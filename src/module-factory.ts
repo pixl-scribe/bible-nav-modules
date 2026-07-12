@@ -28,10 +28,10 @@ export default class ModuleFactory {
     console.log(`Version: ${config.version}`);
     const usxFiles = UsxParser.getUsxFiles(moduleId);
     const usxParser = new UsxParser();
-    usxFiles.forEach((usxFile) => {
+    for (const usxFile of usxFiles) {
       console.log(`  importing ${usxFile}...`);
       const book = usxParser.parseBook(usxFile);
-      console.log({ book });
-    });
+      console.log(JSON.stringify(book, null, 2));
+    }
   }
 }
