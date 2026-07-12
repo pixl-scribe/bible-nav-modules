@@ -19,6 +19,7 @@
     "lint": "eslint ./"
   },
   "dependencies": {
+    "fast-xml-parser": "^5.10.0",
     "jose": "^6.2.3",
     "yaml": "^2.9.0",
     "yargs": "^18.0.0"

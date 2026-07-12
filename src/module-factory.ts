@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { parse } from 'yaml';
+import UsxParser from './usx-parser';
 
 interface ModuleConfig {
   name: string;
@@ -25,5 +26,12 @@ export default class ModuleFactory {
     const config = parse(content) as ModuleConfig;
     console.log(`Name:    ${config.name}`);
     console.log(`Version: ${config.version}`);
+    const usxFiles = UsxParser.getUsxFiles(moduleId);
+    const usxParser = new UsxParser();
+    usxFiles.forEach((usxFile) => {
+      console.log(`  importing ${usxFile}...`);
+      const book = usxParser.parseBook(usxFile);
+      console.log({ book });
+    });
   }
 }
