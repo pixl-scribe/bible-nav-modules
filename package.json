@@ -19,6 +19,7 @@
     "lint": "eslint ./"
   },
   "dependencies": {
+    "better-sqlite3": "^12.11.1",
     "fast-xml-parser": "^5.10.0",
     "jose": "^6.2.3",
     "yaml": "^2.9.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^26.1.1",
     "@types/yargs": "^17.0.35",
     "eslint": "^10.7.0",
