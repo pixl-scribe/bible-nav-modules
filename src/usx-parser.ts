@@ -5,6 +5,8 @@ import {
   Book,
   Chapter,
   GlossaryWord,
+  Note,
+  NoteSegment,
   Paragraph,
   TranslatorsAddition,
   Verse,
@@ -38,7 +40,7 @@ function getBookChildType(child: any): 'chapter' | 'para' | null {
 
 function getParaChildType(
   child: any
-): 'text' | 'w' | 'add' | 'verse' | 'note' | null {
+): 'text' | 'w' | 'add' | 'verse' | 'verse-end' | 'note' | null {
   if (child?.['char'] !== undefined && getElemAttr(child, 'style') === 'w') {
     return 'w';
   }
@@ -46,7 +48,10 @@ function getParaChildType(
     return 'add';
   }
   if (child?.['#text'] !== undefined) return 'text';
-  if (child?.['verse'] !== undefined) return 'verse';
+  if (child?.['verse'] !== undefined) {
+    if (getElemAttr(child, 'eid') !== undefined) return 'verse-end';
+    return 'verse';
+  }
   if (child?.['note'] !== undefined) return 'note';
   return null;
 }
@@ -106,7 +111,7 @@ export default class UsxParser {
   }
 
   private getChapters(bookChildren: any[]): Chapter[] {
-    console.log(JSON.stringify(bookChildren, null, 2));
+    // console.log(JSON.stringify(bookChildren, null, 2));
     const chapters: Chapter[] = [];
     let currentChapter: Chapter | undefined = undefined;
     let paragraphs: Paragraph[] = [];
@@ -133,10 +138,10 @@ export default class UsxParser {
   }
 
   getChapter(chapterNode: any): Chapter {
-    const chapterNumber = parseInt(getElemAttr(chapterNode, 'number') ?? '');
+    const nbr = parseInt(getElemAttr(chapterNode, 'number') ?? '');
     const sid = getElemAttr(chapterNode, 'sid') ?? '';
     return {
-      chapterNumber,
+      nbr,
       sid,
       paragraphs: [],
     };
@@ -146,8 +151,12 @@ export default class UsxParser {
     const paraChildren = para?.['para'];
     const paragraph: Paragraph = { verses: [] };
     let verseChildren: VerseChild[] = [];
+    let activeVerse: Verse | undefined;
     for (const paraChild of paraChildren) {
       switch (getParaChildType(paraChild)) {
+        case 'verse':
+          activeVerse = this.initVerse(paraChild);
+          break;
         case 'w':
           verseChildren.push(this.getGlossaryWord(paraChild));
           break;
@@ -157,11 +166,17 @@ export default class UsxParser {
         case 'text':
           verseChildren.push(paraChild['#text'] as string);
           break;
-        case 'verse':
-          paragraph.verses.push(this.getVerse(paraChild, verseChildren));
+        case 'note':
+          verseChildren.push(this.getNote(paraChild));
+          break;
+        case 'verse-end':
+          if (activeVerse) {
+            activeVerse = this.decorateVerse(activeVerse, verseChildren);
+            paragraph.verses.push(activeVerse);
+          }
+          activeVerse = undefined;
           verseChildren = [];
           break;
-        // case 'note': // TODO: Add note to model.
       }
     }
     return paragraph;
@@ -169,49 +184,68 @@ export default class UsxParser {
 
   getGlossaryWord(child: any): GlossaryWord {
     const strong = getElemAttr(child, 'strong') ?? '';
-    const text =
+    const txt =
       Array.isArray(child?.['char']) && child['char'].length > 0
         ? getElemText(child, 'char')
         : '';
     return {
       style: 'w',
       strong,
-      text,
+      txt,
     };
   }
 
   getTranslatorsAddition(child: any): TranslatorsAddition {
-    const text =
+    const txt =
       Array.isArray(child?.['char']) && child['char'].length > 0
         ? getElemText(child, 'char')
         : '';
     return {
       style: 'add',
-      text,
+      txt,
     };
   }
 
-  getVerse(verseNode: any, children: VerseChild[]): Verse {
-    const verseNumber = parseInt(getElemAttr(verseNode, 'number') ?? '');
+  getNote(child: any): Note {
+    const children: NoteSegment[] =
+      child?.['note'].map((n: any) => ({
+        style: getElemAttr(n, 'style'),
+        txt: getElemText(n, 'char'),
+      })) ?? [];
+    return {
+      style: 'f',
+      children,
+    };
+  }
+
+  initVerse(verseNode: any): Verse {
+    const nbr = parseInt(getElemAttr(verseNode, 'number') ?? '');
     const sid = getElemAttr(verseNode, 'sid') ?? '';
-    const rawText = children
+
+    return {
+      nbr,
+      sid,
+      children: [],
+      raw: '',
+    };
+  }
+
+  decorateVerse(verse: Verse, children: VerseChild[]): Verse {
+    const raw = children
       .reduce((acc: string, child: VerseChild) => {
         if (typeof child === 'string') {
           const sep = startsWithLetter(child) ? ' ' : '';
           return `${acc}${sep}${child}`;
         }
         if (child.style === 'add' || child.style === 'w') {
-          return `${acc} ${child.text}`;
+          return `${acc} ${child.txt}`;
         }
         return acc;
       }, '')
       .trim();
 
-    return {
-      verseNumber,
-      sid: sid,
-      children,
-      rawText,
-    };
+    verse.children = children;
+    verse.raw = raw;
+    return verse;
   }
 }

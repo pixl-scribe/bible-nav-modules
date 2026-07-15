@@ -3,7 +3,7 @@
  */
 export interface TranslatorsAddition {
   style: 'add';
-  text: string;
+  txt: string;
 }
 
 /**
@@ -11,22 +11,29 @@ export interface TranslatorsAddition {
  */
 export interface GlossaryWord {
   style: 'w';
-  text: string;
+  txt: string;
   strong: string;
+}
+
+export type NoteSegmentStyle = 'fr' | 'ft' | 'fk' | 'fq' | 'fqa' | 'fl' | 'fw';
+
+export interface NoteSegment {
+  style: NoteSegmentStyle;
+  txt: string;
 }
 
 export interface Note {
   style: 'f';
-  // TODO: work on this.
+  children: NoteSegment[];
 }
 
 export type VerseChild = string | GlossaryWord | TranslatorsAddition | Note;
 
 export interface Verse {
-  verseNumber: number;
+  nbr: number;
   sid: string;
   children: VerseChild[];
-  rawText: string;
+  raw: string;
 }
 
 export interface Paragraph {
@@ -34,7 +41,7 @@ export interface Paragraph {
 }
 
 export interface Chapter {
-  chapterNumber: number;
+  nbr: number;
   sid: string;
   paragraphs: Paragraph[];
 }
