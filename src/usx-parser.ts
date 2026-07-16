@@ -21,6 +21,12 @@ function getElemText(e: any, name: string): string {
   return e[name]?.[0]?.['#text'];
 }
 
+function getElemTextGuarded(child: any): string {
+  return Array.isArray(child?.['char']) && child['char'].length > 0
+    ? getElemText(child, 'char')
+    : '';
+}
+
 function getElemAttr(e: any, attr: string): string | undefined {
   return e?.[':@']?.[`@_${attr}`];
 }
@@ -62,8 +68,16 @@ function startsWithLetter(str: string): boolean {
   return /^[a-zA-Z]/.test(str);
 }
 
+function appendWord(acc: string, str: string): string {
+  if (acc !== '' && startsWithLetter(str)) {
+    return `${acc} ${str}`;
+  }
+  return `${acc}${str}`;
+}
+
 export default class UsxParser {
   private parser: XMLParser;
+  private usxChildren: any[] = [];
 
   constructor() {
     this.parser = new XMLParser({
@@ -100,25 +114,67 @@ export default class UsxParser {
       throw new Error('Only USX version 3.0 files are supported');
     }
 
-    const usxChildren: any[] = usxAttr?.['usx'];
-    if (!usxChildren) {
+    this.usxChildren = usxAttr?.['usx'];
+    if (!this.usxChildren) {
       throw new Error('No usx children found.');
     }
 
-    const usxBook = usxChildren.find((x: { [x: string]: any }) => !!x['book']);
+    const usxBook = this.usxChildren.find(
+      (x: { [x: string]: any }) => !!x['book']
+    );
 
-    const chapters = this.getChapters(usxChildren);
+    const chapters = this.getChapters(this.usxChildren);
 
     return {
       name: getElemText(usxBook, 'book'),
       code: getElemAttr(usxBook, 'code') ?? '',
-      header: getChildText(usxChildren, 'para', 'h'),
-      toc1: getChildText(usxChildren, 'para', 'toc1'),
-      toc2: getChildText(usxChildren, 'para', 'toc2'),
-      toc3: getChildText(usxChildren, 'para', 'toc3'),
-      mt1: getChildText(usxChildren, 'para', 'mt1'),
+      header: getChildText(this.usxChildren, 'para', 'h'),
+      toc1: getChildText(this.usxChildren, 'para', 'toc1'),
+      toc2: getChildText(this.usxChildren, 'para', 'toc2'),
+      toc3: getChildText(this.usxChildren, 'para', 'toc3'),
+      mt1: getChildText(this.usxChildren, 'para', 'mt1'),
       chapters,
     };
+  }
+
+  public getRawVerseText(): { sid: string; text: string }[] {
+    const paragraphs: any[] = this.usxChildren.filter(
+      (node) => getBookChildType(node) === 'para'
+    );
+
+    const verses: { sid: string; text: string }[] = [];
+
+    for (const para of paragraphs) {
+      const paraChildren = para?.['para'];
+      let activeSid = '';
+      let activeText = '';
+      for (const paraChild of paraChildren) {
+        switch (getParaChildType(paraChild)) {
+          case 'verse':
+            activeSid = getElemAttr(paraChild, 'sid') ?? '';
+            break;
+          case 'w':
+            activeText = appendWord(activeText, getElemTextGuarded(paraChild));
+            break;
+          case 'add':
+            activeText = appendWord(activeText, getElemTextGuarded(paraChild));
+            break;
+          case 'text':
+            activeText = appendWord(activeText, paraChild['#text'] as string);
+            break;
+          case 'verse-end':
+            verses.push({
+              sid: activeSid,
+              text: activeText,
+            });
+            activeSid = '';
+            activeText = '';
+            break;
+        }
+      }
+    }
+
+    return verses;
   }
 
   private getChapters(bookChildren: any[]): Chapter[] {
@@ -195,10 +251,7 @@ export default class UsxParser {
 
   getGlossaryWord(child: any): GlossaryWord {
     const strong = getElemAttr(child, 'strong') ?? '';
-    const txt =
-      Array.isArray(child?.['char']) && child['char'].length > 0
-        ? getElemText(child, 'char')
-        : '';
+    const txt = getElemTextGuarded(child);
     return {
       style: 'w',
       strong,
@@ -207,10 +260,7 @@ export default class UsxParser {
   }
 
   getTranslatorsAddition(child: any): TranslatorsAddition {
-    const txt =
-      Array.isArray(child?.['char']) && child['char'].length > 0
-        ? getElemText(child, 'char')
-        : '';
+    const txt = getElemTextGuarded(child);
     return {
       style: 'add',
       txt,

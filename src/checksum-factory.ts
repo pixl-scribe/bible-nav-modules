@@ -53,6 +53,10 @@ export default class ChecksumFactory {
     for (const usxFile of usxFiles) {
       console.log(`  parsing ${usxFile}...`);
       const book = usxParser.parseBook(usxFile);
+      const rawVerses = usxParser.getRawVerseText();
+      // TODO: stopped here. Need to construct checksum yaml file containing hashes.
+      console.log({ rawVerses });
+
       const bookVerseCounts = chapters?.[book.code];
 
       // Verify chapter count of the book.
@@ -82,6 +86,8 @@ export default class ChecksumFactory {
         }
       });
       console.log(`  ${book.name} verse counts were correct.`);
+      // TODO: remove this
+      break;
     }
   }
 }

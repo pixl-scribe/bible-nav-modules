@@ -22,6 +22,7 @@
     "better-sqlite3": "^12.11.1",
     "fast-xml-parser": "^5.10.0",
     "jose": "^6.2.3",
+    "js-xxhash": "^5.0.1",
     "yaml": "^2.9.0",
     "yargs": "^18.0.0"
   },
