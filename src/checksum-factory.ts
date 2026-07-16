@@ -3,7 +3,10 @@ import { parse } from 'yaml';
 import UsxParser from './usx-parser';
 import path from 'path';
 import { ModuleConfig } from './model/module-config';
-import { BibleVerseCounts } from './model/bible-verse-counts';
+import {
+  BibleVerseCounts,
+  TestamentVerseCounts,
+} from './model/bible-verse-counts';
 import { Paragraph } from './model/book';
 
 export default class ChecksumFactory {
@@ -27,15 +30,36 @@ export default class ChecksumFactory {
     );
     const verseCounts = parse(verseCountsContent) as BibleVerseCounts;
 
-    const usxFiles = UsxParser.getUsxFiles(moduleId);
+    for (const testament of config.testamentsIncluded) {
+      let chapters: TestamentVerseCounts | undefined = undefined;
+      switch (testament) {
+        case 'OT':
+          chapters = verseCounts.OT;
+          break;
+        case 'NT':
+          chapters = verseCounts.NT;
+          break;
+      }
+      const usxFiles = UsxParser.getUsxFiles(moduleId, chapters);
+      ChecksumFactory.checksumTestament(usxFiles, chapters);
+    }
+  }
+
+  private static checksumTestament(
+    usxFiles: string[],
+    chapters: TestamentVerseCounts | undefined
+  ): void {
     const usxParser = new UsxParser();
     for (const usxFile of usxFiles) {
       console.log(`  parsing ${usxFile}...`);
       const book = usxParser.parseBook(usxFile);
-      const bookVerseCounts = verseCounts[book.code];
+      const bookVerseCounts = chapters?.[book.code];
 
       // Verify chapter count of the book.
-      if (book.chapters.length !== bookVerseCounts.length) {
+      if (
+        bookVerseCounts !== undefined &&
+        book.chapters.length !== bookVerseCounts.length
+      ) {
         throw new Error(
           `Book ${book.code} chapter count of ${book.chapters.length} did not match the expected count of ${bookVerseCounts.length}.`
         );
@@ -43,12 +67,15 @@ export default class ChecksumFactory {
 
       // Verify verse count of each chapter.
       book.chapters.forEach((chapter, index) => {
-        const chapterVerseCount = bookVerseCounts[index];
+        const chapterVerseCount = bookVerseCounts?.[index];
         const parsedVerseCount = chapter.paragraphs.reduce(
           (acc: number, paragraph: Paragraph) => acc + paragraph.verses.length,
           0
         );
-        if (chapterVerseCount !== parsedVerseCount) {
+        if (
+          chapterVerseCount !== undefined &&
+          chapterVerseCount !== parsedVerseCount
+        ) {
           throw new Error(
             `Chapter ${chapter.sid} verse count of ${parsedVerseCount} did not match the expected count of ${chapterVerseCount}.`
           );

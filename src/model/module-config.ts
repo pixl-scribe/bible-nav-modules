@@ -7,4 +7,5 @@ export interface ModuleConfig {
   languageCode: string;
   license: string;
   version: string;
+  testamentsIncluded: string[];
 }

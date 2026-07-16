@@ -8,3 +8,6 @@ language: English
 languageCode: eng
 license: Public Domain
 version: 1.0.0
+testamentsIncluded:
+  - OT
+  - NT

@@ -12,6 +12,8 @@ import {
   Verse,
   VerseChild,
 } from './model/book';
+import { TestamentVerseCounts } from './model/bible-verse-counts';
+import path from 'path';
 
 const alwaysArray = ['usx.para'];
 
@@ -76,8 +78,17 @@ export default class UsxParser {
     });
   }
 
-  public static getUsxFiles(moduleId: string): string[] {
-    return fs.globSync(`./assets/${moduleId}/*.usx`);
+  public static getUsxFiles(
+    moduleId: string,
+    chapterVerseCounts: TestamentVerseCounts | undefined
+  ): string[] {
+    if (!chapterVerseCounts) {
+      return fs.globSync(`./assets/${moduleId}/*.usx`);
+    }
+
+    return Object.keys(chapterVerseCounts).map((bookCode: string) =>
+      path.resolve('assets', moduleId, `${bookCode.toLowerCase()}.usx`)
+    );
   }
 
   public parseBook(filename: string): Book {
