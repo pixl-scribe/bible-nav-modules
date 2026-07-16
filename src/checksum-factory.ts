@@ -8,6 +8,8 @@ import {
   TestamentVerseCounts,
 } from './model/bible-verse-counts';
 import { Paragraph } from './model/book';
+import { BookChecksum, ChapterChecksum } from './model/checksum-config';
+import { xxHash32 } from 'js-xxhash';
 
 export default class ChecksumFactory {
   public static generate(moduleId: string) {
@@ -50,12 +52,19 @@ export default class ChecksumFactory {
     chapters: TestamentVerseCounts | undefined
   ): void {
     const usxParser = new UsxParser();
+    const bookChecksums: BookChecksum[] = [];
     for (const usxFile of usxFiles) {
       console.log(`  parsing ${usxFile}...`);
       const book = usxParser.parseBook(usxFile);
-      const rawVerses = usxParser.getRawVerseText();
+      const rawBookVerses = usxParser.getRawVerseText();
       // TODO: stopped here. Need to construct checksum yaml file containing hashes.
-      console.log({ rawVerses });
+      console.log({ rawBookVerses });
+      const chapterChecksums = ChecksumFactory.getVerseChecksums(rawBookVerses);
+      bookChecksums.push({
+        bookCode: book.code,
+        checksum: 0, // TODO
+        chapterChecksums,
+      });
 
       const bookVerseCounts = chapters?.[book.code];
 
@@ -89,5 +98,32 @@ export default class ChecksumFactory {
       // TODO: remove this
       break;
     }
+  }
+
+  private static getVerseChecksums(
+    rawBookVerses: { sid: string; text: string }[]
+  ): ChapterChecksum[] {
+    const chapters = Object.groupBy(
+      rawBookVerses,
+      (verse) => verse.sid.split(':')[0]
+    );
+    const chapterChecksums = Object.keys(chapters).map((sid: string) => {
+      const rawVerses = chapters[sid] as { sid: string; text: string }[];
+      const verseChecksums = rawVerses.map(
+        ({ sid, text }: { sid: string; text: string }) => ({
+          sid,
+          checksum: xxHash32(`${sid}|${text}`),
+        })
+      );
+      console.log({ verseChecksums });
+      return {
+        sid,
+        checksum: xxHash32(verseChecksums.join()),
+        verseChecksums,
+      };
+    });
+    console.log({ chapterChecksums });
+
+    return chapterChecksums;
   }
 }
