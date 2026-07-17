@@ -18,30 +18,40 @@ export class DbExporterService {
     this.createTables();
   }
 
-  public exportModule(config: ModuleConfig) {
+  public exportModule(
+    config: ModuleConfig,
+    checksum: number,
+    signature: string
+  ) {
     const insert = this._db.prepare(`
       INSERT INTO module (
         name,
         description,
+        moduleType,
         year,
         fetchId,
         language,
         languageCode,
         license,
-        version
+        version,
+        checksum,
+        signature
       ) VALUES (
         @name,
         @description,
+        @moduleType,
         @year,
         @fetchId,
         @language,
         @languageCode,
         @license,
-        @version
+        @version,
+        @checksum,
+        @signature
       )
     `);
 
-    insert.run(config);
+    insert.run({ ...config, checksum, signature });
   }
 
   public exportBook(book: Book): void {
@@ -59,12 +69,15 @@ export class DbExporterService {
           CREATE TABLE module (
             name TEXT NOT NULL,
             description TEXT NOT NULL,
+            moduleType TEXT NOT NULL,
             year NUMERIC,
             fetchId TEXT,
             language TEXT NOT NULL,
             languageCode TEXT NOT NULL,
             license TEXT NOT NULL,
-            version TEXT NOT NULL
+            version TEXT NOT NULL,
+            checksum NUMERIC,
+            signature TEXT NOT NULL
           )
         `
       )
@@ -87,7 +100,7 @@ export class DbExporterService {
             toc2 TEXT NOT NULL,
             toc3 TEXT NOT NULL,
             mt1 TEXT NOT NULL,
-            signature TEXT NOT NULL
+            checksum NUMERIC
           )
         `
       )

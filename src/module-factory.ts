@@ -14,7 +14,7 @@ export default class ModuleFactory {
     console.log(`Name:    ${config.name}`);
     console.log(`Version: ${config.version}`);
     console.log(`Checksum: ${checksum.checksum}`);
-    dbExporter.exportModule(config);
+    dbExporter.exportModule(config, checksum.checksum, 'aaa');
 
     const verseCounts = VerseCountService.getVerseCounts();
 

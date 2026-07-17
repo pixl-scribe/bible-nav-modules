@@ -2,6 +2,7 @@ name: King James Version (1769)
 description: |
   The King James Version or Authorized Version of the Holy Bible,
   using the standardized text of 1769, protocanon only, with Strong's numbers added.
+moduleType: bible
 year: 1769
 fetchId: eng_kjv
 language: English
