@@ -1,12 +1,8 @@
 import fs from 'fs';
-import { parse, stringify } from 'yaml';
-import UsxParser from './usx-parser';
+import { stringify } from 'yaml';
+import UsxParserService from './services/usx-parser-service';
 import path from 'path';
-import { ModuleConfig } from './model/module-config';
-import {
-  BibleVerseCounts,
-  TestamentVerseCounts,
-} from './model/bible-verse-counts';
+import { TestamentVerseCounts } from './model/bible-verse-counts';
 import { Paragraph } from './model/book';
 import {
   BookChecksum,
@@ -15,27 +11,17 @@ import {
   TestamentChecksum,
 } from './model/checksum-config';
 import { xxHash32 } from 'js-xxhash';
+import { VerseCountService } from './services/verse-count-service';
+import ModuleConfigService from './services/module-config-service';
 
 export default class ChecksumFactory {
   public static generate(moduleId: string) {
-    const verseCountsFile = path.resolve('assets', 'bible-verse-counts.yaml');
-    const configFile = path.resolve('assets', moduleId, 'config.yaml');
-    if (!fs.existsSync(configFile)) {
-      console.error(`No module found for ${moduleId}`);
-      return;
-    }
-
     console.log(`Generating checksums for ${moduleId}...`);
-    const configContent: string = fs.readFileSync(configFile, 'utf-8');
-    const config = parse(configContent) as ModuleConfig;
+    const config = ModuleConfigService.getModuleConfig(moduleId);
     console.log(`Name:    ${config.name}`);
     console.log(`Version: ${config.version}`);
 
-    const verseCountsContent: string = fs.readFileSync(
-      verseCountsFile,
-      'utf-8'
-    );
-    const verseCounts = parse(verseCountsContent) as BibleVerseCounts;
+    const verseCounts = VerseCountService.getVerseCounts();
     const testamentChecksums: TestamentChecksum[] = [];
 
     for (const testament of config.testamentsIncluded) {
@@ -48,7 +34,7 @@ export default class ChecksumFactory {
           chapters = verseCounts.NT;
           break;
       }
-      const usxFiles = UsxParser.getUsxFiles(moduleId, chapters);
+      const usxFiles = UsxParserService.getUsxFiles(moduleId, chapters);
       if (testament === 'OT' || testament === 'NT') {
         const bookChecksums = ChecksumFactory.checksumTestament(
           usxFiles,
@@ -82,7 +68,7 @@ export default class ChecksumFactory {
     usxFiles: string[],
     chapters: TestamentVerseCounts | undefined
   ): BookChecksum[] {
-    const usxParser = new UsxParser();
+    const usxParser = new UsxParserService();
     const bookChecksums: BookChecksum[] = [];
     for (const usxFile of usxFiles) {
       console.log(`  parsing ${usxFile}...`);

@@ -1,36 +1,42 @@
-import fs from 'fs';
-import { parse } from 'yaml';
-import UsxParser from './usx-parser';
-import path from 'path';
-import { DbExporter } from './db-exporter';
-import { ModuleConfig } from './model/module-config';
+import UsxParserService from './services/usx-parser-service';
+import { DbExporterService } from './services/db-exporter-service';
+import { VerseCountService } from './services/verse-count-service';
+import ModuleConfigService from './services/module-config-service';
+import { TestamentVerseCounts } from './model/bible-verse-counts';
 
 export default class ModuleFactory {
   public static generate(moduleId: string) {
-    const configFile = path.resolve('assets', moduleId, 'config.yaml');
-    if (!fs.existsSync(configFile)) {
-      console.error(`No module found for ${moduleId}`);
-      return;
-    }
-
-    const dbFile = path.resolve('exports', `${moduleId}.db`);
-    fs.rmSync(dbFile, { force: true }); // Remove export if it exists.
-    const dbExporter = new DbExporter(dbFile);
+    const dbExporter = new DbExporterService(moduleId);
 
     console.log(`Generating module ${moduleId}...`);
-    const content: string = fs.readFileSync(configFile, 'utf-8');
-    const config = parse(content) as ModuleConfig;
+    const config = ModuleConfigService.getModuleConfig(moduleId);
+    const checksum = ModuleConfigService.getModuleChecksum(moduleId);
     console.log(`Name:    ${config.name}`);
     console.log(`Version: ${config.version}`);
+    console.log(`Checksum: ${checksum.checksum}`);
     dbExporter.exportModule(config);
 
-    const usxFiles = UsxParser.getUsxFiles(moduleId);
-    const usxParser = new UsxParser();
-    for (const usxFile of usxFiles) {
-      console.log(`  importing ${usxFile}...`);
-      const book = usxParser.parseBook(usxFile);
-      // console.log(JSON.stringify(book, null, 2));
-      dbExporter.exportBook(book);
+    const verseCounts = VerseCountService.getVerseCounts();
+
+    for (const testament of config.testamentsIncluded) {
+      let chapters: TestamentVerseCounts | undefined = undefined;
+      switch (testament) {
+        case 'OT':
+          chapters = verseCounts.OT;
+          break;
+        case 'NT':
+          chapters = verseCounts.NT;
+          break;
+      }
+      const usxFiles = UsxParserService.getUsxFiles(moduleId, chapters);
+
+      const usxParser = new UsxParserService();
+      for (const usxFile of usxFiles) {
+        console.log(`  importing ${usxFile}...`);
+        const book = usxParser.parseBook(usxFile);
+        // console.log(JSON.stringify(book, null, 2));
+        dbExporter.exportBook(book);
+      }
     }
 
     dbExporter.close();

@@ -1,12 +1,18 @@
-import { Book } from './model/book';
+import { Book } from '../model/book';
 import Database from 'better-sqlite3';
-import { ModuleConfig } from './model/module-config';
+import { ModuleConfig } from '../model/module-config';
+import path from 'path';
+import fs from 'fs';
 
-export class DbExporter {
+export class DbExporterService {
   private _db: Database.Database;
 
-  constructor(path: string) {
-    this._db = new Database(path, { verbose: console.log });
+  constructor(moduleId: string) {
+    const dbFile = path.resolve('exports', `${moduleId}.db`);
+    fs.rmSync(dbFile, { force: true }); // Remove export if it exists.
+
+    // this._db = new Database(dbFile, { verbose: console.log });
+    this._db = new Database(dbFile);
     this._db.pragma('journal_mode = WAL');
     this._db.pragma('foreign_keys = ON');
     this.createTables();

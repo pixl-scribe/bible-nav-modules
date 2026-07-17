@@ -11,8 +11,8 @@ import {
   TranslatorsAddition,
   Verse,
   VerseChild,
-} from './model/book';
-import { TestamentVerseCounts } from './model/bible-verse-counts';
+} from '../model/book';
+import { TestamentVerseCounts } from '../model/bible-verse-counts';
 import path from 'path';
 
 const alwaysArray = ['usx.para'];
@@ -75,7 +75,7 @@ function appendWord(acc: string, str: string): string {
   return `${acc}${str}`;
 }
 
-export default class UsxParser {
+export default class UsxParserService {
   private parser: XMLParser;
   private usxChildren: any[] = [];
 
