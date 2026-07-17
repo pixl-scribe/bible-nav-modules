@@ -55,7 +55,7 @@ export class DbExporterService {
   }
 
   public exportBook(book: Book): void {
-    console.log({ book });
+    // console.log({ book });
   }
 
   public close(): void {

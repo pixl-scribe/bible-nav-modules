@@ -3,9 +3,10 @@ import { DbExporterService } from './services/db-exporter-service';
 import { VerseCountService } from './services/verse-count-service';
 import ModuleConfigService from './services/module-config-service';
 import { TestamentVerseCounts } from './model/bible-verse-counts';
+import { JwtTokenService } from './services/jwt-token-service';
 
 export default class ModuleFactory {
-  public static generate(moduleId: string) {
+  public static async generate(moduleId: string): Promise<void> {
     const dbExporter = new DbExporterService(moduleId);
 
     console.log(`Generating module ${moduleId}...`);
@@ -14,7 +15,13 @@ export default class ModuleFactory {
     console.log(`Name:    ${config.name}`);
     console.log(`Version: ${config.version}`);
     console.log(`Checksum: ${checksum.checksum}`);
-    dbExporter.exportModule(config, checksum.checksum, 'aaa');
+    const jwtToken = await JwtTokenService.generateToken({
+      application: 'Bible Nav',
+      moduleId,
+      moduleName: config.name,
+      checksum: checksum.checksum,
+    });
+    dbExporter.exportModule(config, checksum.checksum, jwtToken);
 
     const verseCounts = VerseCountService.getVerseCounts();
 

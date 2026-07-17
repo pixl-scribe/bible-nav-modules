@@ -143,4 +143,4 @@ vite.config.ts.timestamp-*
 .vite/
 
 .idea/
-keys/
+keys/private.pem
