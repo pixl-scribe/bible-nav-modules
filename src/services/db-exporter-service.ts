@@ -1,4 +1,4 @@
-import { Book, Chapter } from '../model/book';
+import {Book, Chapter, Verse} from '../model/book';
 import Database from 'better-sqlite3';
 import { ModuleConfig } from '../model/module-config';
 import path from 'path';
@@ -105,7 +105,7 @@ export class DbExporterService {
     bookId: number,
     chapter: Chapter,
     checksum: number | undefined
-  ): number {
+  ): void {
     const insert = this._db.prepare(`
       INSERT INTO chapters (
         bookId,
@@ -120,8 +120,37 @@ export class DbExporterService {
       )
     `);
 
-    const info = insert.run({ bookId, checksum, ...chapter });
-    return info.lastInsertRowid as number;
+    insert.run({ bookId, checksum, ...chapter });
+  }
+
+  public exportVerse(
+    bookId: number,
+    chapter: number,
+    paragraph: number,
+    verse: Verse,
+    checksum: number | undefined
+  ): void {
+    const insert = this._db.prepare(`
+      INSERT INTO verses (
+        bookId,
+        chapter,
+        nbr,
+        paragraph,
+        sid,
+        raw,
+        checksum
+      ) VALUES (
+        @bookId,
+        @chapter,
+        @nbr,
+        @paragraph,
+        @sid,
+        @raw,
+        @checksum
+      )
+    `);
+
+    insert.run({ bookId, chapter, paragraph, checksum, ...verse });
   }
 
   public close(): void {
@@ -136,13 +165,13 @@ export class DbExporterService {
             name TEXT NOT NULL,
             description TEXT NOT NULL,
             moduleType TEXT NOT NULL,
-            year NUMERIC,
+            year INTEGER,
             fetchId TEXT,
             language TEXT NOT NULL,
             languageCode TEXT NOT NULL,
             license TEXT NOT NULL,
             version TEXT NOT NULL,
-            checksum NUMERIC,
+            checksum INTEGER,
             signature TEXT NOT NULL
           )
         `
@@ -155,7 +184,7 @@ export class DbExporterService {
           CREATE TABLE testaments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             code TEXT NOT NULL,
-            checksum NUMERIC
+            checksum INTEGER
           )
         `
       )
@@ -180,7 +209,7 @@ export class DbExporterService {
             toc2 TEXT NOT NULL,
             toc3 TEXT NOT NULL,
             mt1 TEXT NOT NULL,
-            checksum NUMERIC
+            checksum INTEGER
           )
         `
       )
@@ -191,11 +220,30 @@ export class DbExporterService {
         `
           CREATE TABLE chapters (
             bookId INTEGER,
-            nbr NUMERIC NOT NULL,
+            nbr INTEGER NOT NULL,
             sid TEXT NOT NULL,
-            checksum NUMERIC,
+            checksum INTEGER,
             PRIMARY KEY (bookId, nbr),
             FOREIGN KEY (bookId) REFERENCES books(id)
+          )
+        `
+      )
+      .run();
+
+    this._db
+      .prepare(
+        `
+          CREATE TABLE verses (
+            bookId INTEGER,
+            chapter INTEGER NOT NULL,
+            nbr INTEGER NOT NULL,
+            paragraph INTEGER NOT NULL,
+            sid TEXT NOT NULL,
+            raw TEXT NOT NULL,
+            checksum INTEGER,
+            PRIMARY KEY (bookId, chapter, nbr),
+            FOREIGN KEY (bookId) REFERENCES books(id)
+            FOREIGN KEY (bookId, chapter) REFERENCES chapters(bookId, nbr)
           )
         `
       )

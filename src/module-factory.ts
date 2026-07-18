@@ -40,13 +40,13 @@ export default class ModuleFactory {
           break;
       }
 
-      let testamentChecksums: TestamentChecksum | undefined;
+      let testamentChecksum: TestamentChecksum | undefined;
       if (testament === 'OT' || testament === 'NT') {
-        testamentChecksums = checksum.testamentChecksums.find(
+        testamentChecksum = checksum.testamentChecksums.find(
           (cs) => cs.testament === testament
         );
-        if (testamentChecksums?.checksum) {
-          dbExporter.exportTestament(testament, testamentChecksums.checksum);
+        if (testamentChecksum?.checksum) {
+          dbExporter.exportTestament(testament, testamentChecksum.checksum);
         }
       }
       const usxFiles = UsxParserService.getUsxFiles(moduleId, chapters);
@@ -56,24 +56,34 @@ export default class ModuleFactory {
         console.log(`  importing ${usxFile}...`);
         const book = usxParser.parseBook(usxFile);
         // console.log(JSON.stringify(book, null, 2));
-        const bookChecksums = testamentChecksums?.bookChecksums.find(
+        const bookChecksum = testamentChecksum?.bookChecksums.find(
           (cs) => cs.bookCode === book.code
         );
 
         const bookId = dbExporter.exportBook(
           testament,
           book,
-          bookChecksums?.checksum
+          bookChecksum?.checksum
         );
         for (const chapter of book.chapters) {
-          const chapterChecksums = bookChecksums?.chapterChecksums.find(
+          const chapterChecksum = bookChecksum?.chapterChecksums.find(
             (cs) => cs.sid === chapter.sid
           );
-          const chapterId = dbExporter.exportChapter(
-            bookId,
-            chapter,
-            chapterChecksums?.checksum
-          );
+          dbExporter.exportChapter(bookId, chapter, chapterChecksum?.checksum);
+          chapter.paragraphs.forEach((paragraph, paraIndex) => {
+            for (const verse of paragraph.verses) {
+              const verseChecksum = chapterChecksum?.verseChecksums.find(
+                (cs) => cs.sid === verse.sid
+              );
+              dbExporter.exportVerse(
+                bookId,
+                chapter.nbr,
+                paraIndex,
+                verse,
+                verseChecksum?.checksum
+              );
+            }
+          });
         }
       }
     }
