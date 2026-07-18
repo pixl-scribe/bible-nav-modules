@@ -1,4 +1,4 @@
-import {Book, Chapter, Verse} from '../model/book';
+import { Book, Chapter, Verse } from '../model/book';
 import Database from 'better-sqlite3';
 import { ModuleConfig } from '../model/module-config';
 import path from 'path';
@@ -137,6 +137,7 @@ export class DbExporterService {
         nbr,
         paragraph,
         sid,
+        children,
         raw,
         checksum
       ) VALUES (
@@ -145,12 +146,21 @@ export class DbExporterService {
         @nbr,
         @paragraph,
         @sid,
+        @childrenJson,
         @raw,
         @checksum
       )
     `);
 
-    insert.run({ bookId, chapter, paragraph, checksum, ...verse });
+    const childrenJson = JSON.stringify(verse.children);
+    insert.run({
+      bookId,
+      chapter,
+      paragraph,
+      checksum,
+      childrenJson,
+      ...verse,
+    });
   }
 
   public close(): void {
@@ -239,6 +249,7 @@ export class DbExporterService {
             nbr INTEGER NOT NULL,
             paragraph INTEGER NOT NULL,
             sid TEXT NOT NULL,
+            children TEXT NOT NULL,
             raw TEXT NOT NULL,
             checksum INTEGER,
             PRIMARY KEY (bookId, chapter, nbr),
@@ -248,5 +259,7 @@ export class DbExporterService {
         `
       )
       .run();
+
+    this._db.prepare('CREATE INDEX verse_sid ON verses (sid)').run();
   }
 }
