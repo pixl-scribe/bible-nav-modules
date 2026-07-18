@@ -5,7 +5,7 @@ import ModuleConfigService from './services/module-config-service';
 import { TestamentVerseCounts } from './model/bible-verse-counts';
 import { JwtTokenService } from './services/jwt-token-service';
 import pkg from '../package.json' with { type: 'json' };
-import {TestamentChecksum} from "./model/checksum-config";
+import { TestamentChecksum } from './model/checksum-config';
 
 export default class ModuleFactory {
   public static async generate(moduleId: string): Promise<void> {
@@ -60,7 +60,21 @@ export default class ModuleFactory {
           (cs) => cs.bookCode === book.code
         );
 
-        dbExporter.exportBook(testament, bookChecksums?.checksum, book);
+        const bookId = dbExporter.exportBook(
+          testament,
+          book,
+          bookChecksums?.checksum
+        );
+        for (const chapter of book.chapters) {
+          const chapterChecksums = bookChecksums?.chapterChecksums.find(
+            (cs) => cs.sid === chapter.sid
+          );
+          const chapterId = dbExporter.exportChapter(
+            bookId,
+            chapter,
+            chapterChecksums?.checksum
+          );
+        }
       }
     }
 

@@ -1,4 +1,4 @@
-import { Book } from '../model/book';
+import { Book, Chapter } from '../model/book';
 import Database from 'better-sqlite3';
 import { ModuleConfig } from '../model/module-config';
 import path from 'path';
@@ -70,9 +70,9 @@ export class DbExporterService {
 
   public exportBook(
     testamentCode: string | undefined,
-    checksum: number | undefined,
-    book: Book
-  ): void {
+    book: Book,
+    checksum: number | undefined
+  ): number {
     const insert = this._db.prepare(`
       INSERT INTO books (
         testamentCode,
@@ -97,7 +97,31 @@ export class DbExporterService {
       )
     `);
 
-    insert.run({ testamentCode, checksum, ...book });
+    const info = insert.run({ testamentCode, checksum, ...book });
+    return info.lastInsertRowid as number;
+  }
+
+  public exportChapter(
+    bookId: number,
+    chapter: Chapter,
+    checksum: number | undefined
+  ): number {
+    const insert = this._db.prepare(`
+      INSERT INTO chapters (
+        bookId,
+        nbr,
+        sid,
+        checksum
+      ) VALUES (
+        @bookId,
+        @nbr,
+        @sid,
+        @checksum
+      )
+    `);
+
+    const info = insert.run({ bookId, checksum, ...chapter });
+    return info.lastInsertRowid as number;
   }
 
   public close(): void {
@@ -157,6 +181,21 @@ export class DbExporterService {
             toc3 TEXT NOT NULL,
             mt1 TEXT NOT NULL,
             checksum NUMERIC
+          )
+        `
+      )
+      .run();
+
+    this._db
+      .prepare(
+        `
+          CREATE TABLE chapters (
+            bookId INTEGER,
+            nbr NUMERIC NOT NULL,
+            sid TEXT NOT NULL,
+            checksum NUMERIC,
+            PRIMARY KEY (bookId, nbr),
+            FOREIGN KEY (bookId) REFERENCES books(id)
           )
         `
       )
