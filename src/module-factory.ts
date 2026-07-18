@@ -5,6 +5,7 @@ import ModuleConfigService from './services/module-config-service';
 import { TestamentVerseCounts } from './model/bible-verse-counts';
 import { JwtTokenService } from './services/jwt-token-service';
 import pkg from '../package.json' with { type: 'json' };
+import {TestamentChecksum} from "./model/checksum-config";
 
 export default class ModuleFactory {
   public static async generate(moduleId: string): Promise<void> {
@@ -39,8 +40,9 @@ export default class ModuleFactory {
           break;
       }
 
+      let testamentChecksums: TestamentChecksum | undefined;
       if (testament === 'OT' || testament === 'NT') {
-        const testamentChecksums = checksum.testamentChecksums.find(
+        testamentChecksums = checksum.testamentChecksums.find(
           (cs) => cs.testament === testament
         );
         if (testamentChecksums?.checksum) {
@@ -54,7 +56,11 @@ export default class ModuleFactory {
         console.log(`  importing ${usxFile}...`);
         const book = usxParser.parseBook(usxFile);
         // console.log(JSON.stringify(book, null, 2));
-        dbExporter.exportBook(testament, book);
+        const bookChecksums = testamentChecksums?.bookChecksums.find(
+          (cs) => cs.bookCode === book.code
+        );
+
+        dbExporter.exportBook(testament, bookChecksums?.checksum, book);
       }
     }
 

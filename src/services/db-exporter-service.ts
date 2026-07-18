@@ -68,8 +68,36 @@ export class DbExporterService {
     insert.run({ testamentCode, checksum });
   }
 
-  public exportBook(testamentCode: string | undefined, book: Book): void {
-    // console.log({ book });
+  public exportBook(
+    testamentCode: string | undefined,
+    checksum: number | undefined,
+    book: Book
+  ): void {
+    const insert = this._db.prepare(`
+      INSERT INTO books (
+        testamentCode,
+        name,
+        code,
+        header,
+        toc1,
+        toc2,
+        toc3,
+        mt1,
+        checksum
+      ) VALUES (
+        @testamentCode,
+        @name,
+        @code,
+        @header,
+        @toc1,
+        @toc2,
+        @toc3,
+        @mt1,
+        @checksum
+      )
+    `);
+
+    insert.run({ testamentCode, checksum, ...book });
   }
 
   public close(): void {
