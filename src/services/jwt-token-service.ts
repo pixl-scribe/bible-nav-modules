@@ -5,8 +5,10 @@ import fs from 'fs';
 export interface ModuleTokenPayload {
   [propName: string]: string | number;
   application: string;
+  applicationVersion: string;
   moduleId: string;
   moduleName: string;
+  moduleVersion: string;
   checksum: number;
 }
 

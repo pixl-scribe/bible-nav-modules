@@ -4,6 +4,7 @@ import { VerseCountService } from './services/verse-count-service';
 import ModuleConfigService from './services/module-config-service';
 import { TestamentVerseCounts } from './model/bible-verse-counts';
 import { JwtTokenService } from './services/jwt-token-service';
+import pkg from '../package.json' with { type: 'json' };
 
 export default class ModuleFactory {
   public static async generate(moduleId: string): Promise<void> {
@@ -17,8 +18,10 @@ export default class ModuleFactory {
     console.log(`Checksum: ${checksum.checksum}`);
     const jwtToken = await JwtTokenService.generateToken({
       application: 'Bible Nav',
+      applicationVersion: pkg.version,
       moduleId,
       moduleName: config.name,
+      moduleVersion: config.version,
       checksum: checksum.checksum,
     });
     dbExporter.exportModule(config, checksum.checksum, jwtToken);
