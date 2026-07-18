@@ -244,6 +244,7 @@ export class DbExporterService {
       .prepare(
         `
           CREATE TABLE verses (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             bookId INTEGER,
             chapter INTEGER NOT NULL,
             nbr INTEGER NOT NULL,
@@ -252,7 +253,7 @@ export class DbExporterService {
             children TEXT NOT NULL,
             raw TEXT NOT NULL,
             checksum INTEGER,
-            PRIMARY KEY (bookId, chapter, nbr),
+            UNIQUE (bookId, chapter, nbr),
             FOREIGN KEY (bookId) REFERENCES books(id)
             FOREIGN KEY (bookId, chapter) REFERENCES chapters(bookId, nbr)
           )
@@ -261,5 +262,38 @@ export class DbExporterService {
       .run();
 
     this._db.prepare('CREATE INDEX verse_sid ON verses (sid)').run();
+
+    this._db
+      .prepare(
+        `
+        CREATE VIRTUAL TABLE verses_fts USING fts5(
+          raw,
+          content='verses',
+          content_rowid='id',
+          tokenize='porter'
+        )
+        `
+      )
+      .run();
+
+    /**
+     * How do query:
+     * SELECT v.sid, v.raw, highlight(verses_fts, 0, '<em>', '</em>') AS MATCHED_TEXT
+     * FROM verses v
+     * JOIN verses_fts f ON v.id = f.rowid
+     * WHERE verses_fts MATCH 'faith'
+     * ORDER BY v.id;
+     */
+    this._db
+      .prepare(
+        `
+        CREATE TRIGGER verses_ai AFTER INSERT ON verses
+        BEGIN
+          INSERT INTO verses_fts(rowid, raw)
+          VALUES (new.id, new.raw);
+        END
+        `
+      )
+      .run();
   }
 }
