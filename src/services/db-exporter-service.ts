@@ -54,7 +54,21 @@ export class DbExporterService {
     insert.run({ ...config, checksum, signature });
   }
 
-  public exportBook(book: Book): void {
+  public exportTestament(testamentCode: 'OT' | 'NT', checksum: number): void {
+    const insert = this._db.prepare(`
+      INSERT INTO testaments (
+        code,
+        checksum
+      ) VALUES (
+        @testamentCode,
+        @checksum
+      )
+    `);
+
+    insert.run({ testamentCode, checksum });
+  }
+
+  public exportBook(testamentCode: string | undefined, book: Book): void {
     // console.log({ book });
   }
 
@@ -82,6 +96,19 @@ export class DbExporterService {
         `
       )
       .run();
+
+    this._db
+      .prepare(
+        `
+          CREATE TABLE testaments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            code TEXT NOT NULL,
+            checksum NUMERIC
+          )
+        `
+      )
+      .run();
+
     /**
       toc1: string; // Long table of contents text.
       toc2: string; // Short table of contents text.
@@ -93,6 +120,7 @@ export class DbExporterService {
         `
           CREATE TABLE books (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            testamentCode TEXT,
             name TEXT NOT NULL,
             code TEXT NOT NULL,
             header TEXT NOT NULL,

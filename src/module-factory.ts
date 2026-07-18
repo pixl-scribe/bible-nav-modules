@@ -38,6 +38,15 @@ export default class ModuleFactory {
           chapters = verseCounts.NT;
           break;
       }
+
+      if (testament === 'OT' || testament === 'NT') {
+        const testamentChecksums = checksum.testamentChecksums.find(
+          (cs) => cs.testament === testament
+        );
+        if (testamentChecksums?.checksum) {
+          dbExporter.exportTestament(testament, testamentChecksums.checksum);
+        }
+      }
       const usxFiles = UsxParserService.getUsxFiles(moduleId, chapters);
 
       const usxParser = new UsxParserService();
@@ -45,7 +54,7 @@ export default class ModuleFactory {
         console.log(`  importing ${usxFile}...`);
         const book = usxParser.parseBook(usxFile);
         // console.log(JSON.stringify(book, null, 2));
-        dbExporter.exportBook(book);
+        dbExporter.exportBook(testament, book);
       }
     }
 
