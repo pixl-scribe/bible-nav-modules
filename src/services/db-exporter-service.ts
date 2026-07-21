@@ -240,6 +240,8 @@ export class DbExporterService {
       )
       .run();
 
+    this._db.prepare('CREATE INDEX chapter_sid ON chapters (sid)').run();
+
     this._db
       .prepare(
         `
