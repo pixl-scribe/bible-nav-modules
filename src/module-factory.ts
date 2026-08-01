@@ -53,6 +53,7 @@ export default class ModuleFactory {
 
       const usxParser = new UsxParserService();
       for (const usxFile of usxFiles) {
+        // if (!usxFile.endsWith('luk.usx')) continue;
         console.log(`  importing ${usxFile}...`);
         const book = usxParser.parseBook(usxFile);
         // console.log(JSON.stringify(book, null, 2));

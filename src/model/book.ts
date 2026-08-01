@@ -27,7 +27,13 @@ export interface Note {
   children: NoteSegment[];
 }
 
-export type VerseChild = string | GlossaryWord | TranslatorsAddition | Note;
+export interface WordsOfJesus {
+  style: 'wj';
+  children: (string | GlossaryWord | TranslatorsAddition)[];
+}
+
+export type VerseChild =
+  string | GlossaryWord | TranslatorsAddition | Note | WordsOfJesus;
 
 export interface Verse {
   nbr: number;

@@ -11,9 +11,13 @@ import {
   TranslatorsAddition,
   Verse,
   VerseChild,
+  WordsOfJesus,
 } from '../model/book';
 import { TestamentVerseCounts } from '../model/bible-verse-counts';
 import path from 'path';
+
+type ParagraphChildType =
+  'text' | 'w' | 'wj' | 'add' | 'verse' | 'verse-end' | 'note';
 
 const alwaysArray = ['usx.para'];
 
@@ -46,11 +50,15 @@ function getBookChildType(child: any): 'chapter' | 'para' | null {
   return null;
 }
 
-function getParaChildType(
-  child: any
-): 'text' | 'w' | 'add' | 'verse' | 'verse-end' | 'note' | null {
+/**
+ * See https://ubsicap.github.io/usx/charstyles.html#character-styling.
+ */
+function getParaChildType(child: any): ParagraphChildType | null {
   if (child?.['char'] !== undefined && getElemAttr(child, 'style') === 'w') {
     return 'w';
+  }
+  if (child?.['char'] !== undefined && getElemAttr(child, 'style') === 'wj') {
+    return 'wj'; // Words of Jesus.
   }
   if (child?.['char'] !== undefined && getElemAttr(child, 'style') === 'add') {
     return 'add';
@@ -74,6 +82,38 @@ function appendWord(acc: string, str: string): string {
   }
   return `${acc}${str}`;
 }
+
+function appendWordsOfJesus(activeText: string, wj: any): string {
+  const wjChildren = wj?.['char'];
+  for (const wjChild of wjChildren) {
+    switch (getParaChildType(wjChild)) {
+      case 'w':
+        activeText = appendWord(activeText, getElemTextGuarded(wjChild));
+        break;
+      case 'add':
+        activeText = appendWord(activeText, getElemTextGuarded(wjChild));
+        break;
+      case 'text':
+        activeText = appendWord(activeText, wjChild['#text'] as string);
+        break;
+    }
+  }
+  return activeText;
+}
+
+const reduceVerse = (acc: string, child: VerseChild): string => {
+  if (typeof child === 'string') {
+    const sep = startsWithLetter(child) ? ' ' : '';
+    return `${acc}${sep}${child}`;
+  }
+  if (child.style === 'add' || child.style === 'w') {
+    return `${acc} ${child.txt}`;
+  }
+  if (child.style === 'wj') {
+    return child.children.reduce(reduceVerse, acc);
+  }
+  return acc;
+};
 
 export default class UsxParserService {
   private parser: XMLParser;
@@ -156,6 +196,9 @@ export default class UsxParserService {
           case 'w':
             activeText = appendWord(activeText, getElemTextGuarded(paraChild));
             break;
+          case 'wj':
+            activeText = appendWordsOfJesus(activeText, paraChild);
+            break;
           case 'add':
             activeText = appendWord(activeText, getElemTextGuarded(paraChild));
             break;
@@ -204,7 +247,7 @@ export default class UsxParserService {
     return chapters;
   }
 
-  getChapter(chapterNode: any): Chapter {
+  private getChapter(chapterNode: any): Chapter {
     const nbr = parseInt(getElemAttr(chapterNode, 'number') ?? '');
     const sid = getElemAttr(chapterNode, 'sid') ?? '';
     return {
@@ -214,7 +257,7 @@ export default class UsxParserService {
     };
   }
 
-  getParagraph(para: any): Paragraph {
+  private getParagraph(para: any): Paragraph {
     const paraChildren = para?.['para'];
     const paragraph: Paragraph = { verses: [] };
     let verseChildren: VerseChild[] = [];
@@ -226,6 +269,9 @@ export default class UsxParserService {
           break;
         case 'w':
           verseChildren.push(this.getGlossaryWord(paraChild));
+          break;
+        case 'wj':
+          verseChildren.push(this.getWordsOfJesus(paraChild));
           break;
         case 'add':
           verseChildren.push(this.getTranslatorsAddition(paraChild));
@@ -249,7 +295,7 @@ export default class UsxParserService {
     return paragraph;
   }
 
-  getGlossaryWord(child: any): GlossaryWord {
+  private getGlossaryWord(child: any): GlossaryWord {
     const strong = getElemAttr(child, 'strong') ?? '';
     const txt = getElemTextGuarded(child);
     return {
@@ -259,7 +305,29 @@ export default class UsxParserService {
     };
   }
 
-  getTranslatorsAddition(child: any): TranslatorsAddition {
+  private getWordsOfJesus(node: any): WordsOfJesus {
+    const children: (string | GlossaryWord | TranslatorsAddition)[] = [];
+    const wjChildren = node?.['char'];
+    for (const wjChild of wjChildren) {
+      switch (getParaChildType(wjChild)) {
+        case 'w':
+          children.push(this.getGlossaryWord(wjChild));
+          break;
+        case 'add':
+          children.push(this.getTranslatorsAddition(wjChild));
+          break;
+        case 'text':
+          children.push(wjChild['#text'] as string);
+          break;
+      }
+    }
+    return {
+      style: 'wj',
+      children,
+    };
+  }
+
+  private getTranslatorsAddition(child: any): TranslatorsAddition {
     const txt = getElemTextGuarded(child);
     return {
       style: 'add',
@@ -267,7 +335,7 @@ export default class UsxParserService {
     };
   }
 
-  getNote(child: any): Note {
+  private getNote(child: any): Note {
     const children: NoteSegment[] =
       child?.['note'].map((n: any) => ({
         style: getElemAttr(n, 'style'),
@@ -279,7 +347,7 @@ export default class UsxParserService {
     };
   }
 
-  initVerse(verseNode: any): Verse {
+  private initVerse(verseNode: any): Verse {
     const nbr = parseInt(getElemAttr(verseNode, 'number') ?? '');
     const sid = getElemAttr(verseNode, 'sid') ?? '';
 
@@ -291,19 +359,8 @@ export default class UsxParserService {
     };
   }
 
-  decorateVerse(verse: Verse, children: VerseChild[]): Verse {
-    const raw = children
-      .reduce((acc: string, child: VerseChild) => {
-        if (typeof child === 'string') {
-          const sep = startsWithLetter(child) ? ' ' : '';
-          return `${acc}${sep}${child}`;
-        }
-        if (child.style === 'add' || child.style === 'w') {
-          return `${acc} ${child.txt}`;
-        }
-        return acc;
-      }, '')
-      .trim();
+  private decorateVerse(verse: Verse, children: VerseChild[]): Verse {
+    const raw = children.reduce(reduceVerse, '').trim();
 
     verse.children = children;
     verse.raw = raw;

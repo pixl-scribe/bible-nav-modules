@@ -71,6 +71,7 @@ export default class ChecksumFactory {
     const usxParser = new UsxParserService();
     const bookChecksums: BookChecksum[] = [];
     for (const usxFile of usxFiles) {
+      // if (!usxFile.endsWith('luk.usx')) continue;
       console.log(`  parsing ${usxFile}...`);
       const book = usxParser.parseBook(usxFile);
       const rawBookVerses = usxParser.getRawVerseText();
@@ -112,7 +113,7 @@ export default class ChecksumFactory {
           );
         }
       });
-      console.log(`  ${book.name} verse counts were correct.`);
+      console.log(`  ${book.toc2} verse counts were correct.`);
     }
 
     return bookChecksums;
