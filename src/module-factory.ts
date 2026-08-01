@@ -28,6 +28,7 @@ export default class ModuleFactory {
     dbExporter.exportModule(config, checksum.checksum, jwtToken);
 
     const verseCounts = VerseCountService.getVerseCounts();
+    let paraIndex = 0;
 
     for (const testament of config.testamentsIncluded) {
       let chapters: TestamentVerseCounts | undefined = undefined;
@@ -71,7 +72,7 @@ export default class ModuleFactory {
             (cs) => cs.sid === chapter.sid
           );
           dbExporter.exportChapter(bookId, chapter, chapterChecksum?.checksum);
-          chapter.paragraphs.forEach((paragraph, paraIndex) => {
+          chapter.paragraphs.forEach((paragraph) => {
             for (const verse of paragraph.verses) {
               const verseChecksum = chapterChecksum?.verseChecksums.find(
                 (cs) => cs.sid === verse.sid
@@ -84,6 +85,7 @@ export default class ModuleFactory {
                 verseChecksum?.checksum
               );
             }
+            paraIndex += 1;
           });
         }
       }
