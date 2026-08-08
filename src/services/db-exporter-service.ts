@@ -268,6 +268,14 @@ export class DbExporterService {
       .prepare('CREATE INDEX paragraph_index ON verses (paragraph)')
       .run();
 
+    /**
+     * How to do a full text search:
+     * SELECT v.sid, v.raw, highlight(verses_fts, 0, '<em>', '</em>') AS MATCHED_TEXT
+     * FROM verses v
+     * JOIN verses_fts f ON v.id = f.rowid
+     * WHERE verses_fts MATCH 'faith'
+     * ORDER BY v.id;
+     */
     this._db
       .prepare(
         `
@@ -282,12 +290,7 @@ export class DbExporterService {
       .run();
 
     /**
-     * How do query:
-     * SELECT v.sid, v.raw, highlight(verses_fts, 0, '<em>', '</em>') AS MATCHED_TEXT
-     * FROM verses v
-     * JOIN verses_fts f ON v.id = f.rowid
-     * WHERE verses_fts MATCH 'faith'
-     * ORDER BY v.id;
+     * Note: _ai stands for after insert.
      */
     this._db
       .prepare(
@@ -297,6 +300,18 @@ export class DbExporterService {
           INSERT INTO verses_fts(rowid, raw)
           VALUES (new.id, new.raw);
         END
+        `
+      )
+      .run();
+
+    /**
+     * Note: _ai stands for after insert.
+     */
+    this._db
+      .prepare(
+        `
+        CREATE VIRTUAL TABLE verses_vocab
+        USING fts5vocab(verses_fts, col);
         `
       )
       .run();
