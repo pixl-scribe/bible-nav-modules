@@ -290,6 +290,22 @@ export class DbExporterService {
       .run();
 
     /**
+     * We need a non porter tokenized virtual table in order
+     * to generate non-stemmed words in the vocab table.
+     */
+    this._db
+      .prepare(
+        `
+        CREATE VIRTUAL TABLE verses_fts_non_porter USING fts5(
+          raw,
+          content='verses',
+          content_rowid='id'
+        )
+        `
+      )
+      .run();
+
+    /**
      * Note: _ai stands for after insert.
      */
     this._db
@@ -298,6 +314,9 @@ export class DbExporterService {
         CREATE TRIGGER verses_ai AFTER INSERT ON verses
         BEGIN
           INSERT INTO verses_fts(rowid, raw)
+          VALUES (new.id, new.raw);
+
+          INSERT INTO verses_fts_non_porter(rowid, raw)
           VALUES (new.id, new.raw);
         END
         `
@@ -311,7 +330,7 @@ export class DbExporterService {
       .prepare(
         `
         CREATE VIRTUAL TABLE verses_vocab
-        USING fts5vocab(verses_fts, col);
+        USING fts5vocab(verses_fts_non_porter, col);
         `
       )
       .run();
