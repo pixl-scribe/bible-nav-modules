@@ -23,8 +23,8 @@ export const generateCommand: CommandModule<unknown, GenerateArgs> = {
       .alias('h', 'help')
       .strict(),
 
-  handler: (argv) => {
-    ModuleFactory.generate(argv.id);
+  handler: async (argv) => {
+    await ModuleFactory.generate(argv.id);
   },
 };
 
@@ -53,10 +53,41 @@ export const checksumCommand: CommandModule<unknown, ChecksumArgs> = {
   },
 };
 
+interface VerifyArgs {
+  id: string;
+}
+
+export const verifyCommand: CommandModule<unknown, VerifyArgs> = {
+  command: 'verify',
+  describe: 'Checks a generated module against its USX files, word for word',
+
+  builder: (y) =>
+    y
+      .option('id', {
+        alias: 'id',
+        type: 'string',
+        describe: 'The module ID to read from the assets folder',
+        demandOption: true, // Make it required
+      })
+      .help('h') // Enable --help with alias -h
+      .alias('h', 'help')
+      .strict(),
+
+  handler: (argv) => {
+    ModuleFactory.verify(argv.id);
+  },
+};
+
 // 5. Wire up to process.argv
 yargs(hideBin(process.argv))
   .command(generateCommand)
   .command(checksumCommand)
+  .command(verifyCommand)
   .demandCommand(1, 'You need at least one command before moving on')
   .help()
-  .parse();
+  .fail(false)
+  .parseAsync()
+  .catch((error: Error) => {
+    console.error(error.message);
+    process.exitCode = 1;
+  });

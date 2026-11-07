@@ -16,7 +16,8 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "tsx ./src/index.ts",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "test": "tsx --test \"src/**/*.test.ts\""
   },
   "dependencies": {
     "better-sqlite3": "^12.11.1",

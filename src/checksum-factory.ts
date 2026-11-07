@@ -71,10 +71,13 @@ export default class ChecksumFactory {
     const usxParser = new UsxParserService();
     const bookChecksums: BookChecksum[] = [];
     for (const usxFile of usxFiles) {
-      // if (!usxFile.endsWith('luk.usx')) continue;
       console.log(`  parsing ${usxFile}...`);
       const book = usxParser.parseBook(usxFile);
-      const rawBookVerses = usxParser.getRawVerseText();
+      const rawBookVerses = book.chapters.flatMap((chapter) =>
+        chapter.paragraphs.flatMap((paragraph) =>
+          paragraph.verses.map(({ sid, raw }) => ({ sid, text: raw }))
+        )
+      );
       const chapterChecksums = ChecksumFactory.getVerseChecksums(rawBookVerses);
       const chapterJoinedChecksums = chapterChecksums
         .map((ccs) => ccs.checksum)
@@ -147,11 +150,7 @@ export default class ChecksumFactory {
 
   private static writeChecksums(moduleId: string, yaml: string) {
     const checksumFile = path.resolve('assets', moduleId, 'checksum.yaml');
-    try {
-      fs.writeFileSync(checksumFile, yaml, 'utf8');
-      console.log('  Checksum file written successfully!');
-    } catch (error) {
-      console.error('Error writing checksum file:', error);
-    }
+    fs.writeFileSync(checksumFile, yaml, 'utf8');
+    console.log('  Checksum file written successfully!');
   }
 }

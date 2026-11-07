@@ -1,134 +1,166 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from 'fs';
+import path from 'path';
 import { XMLParser } from 'fast-xml-parser';
 import {
   Book,
   Chapter,
-  GlossaryWord,
+  Heading,
+  Inline,
   Note,
   NoteSegment,
+  NoteSegmentStyle,
   Paragraph,
-  TranslatorsAddition,
+  StyledText,
   Verse,
   VerseChild,
-  WordsOfJesus,
 } from '../model/book';
 import { TestamentVerseCounts } from '../model/bible-verse-counts';
-import path from 'path';
 
-type ParagraphChildType =
-  'text' | 'w' | 'wj' | 'add' | 'verse' | 'verse-end' | 'note';
+/**
+ * A node from fast-xml-parser's preserveOrder output: a tag name mapped to its
+ * child nodes, '#text' mapped to a string, and ':@' mapped to the attributes.
+ */
+type XmlNode = Record<string, unknown>;
 
-const alwaysArray = ['usx.para'];
+const STYLED_TEXT = new Set<string>(['add', 'nd', 'tl', 'wj']);
+const NOTE_SEGMENTS = new Set<string>([
+  'fr',
+  'ft',
+  'fk',
+  'fq',
+  'fqa',
+  'fl',
+  'fw',
+]);
+const FRONT_MATTER = new Set(['h', 'toc1', 'toc2', 'toc3', 'mt1', 'mt2']);
+const VERSE_PARAGRAPHS = new Set(['p', 'q1']);
+const HEADING_PARAGRAPHS = new Set(['d', 's1']);
+// b is a blank line, such as between stanzas. It holds no text.
+const EMPTY_PARAGRAPHS = new Set(['b']);
 
-function getElemText(e: any, name: string): string {
-  return e[name]?.[0]?.['#text'];
+function attr(node: XmlNode, name: string): string | undefined {
+  const attrs = node[':@'] as Record<string, string> | undefined;
+  return attrs?.[`@_${name}`];
 }
 
-function getElemTextGuarded(child: any): string {
-  return Array.isArray(child?.['char']) && child['char'].length > 0
-    ? getElemText(child, 'char')
-    : '';
+function tagOf(node: XmlNode): string {
+  const tag = Object.keys(node).find((key) => key !== ':@');
+  return tag ?? '';
 }
 
-function getElemAttr(e: any, attr: string): string | undefined {
-  return e?.[':@']?.[`@_${attr}`];
+function childrenOf(node: XmlNode): XmlNode[] {
+  return node[tagOf(node)] as XmlNode[];
 }
 
-function getChildText(nodes: any[], name: string, withStyle: string) {
-  const elem = nodes.find(
-    (x: { [x: string]: any }) => !!x[name] && x[':@']?.['@_style'] === withStyle
-  );
-  return getElemText(elem, name);
+function isBlankText(node: XmlNode): boolean {
+  return tagOf(node) === '#text' && (node['#text'] as string).trim() === '';
 }
 
-function getBookChildType(child: any): 'chapter' | 'para' | null {
-  if (child?.['chapter'] !== undefined && child?.[':@']?.['@_style'] === 'c') {
-    return 'chapter';
-  }
-  if (child?.['para'] !== undefined) return 'para';
-  return null;
+function isNote(child: VerseChild): child is Note {
+  return typeof child === 'object' && child.style === 'f';
 }
 
 /**
- * See https://ubsicap.github.io/usx/charstyles.html#character-styling.
+ * The reading text of inline content, without footnotes. This is the only
+ * source of verse text: both verses.raw and the checksums come from it.
  */
-function getParaChildType(child: any): ParagraphChildType | null {
-  if (child?.['char'] !== undefined && getElemAttr(child, 'style') === 'w') {
-    return 'w';
-  }
-  if (child?.['char'] !== undefined && getElemAttr(child, 'style') === 'wj') {
-    return 'wj'; // Words of Jesus.
-  }
-  if (child?.['char'] !== undefined && getElemAttr(child, 'style') === 'add') {
-    return 'add';
-  }
-  if (child?.['#text'] !== undefined) return 'text';
-  if (child?.['verse'] !== undefined) {
-    if (getElemAttr(child, 'eid') !== undefined) return 'verse-end';
-    return 'verse';
-  }
-  if (child?.['note'] !== undefined) return 'note';
-  return null;
+export function plainText(children: VerseChild[]): string {
+  return children
+    .map((child) => {
+      if (typeof child === 'string') return child;
+      if (isNote(child)) return '';
+      if (child.style === 'w') return child.txt;
+      return plainText(child.children);
+    })
+    .join('');
 }
 
-function startsWithLetter(str: string): boolean {
-  return /^[a-zA-Z]/.test(str);
-}
+/**
+ * Collapses whitespace so the pieces can be joined directly, with one space
+ * between words, no matter which nesting level the space came from.
+ */
+function normalizeInlines<T extends VerseChild>(
+  children: T[],
+  state: { atSpace: boolean } = { atSpace: true }
+): T[] {
+  const collapse = (text: string): string => {
+    const collapsed = text.replace(/\s+/g, ' ');
+    const result =
+      state.atSpace && collapsed.startsWith(' ')
+        ? collapsed.slice(1)
+        : collapsed;
+    if (result !== '') state.atSpace = result.endsWith(' ');
+    return result;
+  };
 
-function appendWord(acc: string, str: string): string {
-  if (acc !== '' && startsWithLetter(str)) {
-    return `${acc} ${str}`;
-  }
-  return `${acc}${str}`;
-}
-
-function appendWordsOfJesus(activeText: string, wj: any): string {
-  const wjChildren = wj?.['char'];
-  for (const wjChild of wjChildren) {
-    switch (getParaChildType(wjChild)) {
-      case 'w':
-        activeText = appendWord(activeText, getElemTextGuarded(wjChild));
-        break;
-      case 'add':
-        activeText = appendWord(activeText, getElemTextGuarded(wjChild));
-        break;
-      case 'text':
-        activeText = appendWord(activeText, wjChild['#text'] as string);
-        break;
+  const normalized: T[] = [];
+  for (const item of children) {
+    const child: VerseChild = item;
+    if (typeof child === 'string') {
+      const text = collapse(child);
+      if (text !== '') normalized.push(text as T);
+    } else if (isNote(child)) {
+      normalized.push(child as T);
+    } else if (child.style === 'w') {
+      normalized.push({ ...child, txt: collapse(child.txt) } as T);
+    } else {
+      normalized.push({
+        ...child,
+        children: normalizeInlines(child.children, state),
+      } as T);
     }
   }
-  return activeText;
+  return normalized;
 }
 
-const reduceVerse = (acc: string, child: VerseChild): string => {
-  if (typeof child === 'string') {
-    const sep = startsWithLetter(child) ? ' ' : '';
-    return `${acc}${sep}${child}`;
+/**
+ * Removes trailing whitespace, looking through footnotes and nested content.
+ */
+function trimEnd<T extends VerseChild>(children: T[]): T[] {
+  const result = [...children];
+  for (let i = result.length - 1; i >= 0; i--) {
+    const child: VerseChild = result[i];
+    if (typeof child === 'string') {
+      const text = child.trimEnd();
+      if (text === '') {
+        result.splice(i, 1);
+        continue;
+      }
+      result[i] = text as T;
+    } else if (isNote(child)) {
+      continue;
+    } else if (child.style === 'w') {
+      result[i] = { ...child, txt: child.txt.trimEnd() } as T;
+    } else {
+      const inner = trimEnd(child.children);
+      if (inner.length === 0) {
+        result.splice(i, 1);
+        continue;
+      }
+      result[i] = { ...child, children: inner } as T;
+    }
+    break;
   }
-  if (child.style === 'add' || child.style === 'w') {
-    return `${acc} ${child.txt}`;
-  }
-  if (child.style === 'wj') {
-    return child.children.reduce(reduceVerse, acc);
-  }
-  return acc;
-};
+  return result;
+}
+
+function normalize<T extends VerseChild>(children: T[]): T[] {
+  return trimEnd(normalizeInlines(children));
+}
 
 export default class UsxParserService {
   private parser: XMLParser;
-  private usxChildren: any[] = [];
+  private location = '';
 
   constructor() {
     this.parser = new XMLParser({
       ignoreAttributes: false,
       ignoreDeclaration: true, // removes '?xml' declarations
       preserveOrder: true,
-      trimValues: true,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      isArray: (_tagName, jPathOrMatcher, _isLeafNode, _isAttribute) => {
-        return alwaysArray.indexOf(jPathOrMatcher as string) !== -1;
-      },
+      // Keep the source's spacing, and keep text such as 'false' and '4.10'
+      // as text instead of converting it to a boolean or number.
+      trimValues: false,
+      parseTagValue: false,
     });
   }
 
@@ -146,224 +178,202 @@ export default class UsxParserService {
   }
 
   public parseBook(filename: string): Book {
-    const xml: string = fs.readFileSync(filename, 'utf-8');
-    const contents = this.parser.parse(xml);
-    const usxAttr = contents.find((x: { [x: string]: any }) => !!x[':@']);
-    const version = usxAttr?.[':@']?.['@_version'];
-    if (version !== '3.0') {
-      throw new Error('Only USX version 3.0 files are supported');
+    return this.parseBookXml(fs.readFileSync(filename, 'utf-8'), filename);
+  }
+
+  public parseBookXml(xml: string, source: string = 'USX'): Book {
+    this.location = source;
+    const contents = this.parser.parse(xml) as XmlNode[];
+    const usx = contents.find((node) => tagOf(node) === 'usx');
+    if (!usx) this.fail('no usx element found');
+    if (attr(usx, 'version') !== '3.0') {
+      this.fail('only USX version 3.0 files are supported');
     }
 
-    this.usxChildren = usxAttr?.['usx'];
-    if (!this.usxChildren) {
-      throw new Error('No usx children found.');
-    }
+    const book: Book = {
+      name: '',
+      code: '',
+      header: '',
+      toc1: '',
+      toc2: '',
+      toc3: '',
+      mt1: '',
+      chapters: [],
+    };
+    let chapter: Chapter | undefined;
 
-    const usxBook = this.usxChildren.find(
-      (x: { [x: string]: any }) => !!x['book']
+    for (const node of childrenOf(usx)) {
+      if (isBlankText(node)) continue;
+      const tag = tagOf(node);
+      if (tag === 'book') {
+        book.code = attr(node, 'code') ?? this.fail('book has no code');
+        this.location = book.code;
+        book.name = this.plainElementText(node);
+      } else if (tag === 'chapter') {
+        if (attr(node, 'eid') !== undefined) continue;
+        chapter = this.parseChapter(node);
+        book.chapters.push(chapter);
+        this.location = chapter.sid;
+      } else if (tag === 'para') {
+        if (chapter) {
+          chapter.paragraphs.push(this.parseParagraph(node));
+        } else {
+          this.parseFrontMatter(node, book);
+        }
+      } else {
+        this.fail(`unknown element <${tag}> in the book body`);
+      }
+    }
+    return book;
+  }
+
+  private parseChapter(node: XmlNode): Chapter {
+    const sid = attr(node, 'sid');
+    const nbr = parseInt(attr(node, 'number') ?? '');
+    if (!sid || Number.isNaN(nbr)) this.fail('chapter needs a sid and number');
+    return { nbr, sid, paragraphs: [] };
+  }
+
+  private parseFrontMatter(node: XmlNode, book: Book): void {
+    const style = attr(node, 'style') ?? '';
+    if (!FRONT_MATTER.has(style)) {
+      this.fail(`paragraph style "${style}" before the first chapter`);
+    }
+    const text = this.plainElementText(node);
+    if (style === 'h') book.header = text;
+    else book[style as 'toc1' | 'toc2' | 'toc3' | 'mt1' | 'mt2'] = text;
+  }
+
+  /**
+   * Reads an element that must contain nothing but text.
+   */
+  private plainElementText(node: XmlNode): string {
+    return childrenOf(node)
+      .map((child) => {
+        if (tagOf(child) !== '#text') {
+          this.fail(`unexpected <${tagOf(child)}> in <${tagOf(node)}>`);
+        }
+        return child['#text'] as string;
+      })
+      .join('')
+      .trim();
+  }
+
+  private parseParagraph(node: XmlNode): Paragraph {
+    const style = attr(node, 'style') ?? '';
+    if (VERSE_PARAGRAPHS.has(style)) {
+      return { style, verses: this.parseVerses(node) };
+    }
+    if (HEADING_PARAGRAPHS.has(style)) {
+      return { style, verses: [], heading: this.parseHeading(node, style) };
+    }
+    if (EMPTY_PARAGRAPHS.has(style)) {
+      if (childrenOf(node).some((child) => !isBlankText(child))) {
+        this.fail(`paragraph style "${style}" should be empty`);
+      }
+      return { style, verses: [] };
+    }
+    this.fail(`unknown paragraph style "${style}"`);
+  }
+
+  private parseHeading(node: XmlNode, style: string): Heading {
+    const children = normalize(
+      childrenOf(node).map((child) => this.parseInline(child))
     );
-
-    const chapters = this.getChapters(this.usxChildren);
-
     return {
-      name: getElemText(usxBook, 'book'),
-      code: getElemAttr(usxBook, 'code') ?? '',
-      header: getChildText(this.usxChildren, 'para', 'h'),
-      toc1: getChildText(this.usxChildren, 'para', 'toc1'),
-      toc2: getChildText(this.usxChildren, 'para', 'toc2'),
-      toc3: getChildText(this.usxChildren, 'para', 'toc3'),
-      mt1: getChildText(this.usxChildren, 'para', 'mt1'),
-      chapters,
+      style: style as Heading['style'],
+      children,
+      raw: plainText(children),
     };
   }
 
-  public getRawVerseText(): { sid: string; text: string }[] {
-    const paragraphs: any[] = this.usxChildren.filter(
-      (node) => getBookChildType(node) === 'para'
-    );
+  private parseVerses(para: XmlNode): Verse[] {
+    const verses: Verse[] = [];
+    let active: Verse | undefined;
+    let children: VerseChild[] = [];
 
-    const verses: { sid: string; text: string }[] = [];
-
-    for (const para of paragraphs) {
-      const paraChildren = para?.['para'];
-      let activeSid = '';
-      let activeText = '';
-      for (const paraChild of paraChildren) {
-        switch (getParaChildType(paraChild)) {
-          case 'verse':
-            activeSid = getElemAttr(paraChild, 'sid') ?? '';
-            break;
-          case 'w':
-            activeText = appendWord(activeText, getElemTextGuarded(paraChild));
-            break;
-          case 'wj':
-            activeText = appendWordsOfJesus(activeText, paraChild);
-            break;
-          case 'add':
-            activeText = appendWord(activeText, getElemTextGuarded(paraChild));
-            break;
-          case 'text':
-            activeText = appendWord(activeText, paraChild['#text'] as string);
-            break;
-          case 'verse-end':
-            verses.push({
-              sid: activeSid,
-              text: activeText,
-            });
-            activeSid = '';
-            activeText = '';
-            break;
+    for (const node of childrenOf(para)) {
+      const tag = tagOf(node);
+      if (tag === 'verse') {
+        const eid = attr(node, 'eid');
+        if (eid !== undefined) {
+          if (!active || active.sid !== eid) {
+            this.fail(`verse end "${eid}" has no matching start`);
+          }
+          const normalized = normalize(children);
+          active.children = normalized;
+          active.raw = plainText(normalized);
+          verses.push(active);
+          active = undefined;
+          children = [];
+        } else {
+          if (active) this.fail(`verse started inside "${active.sid}"`);
+          active = this.startVerse(node);
+          this.location = active.sid;
         }
+      } else if (isBlankText(node) && !active) {
+        continue;
+      } else if (!active) {
+        this.fail(`text or <${tag}> outside of a verse`);
+      } else if (tag === 'note') {
+        children.push(this.parseNote(node));
+      } else {
+        children.push(this.parseInline(node));
       }
     }
-
+    if (active) this.fail(`verse "${active.sid}" spans two paragraphs`);
     return verses;
   }
 
-  private getChapters(bookChildren: any[]): Chapter[] {
-    // console.log(JSON.stringify(bookChildren, null, 2));
-    const chapters: Chapter[] = [];
-    let currentChapter: Chapter | undefined = undefined;
-    let paragraphs: Paragraph[] = [];
-    for (const bookChild of bookChildren) {
-      switch (getBookChildType(bookChild)) {
-        case 'para':
-          paragraphs.push(this.getParagraph(bookChild));
-          break;
-        case 'chapter':
-          if (currentChapter) {
-            currentChapter.paragraphs = paragraphs;
-            chapters.push(currentChapter);
-          }
-          currentChapter = this.getChapter(bookChild);
-          paragraphs = [];
-          break;
+  private startVerse(node: XmlNode): Verse {
+    const sid = attr(node, 'sid');
+    const nbr = parseInt(attr(node, 'number') ?? '');
+    if (!sid || Number.isNaN(nbr)) this.fail('verse needs a sid and number');
+    return { nbr, sid, children: [], raw: '' };
+  }
+
+  private parseInline(node: XmlNode): Inline {
+    const tag = tagOf(node);
+    if (tag === '#text') return node['#text'] as string;
+    if (tag !== 'char') this.fail(`unknown inline element <${tag}>`);
+
+    const style = attr(node, 'style') ?? '';
+    if (style === 'w') {
+      const strong = attr(node, 'strong');
+      const txt = this.plainElementText(node);
+      if (!strong || txt === '') this.fail('word needs a strong and text');
+      return { style: 'w', strong, txt };
+    }
+    if (STYLED_TEXT.has(style)) {
+      return {
+        style: style as StyledText['style'],
+        children: childrenOf(node).map((child) => this.parseInline(child)),
+      };
+    }
+    this.fail(`unknown character style "${style}"`);
+  }
+
+  private parseNote(node: XmlNode): Note {
+    const style = attr(node, 'style');
+    if (style !== 'f') this.fail(`unknown note style "${style}"`);
+    const children: NoteSegment[] = [];
+    for (const child of childrenOf(node)) {
+      if (isBlankText(child)) continue;
+      const segment = attr(child, 'style') ?? '';
+      if (tagOf(child) !== 'char' || !NOTE_SEGMENTS.has(segment)) {
+        this.fail(`unknown footnote content "${tagOf(child)} ${segment}"`);
       }
+      children.push({
+        style: segment as NoteSegmentStyle,
+        children: normalize(
+          childrenOf(child).map((inner) => this.parseInline(inner))
+        ),
+      });
     }
-    if (currentChapter) {
-      currentChapter.paragraphs = paragraphs;
-      chapters.push(currentChapter);
-    }
-    return chapters;
+    return { style: 'f', children };
   }
 
-  private getChapter(chapterNode: any): Chapter {
-    const nbr = parseInt(getElemAttr(chapterNode, 'number') ?? '');
-    const sid = getElemAttr(chapterNode, 'sid') ?? '';
-    return {
-      nbr,
-      sid,
-      paragraphs: [],
-    };
-  }
-
-  private getParagraph(para: any): Paragraph {
-    const paraChildren = para?.['para'];
-    const paragraph: Paragraph = { verses: [] };
-    let verseChildren: VerseChild[] = [];
-    let activeVerse: Verse | undefined;
-    for (const paraChild of paraChildren) {
-      switch (getParaChildType(paraChild)) {
-        case 'verse':
-          activeVerse = this.initVerse(paraChild);
-          break;
-        case 'w':
-          verseChildren.push(this.getGlossaryWord(paraChild));
-          break;
-        case 'wj':
-          verseChildren.push(this.getWordsOfJesus(paraChild));
-          break;
-        case 'add':
-          verseChildren.push(this.getTranslatorsAddition(paraChild));
-          break;
-        case 'text':
-          verseChildren.push(paraChild['#text'] as string);
-          break;
-        case 'note':
-          verseChildren.push(this.getNote(paraChild));
-          break;
-        case 'verse-end':
-          if (activeVerse) {
-            activeVerse = this.decorateVerse(activeVerse, verseChildren);
-            paragraph.verses.push(activeVerse);
-          }
-          activeVerse = undefined;
-          verseChildren = [];
-          break;
-      }
-    }
-    return paragraph;
-  }
-
-  private getGlossaryWord(child: any): GlossaryWord {
-    const strong = getElemAttr(child, 'strong') ?? '';
-    const txt = getElemTextGuarded(child);
-    return {
-      style: 'w',
-      strong,
-      txt,
-    };
-  }
-
-  private getWordsOfJesus(node: any): WordsOfJesus {
-    const children: (string | GlossaryWord | TranslatorsAddition)[] = [];
-    const wjChildren = node?.['char'];
-    for (const wjChild of wjChildren) {
-      switch (getParaChildType(wjChild)) {
-        case 'w':
-          children.push(this.getGlossaryWord(wjChild));
-          break;
-        case 'add':
-          children.push(this.getTranslatorsAddition(wjChild));
-          break;
-        case 'text':
-          children.push(wjChild['#text'] as string);
-          break;
-      }
-    }
-    return {
-      style: 'wj',
-      children,
-    };
-  }
-
-  private getTranslatorsAddition(child: any): TranslatorsAddition {
-    const txt = getElemTextGuarded(child);
-    return {
-      style: 'add',
-      txt,
-    };
-  }
-
-  private getNote(child: any): Note {
-    const children: NoteSegment[] =
-      child?.['note'].map((n: any) => ({
-        style: getElemAttr(n, 'style'),
-        txt: getElemText(n, 'char'),
-      })) ?? [];
-    return {
-      style: 'f',
-      children,
-    };
-  }
-
-  private initVerse(verseNode: any): Verse {
-    const nbr = parseInt(getElemAttr(verseNode, 'number') ?? '');
-    const sid = getElemAttr(verseNode, 'sid') ?? '';
-
-    return {
-      nbr,
-      sid,
-      children: [],
-      raw: '',
-    };
-  }
-
-  private decorateVerse(verse: Verse, children: VerseChild[]): Verse {
-    const raw = children.reduce(reduceVerse, '').trim();
-
-    verse.children = children;
-    verse.raw = raw;
-    return verse;
+  private fail(message: string): never {
+    throw new Error(`${this.location}: ${message}`);
   }
 }

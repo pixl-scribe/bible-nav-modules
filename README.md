@@ -12,7 +12,11 @@ imported into Bible Nav.
 npm i
 # Generates the checksum file for eng_kjv and saves it in the assets directory
 npm start -- checksum --id eng_kjv
-# Generates the module for eng_kjv and saves it in the exports directory
+# Generates the module for eng_kjv, checks it against the USX files,
+# and saves it in the exports directory only if it matches
 npm start -- generate --id eng_kjv
+# Checks an existing module against the USX files
+npm start -- verify --id eng_kjv
+npm test
 npm run lint
 ```

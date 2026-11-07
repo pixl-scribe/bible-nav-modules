@@ -1,15 +1,19 @@
-import { Book, Chapter, Verse } from '../model/book';
+import { Book, Chapter, Heading, Verse } from '../model/book';
 import Database from 'better-sqlite3';
 import { ModuleConfig } from '../model/module-config';
-import path from 'path';
 import fs from 'fs';
+
+/**
+ * The version of the database layout and the verses.children JSON. Increase it
+ * for any change that a module reader would have to know about.
+ */
+export const MODULE_FORMAT_VERSION = 1;
 
 export class DbExporterService {
   private _db: Database.Database;
 
-  constructor(moduleId: string) {
-    const dbFile = path.resolve('exports', `${moduleId}.db`);
-    fs.rmSync(dbFile, { force: true }); // Remove export if it exists.
+  constructor(dbFile: string) {
+    fs.rmSync(dbFile, { force: true }); // Remove the file if it exists.
 
     // this._db = new Database(dbFile, { verbose: console.log });
     this._db = new Database(dbFile);
@@ -25,6 +29,7 @@ export class DbExporterService {
   ) {
     const insert = this._db.prepare(`
       INSERT INTO module (
+        formatVersion,
         name,
         description,
         moduleType,
@@ -37,6 +42,7 @@ export class DbExporterService {
         checksum,
         signature
       ) VALUES (
+        @formatVersion,
         @name,
         @description,
         @moduleType,
@@ -51,7 +57,12 @@ export class DbExporterService {
       )
     `);
 
-    insert.run({ ...config, checksum, signature });
+    insert.run({
+      ...config,
+      formatVersion: MODULE_FORMAT_VERSION,
+      checksum,
+      signature,
+    });
   }
 
   public exportTestament(testamentCode: 'OT' | 'NT', checksum: number): void {
@@ -83,6 +94,7 @@ export class DbExporterService {
         toc2,
         toc3,
         mt1,
+        mt2,
         checksum
       ) VALUES (
         @testamentCode,
@@ -93,11 +105,17 @@ export class DbExporterService {
         @toc2,
         @toc3,
         @mt1,
+        @mt2,
         @checksum
       )
     `);
 
-    const info = insert.run({ testamentCode, checksum, ...book });
+    const info = insert.run({
+      testamentCode,
+      checksum,
+      ...book,
+      mt2: book.mt2 ?? null,
+    });
     return info.lastInsertRowid as number;
   }
 
@@ -123,13 +141,36 @@ export class DbExporterService {
     insert.run({ bookId, checksum, ...chapter });
   }
 
+  public exportParagraph(
+    id: number,
+    bookId: number,
+    chapter: number,
+    style: string
+  ): void {
+    const insert = this._db.prepare(`
+      INSERT INTO paragraphs (
+        id,
+        bookId,
+        chapter,
+        style
+      ) VALUES (
+        @id,
+        @bookId,
+        @chapter,
+        @style
+      )
+    `);
+
+    insert.run({ id, bookId, chapter, style });
+  }
+
   public exportVerse(
     bookId: number,
     chapter: number,
     paragraph: number,
     verse: Verse,
     checksum: number | undefined
-  ): void {
+  ): number {
     const insert = this._db.prepare(`
       INSERT INTO verses (
         bookId,
@@ -153,7 +194,7 @@ export class DbExporterService {
     `);
 
     const childrenJson = JSON.stringify(verse.children);
-    insert.run({
+    const info = insert.run({
       bookId,
       chapter,
       paragraph,
@@ -161,9 +202,56 @@ export class DbExporterService {
       childrenJson,
       ...verse,
     });
+    return info.lastInsertRowid as number;
   }
 
+  /**
+   * @param afterVerseId The verse this text follows, or 0 if it comes first.
+   */
+  public exportHeading(
+    bookId: number,
+    chapter: number,
+    paragraph: number,
+    afterVerseId: number,
+    heading: Heading
+  ): void {
+    const insert = this._db.prepare(`
+      INSERT INTO headings (
+        bookId,
+        chapter,
+        paragraph,
+        afterVerseId,
+        style,
+        children,
+        raw
+      ) VALUES (
+        @bookId,
+        @chapter,
+        @paragraph,
+        @afterVerseId,
+        @style,
+        @childrenJson,
+        @raw
+      )
+    `);
+
+    insert.run({
+      bookId,
+      chapter,
+      paragraph,
+      afterVerseId,
+      style: heading.style,
+      childrenJson: JSON.stringify(heading.children),
+      raw: heading.raw,
+    });
+  }
+
+  /**
+   * Leaves WAL mode so the finished module is one self-contained file. Readers
+   * then never need -wal or -shm files, which read-only media can't hold.
+   */
   public close(): void {
+    this._db.pragma('journal_mode = DELETE');
     this._db.close();
   }
 
@@ -172,6 +260,7 @@ export class DbExporterService {
       .prepare(
         `
           CREATE TABLE module (
+            formatVersion INTEGER NOT NULL,
             name TEXT NOT NULL,
             description TEXT NOT NULL,
             moduleType TEXT NOT NULL,
@@ -205,6 +294,7 @@ export class DbExporterService {
       toc2: string; // Short table of contents text.
       toc3: string; // Book abbreviation.
       mt1: string; // Main title.
+      mt2: string; // Secondary title.
      */
     this._db
       .prepare(
@@ -219,6 +309,7 @@ export class DbExporterService {
             toc2 TEXT NOT NULL,
             toc3 TEXT NOT NULL,
             mt1 TEXT NOT NULL,
+            mt2 TEXT,
             checksum INTEGER
           )
         `
@@ -242,6 +333,25 @@ export class DbExporterService {
 
     this._db.prepare('CREATE INDEX chapter_sid_index ON chapters (sid)').run();
 
+    /**
+     * Every paragraph in reading order, including blank ones. id is global
+     * across books, and style decides the layout (p: prose, q1: poetic line,
+     * b: blank line). Verses and headings point here through their paragraph.
+     */
+    this._db
+      .prepare(
+        `
+          CREATE TABLE paragraphs (
+            id INTEGER PRIMARY KEY,
+            bookId INTEGER NOT NULL,
+            chapter INTEGER NOT NULL,
+            style TEXT NOT NULL,
+            FOREIGN KEY (bookId, chapter) REFERENCES chapters(bookId, nbr)
+          )
+        `
+      )
+      .run();
+
     this._db
       .prepare(
         `
@@ -258,6 +368,7 @@ export class DbExporterService {
             UNIQUE (bookId, chapter, nbr),
             FOREIGN KEY (bookId) REFERENCES books(id)
             FOREIGN KEY (bookId, chapter) REFERENCES chapters(bookId, nbr)
+            FOREIGN KEY (paragraph) REFERENCES paragraphs(id)
           )
         `
       )
@@ -266,6 +377,34 @@ export class DbExporterService {
     this._db.prepare('CREATE INDEX verse_sid_index ON verses (sid)').run();
     this._db
       .prepare('CREATE INDEX paragraph_index ON verses (paragraph)')
+      .run();
+
+    /**
+     * Text between verses, such as Psalm titles. To place it, show the headings
+     * with afterVerseId = n - 1 before verse n, ordered by id.
+     */
+    this._db
+      .prepare(
+        `
+          CREATE TABLE headings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            bookId INTEGER NOT NULL,
+            chapter INTEGER NOT NULL,
+            paragraph INTEGER NOT NULL REFERENCES paragraphs(id),
+            afterVerseId INTEGER NOT NULL,
+            style TEXT NOT NULL,
+            children TEXT NOT NULL,
+            raw TEXT NOT NULL,
+            FOREIGN KEY (bookId, chapter) REFERENCES chapters(bookId, nbr)
+          )
+        `
+      )
+      .run();
+
+    this._db
+      .prepare(
+        'CREATE INDEX heading_after_verse_index ON headings (afterVerseId)'
+      )
       .run();
 
     /**
