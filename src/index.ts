@@ -1,7 +1,6 @@
 import yargs, { CommandModule } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import ModuleFactory from './module-factory';
-import ChecksumFactory from './checksum-factory';
 
 interface GenerateArgs {
   id: string;
@@ -28,28 +27,34 @@ export const generateCommand: CommandModule<unknown, GenerateArgs> = {
   },
 };
 
-interface ChecksumArgs {
+interface SignArgs {
   id: string;
+  key: string;
 }
 
-export const checksumCommand: CommandModule<unknown, ChecksumArgs> = {
-  command: 'checksum',
-  describe: 'Creates a checksum file for a given set of USX files',
+export const signCommand: CommandModule<unknown, SignArgs> = {
+  command: 'sign',
+  describe: 'Checks a generated module, then adds a signature to its manifest',
 
   builder: (y) =>
     y
       .option('id', {
-        alias: 'id',
         type: 'string',
         describe: 'The module ID to read from the assets folder',
-        demandOption: true, // Make it required
+        demandOption: true,
       })
-      .help('h') // Enable --help with alias -h
+      .option('key', {
+        type: 'string',
+        describe:
+          'An Ed25519 private key PEM file, or - to read it from standard input',
+        demandOption: true,
+      })
+      .help('h')
       .alias('h', 'help')
       .strict(),
 
   handler: (argv) => {
-    ChecksumFactory.generate(argv.id);
+    ModuleFactory.sign(argv.id, argv.key);
   },
 };
 
@@ -59,7 +64,8 @@ interface VerifyArgs {
 
 export const verifyCommand: CommandModule<unknown, VerifyArgs> = {
   command: 'verify',
-  describe: 'Checks a generated module against its USX files, word for word',
+  describe:
+    'Checks a generated module against its USX files, word for word, and its manifest and signatures',
 
   builder: (y) =>
     y
@@ -81,7 +87,7 @@ export const verifyCommand: CommandModule<unknown, VerifyArgs> = {
 // 5. Wire up to process.argv
 yargs(hideBin(process.argv))
   .command(generateCommand)
-  .command(checksumCommand)
+  .command(signCommand)
   .command(verifyCommand)
   .demandCommand(1, 'You need at least one command before moving on')
   .help()

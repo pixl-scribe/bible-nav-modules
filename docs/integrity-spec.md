@@ -235,7 +235,7 @@ never reformatted after signing. For example:
     "textRoot": "...",
     "contentRoot": "..."
   },
-  "signedAt": "2026-11-11"
+  "createdAt": "2026-11-11"
 }
 ```
 
@@ -246,6 +246,13 @@ never reformatted after signing. For example:
 - `text.edition` names the exact edition and `text.source` says where the
   source text came from, precisely enough to fetch it again (for example a
   snapshot's address and date).
+- `createdAt` is the date the manifest was written. Signatures are added to
+  the `.sig` file later without changing the manifest, so it isn't the date
+  of any signature. Like every date in a manifest, it is written by whoever
+  made the manifest, so it proves nothing.
+- The manifest is written as JSON with two-space indentation and a final
+  newline, though a checker must not depend on that: it checks the bytes as
+  they are.
 
 ## Signatures
 
@@ -432,10 +439,16 @@ openssl pkeyutl -verify -pubin -inkey public-key.pem -rawin \
   -in eng_kjv-1.0.0.manifest.json -sigfile signature.bin
 ```
 
-The text root can be recomputed from the module, or from the source text,
-with a small independent program that follows this document. One will be
-published with the generator, and kept separate from its code, so that a
-mistake in the generator can't hide itself.
+The text root and content root can be recomputed from the module with
+`tools/text-roots.py`, a short program that needs only Python 3:
+
+```
+python3 tools/text-roots.py eng_kjv-1.1.0.db
+```
+
+It follows this document and shares no code with the generator, so a mistake
+in the generator can't hide itself. Computing the text root from the source
+text itself, without the module, is still to be written.
 
 ## Module format changes (format version 2)
 

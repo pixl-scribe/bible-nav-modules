@@ -4,12 +4,10 @@ import os from 'node:os';
 import path from 'node:path';
 import { after, before, beforeEach, describe, test } from 'node:test';
 import Database from 'better-sqlite3';
-import { xxHash32 } from 'js-xxhash';
 import ModuleFactory from '../module-factory';
 import { DbExporterService } from './db-exporter-service';
 import { verifyModule } from './module-verifier-service';
 import UsxParserService from './usx-parser-service';
-import { BookChecksum } from '../model/checksum-config';
 import { ModuleConfig } from '../model/module-config';
 
 const USX = `<?xml version="1.0" encoding="UTF-8"?>
@@ -56,24 +54,10 @@ describe('verifyModule', () => {
 
   beforeEach(() => {
     const book = new UsxParserService().parseBookXml(USX);
-    const verses = book.chapters[0].paragraphs.flatMap((p) => p.verses);
-    const checksums: BookChecksum = {
-      bookCode: book.code,
-      checksum: 1,
-      chapterChecksums: [
-        {
-          sid: 'TST 1',
-          checksum: 1,
-          verseChecksums: verses.map(({ sid, raw }) => ({
-            sid,
-            checksum: xxHash32(`${sid}|${raw}`),
-          })),
-        },
-      ],
-    };
     const exporter = new DbExporterService(dbFile);
-    exporter.exportModule({ ...CONFIG, year: 1, fetchId: 'tst' }, 1, 'sig');
-    ModuleFactory.exportBook(exporter, 'OT', book, checksums, {
+    exporter.exportModule({ ...CONFIG, year: 1, fetchId: 'tst' });
+    exporter.exportTestament('OT');
+    ModuleFactory.exportBook(exporter, 'OT', book, {
       paragraph: 0,
       lastVerseId: 0,
     });
@@ -177,11 +161,6 @@ describe('verifyModule', () => {
   test('catches a misplaced heading', () => {
     corrupt("UPDATE headings SET afterVerseId = 1 WHERE style = 'd'");
     assert.throws(() => verifyModule(dbFile, dir), /wrong style or position/);
-  });
-
-  test('catches a stale checksum', () => {
-    corrupt("UPDATE verses SET checksum = 1 WHERE sid = 'TST 1:1'");
-    assert.throws(() => verifyModule(dbFile, dir), /stale checksum/);
   });
 
   test('catches an unknown place for text in the USX', () => {

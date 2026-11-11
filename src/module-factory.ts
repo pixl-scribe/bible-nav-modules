@@ -1,15 +1,33 @@
 import fs from 'fs';
 import path from 'path';
+import { createPrivateKey, createPublicKey, KeyObject } from 'crypto';
 import UsxParserService from './services/usx-parser-service';
-import { DbExporterService } from './services/db-exporter-service';
+import {
+  DbExporterService,
+  MODULE_FORMAT_VERSION,
+} from './services/db-exporter-service';
 import { VerseCountService } from './services/verse-count-service';
 import ModuleConfigService from './services/module-config-service';
 import { verifyModule } from './services/module-verifier-service';
 import { TestamentVerseCounts } from './model/bible-verse-counts';
-import { JwtTokenService } from './services/jwt-token-service';
-import pkg from '../package.json' with { type: 'json' };
-import { BookChecksum, TestamentChecksum } from './model/checksum-config';
-import { Book } from './model/book';
+import { Book, Paragraph } from './model/book';
+import { moduleRoots } from './services/text-tree-service';
+import {
+  buildManifest,
+  fileSha256,
+  Manifest,
+  MANIFEST_TYPE,
+  manifestBytes,
+  moduleFiles,
+} from './services/manifest-service';
+import {
+  addSignature,
+  checkSignatures,
+  formatSignatures,
+  keyId,
+  parseSignatures,
+  signManifest,
+} from './services/signing-service';
 
 /**
  * Tracks position across books while exporting. paragraph numbers are global,
@@ -20,14 +38,34 @@ export interface ExportPosition {
   lastVerseId: number;
 }
 
+/**
+ * The development key: public by design, so anyone can build and test. Only
+ * development builds of Bible Nav accept it.
+ */
+const DEVELOPMENT_KEY = path.join('keys', 'development', 'private.pem');
+
+/**
+ * Public keys `verify` checks signatures with, where present: the development
+ * key, and the maintainer's primary and backup keys once they exist.
+ */
+const PUBLIC_KEYS = ['development', 'primary', 'backup'].map((role) =>
+  path.join('keys', role, 'public.pem')
+);
+
 export default class ModuleFactory {
   /**
-   * Writes the module to a temporary file and replaces the real export only
-   * after it matches the USX, so a failure can't leave a bad export behind.
+   * Writes the module to a temporary file and keeps it only after it matches
+   * the USX, so a failure can't leave a bad export behind. Then writes its
+   * manifest and signs that with the development key.
    */
   public static async generate(moduleId: string): Promise<void> {
-    const dbFile = path.resolve('exports', `${moduleId}.db`);
-    const tempFile = `${dbFile}.tmp`;
+    const config = ModuleConfigService.getModuleConfig(moduleId);
+    const files = moduleFiles(
+      path.resolve('exports'),
+      moduleId,
+      config.version
+    );
+    const tempFile = `${files.db}.tmp`;
 
     try {
       await ModuleFactory.writeModule(moduleId, tempFile);
@@ -35,25 +73,167 @@ export default class ModuleFactory {
       console.log(
         `Verified ${summary.books} books, ${summary.paragraphs} paragraphs, ${summary.verses} verses, and ${summary.headings} headings against the USX.`
       );
-      fs.renameSync(tempFile, dbFile);
+      const roots = moduleRoots(tempFile);
+      const manifest = buildManifest(
+        moduleId,
+        config,
+        tempFile,
+        path.basename(files.db),
+        roots,
+        new Date()
+      );
+      const bytes = manifestBytes(manifest);
+      const developmentKey = createPrivateKey(
+        fs.readFileSync(path.resolve(DEVELOPMENT_KEY))
+      );
+
+      fs.renameSync(tempFile, files.db);
+      fs.writeFileSync(files.manifest, bytes);
+      // A new manifest makes every earlier signature invalid, so start the
+      // signature file again.
+      fs.writeFileSync(
+        files.signatures,
+        formatSignatures([signManifest(bytes, developmentKey)])
+      );
+      console.log(`Text root:    ${roots.textRoot}`);
+      console.log(`Content root: ${roots.contentRoot}`);
+      console.log(`File SHA-256: ${manifest.file.sha256}`);
+      console.log(
+        `Wrote ${path.basename(files.db)} with its manifest, signed with the development key.`
+      );
     } finally {
-      for (const suffix of ['', '-wal', '-shm']) {
+      for (const suffix of ['', '-wal', '-shm', '-journal']) {
         fs.rmSync(`${tempFile}${suffix}`, { force: true });
       }
     }
   }
 
   /**
-   * Checks an existing export against the USX without changing it.
+   * Checks an existing export against the USX, and its manifest and
+   * signatures against the module, without changing anything.
    */
   public static verify(moduleId: string): void {
-    const summary = verifyModule(
-      path.resolve('exports', `${moduleId}.db`),
-      path.resolve('assets', moduleId)
+    const config = ModuleConfigService.getModuleConfig(moduleId);
+    const files = moduleFiles(
+      path.resolve('exports'),
+      moduleId,
+      config.version
     );
+    const summary = verifyModule(files.db, path.resolve('assets', moduleId));
     console.log(
       `Verified ${summary.books} books, ${summary.paragraphs} paragraphs, ${summary.verses} verses, and ${summary.headings} headings against the USX.`
     );
+    const manifest = ModuleFactory.checkManifest(
+      moduleId,
+      config.version,
+      files
+    );
+    console.log(
+      `The manifest matches the module (text root ${manifest.text.textRoot}).`
+    );
+
+    const signatures = checkSignatures(
+      fs.readFileSync(files.manifest),
+      parseSignatures(fs.readFileSync(files.signatures, 'utf8')),
+      ModuleFactory.publicKeys()
+    );
+    for (const id of signatures.valid) console.log(`Valid signature: ${id}`);
+    for (const id of signatures.unknown) {
+      console.log(`Signature by a key not in keys/: ${id}`);
+    }
+    if (signatures.invalid.length > 0) {
+      throw new Error(
+        `Invalid signatures by: ${signatures.invalid.join(', ')}`
+      );
+    }
+    if (signatures.valid.length === 0) {
+      throw new Error('The manifest has no valid signature from a known key.');
+    }
+  }
+
+  /**
+   * Adds a signature to a module's manifest, after checking the module, so a
+   * key never signs a module that doesn't match the USX and its manifest.
+   *
+   * @param keyFile a PEM Ed25519 private key file, or '-' to read it from
+   *   standard input so it never has to be written to disk.
+   */
+  public static sign(moduleId: string, keyFile: string): void {
+    ModuleFactory.verifyBeforeSigning(moduleId);
+    const config = ModuleConfigService.getModuleConfig(moduleId);
+    const files = moduleFiles(
+      path.resolve('exports'),
+      moduleId,
+      config.version
+    );
+    const pem = fs.readFileSync(keyFile === '-' ? 0 : keyFile);
+    const privateKey = createPrivateKey(pem);
+    const line = signManifest(fs.readFileSync(files.manifest), privateKey);
+    addSignature(files.signatures, line);
+    console.log(
+      `Signed ${path.basename(files.manifest)} with key ${line.keyId}.`
+    );
+  }
+
+  private static verifyBeforeSigning(moduleId: string): void {
+    const config = ModuleConfigService.getModuleConfig(moduleId);
+    const files = moduleFiles(
+      path.resolve('exports'),
+      moduleId,
+      config.version
+    );
+    verifyModule(files.db, path.resolve('assets', moduleId));
+    ModuleFactory.checkManifest(moduleId, config.version, files);
+  }
+
+  /** Checks a manifest against its module: identity, file hash, and roots. */
+  private static checkManifest(
+    moduleId: string,
+    version: string,
+    files: ReturnType<typeof moduleFiles>
+  ): Manifest {
+    const manifest = JSON.parse(
+      fs.readFileSync(files.manifest, 'utf8')
+    ) as Manifest;
+    const problems: string[] = [];
+    const expect = (what: string, actual: unknown, wanted: unknown) => {
+      if (actual !== wanted) {
+        problems.push(
+          `${what} is ${String(actual)}, expected ${String(wanted)}`
+        );
+      }
+    };
+    expect('type', manifest.type, MANIFEST_TYPE);
+    expect('manifestVersion', manifest.manifestVersion, 1);
+    expect('module.id', manifest.module?.id, moduleId);
+    expect('module.version', manifest.module?.version, version);
+    expect(
+      'module.formatVersion',
+      manifest.module?.formatVersion,
+      MODULE_FORMAT_VERSION
+    );
+    expect('file.name', manifest.file?.name, path.basename(files.db));
+    expect('file.size', manifest.file?.size, fs.statSync(files.db).size);
+    expect('file.sha256', manifest.file?.sha256, fileSha256(files.db));
+    const roots = moduleRoots(files.db);
+    expect('text.textRoot', manifest.text?.textRoot, roots.textRoot);
+    expect('text.contentRoot', manifest.text?.contentRoot, roots.contentRoot);
+    if (problems.length > 0) {
+      throw new Error(
+        `The manifest doesn't match the module:\n  ${problems.join('\n  ')}`
+      );
+    }
+    return manifest;
+  }
+
+  private static publicKeys(): KeyObject[] {
+    return PUBLIC_KEYS.map((file) => path.resolve(file))
+      .filter((file) => fs.existsSync(file))
+      .map((file) => {
+        const key = createPublicKey(fs.readFileSync(file));
+        keyId(key); // Fails for anything but an Ed25519 key.
+        return key;
+      });
   }
 
   private static async writeModule(
@@ -64,19 +244,9 @@ export default class ModuleFactory {
 
     console.log(`Generating module ${moduleId}...`);
     const config = ModuleConfigService.getModuleConfig(moduleId);
-    const checksum = ModuleConfigService.getModuleChecksum(moduleId);
     console.log(`Name:    ${config.name}`);
     console.log(`Version: ${config.version}`);
-    console.log(`Checksum: ${checksum.checksum}`);
-    const jwtToken = await JwtTokenService.generateToken({
-      application: 'Bible Nav',
-      applicationVersion: pkg.version,
-      moduleId,
-      moduleName: config.name,
-      moduleVersion: config.version,
-      checksum: checksum.checksum,
-    });
-    dbExporter.exportModule(config, checksum.checksum, jwtToken);
+    dbExporter.exportModule(config);
 
     const verseCounts = VerseCountService.getVerseCounts();
     const position: ExportPosition = { paragraph: 0, lastVerseId: 0 };
@@ -91,15 +261,8 @@ export default class ModuleFactory {
           chapters = verseCounts.NT;
           break;
       }
-
-      let testamentChecksum: TestamentChecksum | undefined;
       if (testament === 'OT' || testament === 'NT') {
-        testamentChecksum = checksum.testamentChecksums.find(
-          (cs) => cs.testament === testament
-        );
-        if (testamentChecksum?.checksum) {
-          dbExporter.exportTestament(testament, testamentChecksum.checksum);
-        }
+        dbExporter.exportTestament(testament);
       }
       const usxFiles = UsxParserService.getUsxFiles(moduleId, chapters);
 
@@ -107,39 +270,52 @@ export default class ModuleFactory {
       for (const usxFile of usxFiles) {
         console.log(`  importing ${usxFile}...`);
         const book = usxParser.parseBook(usxFile);
-        const bookChecksum = testamentChecksum?.bookChecksums.find(
-          (cs) => cs.bookCode === book.code
-        );
-        ModuleFactory.exportBook(
-          dbExporter,
-          testament,
-          book,
-          bookChecksum,
-          position
-        );
+        ModuleFactory.checkVerseCounts(book, chapters);
+        ModuleFactory.exportBook(dbExporter, testament, book, position);
       }
     }
 
     dbExporter.close();
   }
 
+  /**
+   * Fails unless the book has the expected number of chapters, and each
+   * chapter the expected number of verses (assets/bible-verse-counts.yaml).
+   */
+  public static checkVerseCounts(
+    book: Book,
+    chapters: TestamentVerseCounts | undefined
+  ): void {
+    const bookVerseCounts = chapters?.[book.code];
+    if (bookVerseCounts === undefined) return;
+    if (book.chapters.length !== bookVerseCounts.length) {
+      throw new Error(
+        `Book ${book.code} chapter count of ${book.chapters.length} did not match the expected count of ${bookVerseCounts.length}.`
+      );
+    }
+    book.chapters.forEach((chapter, index) => {
+      const expected = bookVerseCounts[index];
+      const parsed = chapter.paragraphs.reduce(
+        (acc: number, paragraph: Paragraph) => acc + paragraph.verses.length,
+        0
+      );
+      if (expected !== parsed) {
+        throw new Error(
+          `Chapter ${chapter.sid} verse count of ${parsed} did not match the expected count of ${expected}.`
+        );
+      }
+    });
+  }
+
   public static exportBook(
     dbExporter: DbExporterService,
     testament: string | undefined,
     book: Book,
-    bookChecksum: BookChecksum | undefined,
     position: ExportPosition
   ): void {
-    const bookId = dbExporter.exportBook(
-      testament,
-      book,
-      bookChecksum?.checksum
-    );
+    const bookId = dbExporter.exportBook(testament, book);
     for (const chapter of book.chapters) {
-      const chapterChecksum = bookChecksum?.chapterChecksums.find(
-        (cs) => cs.sid === chapter.sid
-      );
-      dbExporter.exportChapter(bookId, chapter, chapterChecksum?.checksum);
+      dbExporter.exportChapter(bookId, chapter);
       for (const paragraph of chapter.paragraphs) {
         dbExporter.exportParagraph(
           position.paragraph,
@@ -157,15 +333,11 @@ export default class ModuleFactory {
           );
         }
         for (const verse of paragraph.verses) {
-          const verseChecksum = chapterChecksum?.verseChecksums.find(
-            (cs) => cs.sid === verse.sid
-          );
           position.lastVerseId = dbExporter.exportVerse(
             bookId,
             chapter.nbr,
             position.paragraph,
-            verse,
-            verseChecksum?.checksum
+            verse
           );
         }
         position.paragraph += 1;

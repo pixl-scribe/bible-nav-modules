@@ -144,3 +144,8 @@ vite.config.ts.timestamp-*
 
 .idea/
 keys/private.pem
+
+# Real private keys must never be committed. The development key is public on purpose.
+keys/*/private.pem
+!keys/development/private.pem
+*.db.tmp

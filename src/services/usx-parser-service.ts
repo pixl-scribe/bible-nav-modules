@@ -62,7 +62,7 @@ function isNote(child: VerseChild): child is Note {
 
 /**
  * The reading text of inline content, without footnotes. This is the only
- * source of verse text: both verses.raw and the checksums come from it.
+ * source of verses.raw.
  */
 export function plainText(children: VerseChild[]): string {
   return children

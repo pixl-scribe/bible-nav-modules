@@ -6,8 +6,12 @@ import fs from 'fs';
 /**
  * The version of the database layout and the verses.children JSON. Increase it
  * for any change that a module reader would have to know about.
+ *
+ * 2: the xxHash32 checksum columns and the stored JWT signature are gone. The
+ * text tree and the signed manifest beside the module replace them (see
+ * docs/integrity-spec.md).
  */
-export const MODULE_FORMAT_VERSION = 1;
+export const MODULE_FORMAT_VERSION = 2;
 
 export class DbExporterService {
   private _db: Database.Database;
@@ -22,11 +26,7 @@ export class DbExporterService {
     this.createTables();
   }
 
-  public exportModule(
-    config: ModuleConfig,
-    checksum: number,
-    signature: string
-  ) {
+  public exportModule(config: ModuleConfig) {
     const insert = this._db.prepare(`
       INSERT INTO module (
         formatVersion,
@@ -38,9 +38,7 @@ export class DbExporterService {
         language,
         languageCode,
         license,
-        version,
-        checksum,
-        signature
+        version
       ) VALUES (
         @formatVersion,
         @name,
@@ -51,39 +49,33 @@ export class DbExporterService {
         @language,
         @languageCode,
         @license,
-        @version,
-        @checksum,
-        @signature
+        @version
       )
     `);
 
     insert.run({
-      ...config,
       formatVersion: MODULE_FORMAT_VERSION,
-      checksum,
-      signature,
+      name: config.name,
+      description: config.description,
+      moduleType: config.moduleType,
+      year: config.year ?? null,
+      fetchId: config.fetchId ?? null,
+      language: config.language,
+      languageCode: config.languageCode,
+      license: config.license,
+      version: config.version,
     });
   }
 
-  public exportTestament(testamentCode: 'OT' | 'NT', checksum: number): void {
+  public exportTestament(testamentCode: 'OT' | 'NT'): void {
     const insert = this._db.prepare(`
-      INSERT INTO testaments (
-        code,
-        checksum
-      ) VALUES (
-        @testamentCode,
-        @checksum
-      )
+      INSERT INTO testaments (code) VALUES (@testamentCode)
     `);
 
-    insert.run({ testamentCode, checksum });
+    insert.run({ testamentCode });
   }
 
-  public exportBook(
-    testamentCode: string | undefined,
-    book: Book,
-    checksum: number | undefined
-  ): number {
+  public exportBook(testamentCode: string | undefined, book: Book): number {
     const insert = this._db.prepare(`
       INSERT INTO books (
         testamentCode,
@@ -94,8 +86,7 @@ export class DbExporterService {
         toc2,
         toc3,
         mt1,
-        mt2,
-        checksum
+        mt2
       ) VALUES (
         @testamentCode,
         @name,
@@ -105,40 +96,38 @@ export class DbExporterService {
         @toc2,
         @toc3,
         @mt1,
-        @mt2,
-        @checksum
+        @mt2
       )
     `);
 
     const info = insert.run({
       testamentCode,
-      checksum,
-      ...book,
+      name: book.name,
+      code: book.code,
+      header: book.header,
+      toc1: book.toc1,
+      toc2: book.toc2,
+      toc3: book.toc3,
+      mt1: book.mt1,
       mt2: book.mt2 ?? null,
     });
     return info.lastInsertRowid as number;
   }
 
-  public exportChapter(
-    bookId: number,
-    chapter: Chapter,
-    checksum: number | undefined
-  ): void {
+  public exportChapter(bookId: number, chapter: Chapter): void {
     const insert = this._db.prepare(`
       INSERT INTO chapters (
         bookId,
         nbr,
-        sid,
-        checksum
+        sid
       ) VALUES (
         @bookId,
         @nbr,
-        @sid,
-        @checksum
+        @sid
       )
     `);
 
-    insert.run({ bookId, checksum, ...chapter });
+    insert.run({ bookId, nbr: chapter.nbr, sid: chapter.sid });
   }
 
   public exportParagraph(
@@ -168,8 +157,7 @@ export class DbExporterService {
     bookId: number,
     chapter: number,
     paragraph: number,
-    verse: Verse,
-    checksum: number | undefined
+    verse: Verse
   ): number {
     const insert = this._db.prepare(`
       INSERT INTO verses (
@@ -179,8 +167,7 @@ export class DbExporterService {
         paragraph,
         sid,
         children,
-        raw,
-        checksum
+        raw
       ) VALUES (
         @bookId,
         @chapter,
@@ -188,19 +175,18 @@ export class DbExporterService {
         @paragraph,
         @sid,
         @childrenJson,
-        @raw,
-        @checksum
+        @raw
       )
     `);
 
-    const childrenJson = JSON.stringify(verse.children);
     const info = insert.run({
       bookId,
       chapter,
+      nbr: verse.nbr,
       paragraph,
-      checksum,
-      childrenJson,
-      ...verse,
+      sid: verse.sid,
+      childrenJson: JSON.stringify(verse.children),
+      raw: verse.raw,
     });
     return info.lastInsertRowid as number;
   }
@@ -269,9 +255,7 @@ export class DbExporterService {
             language TEXT NOT NULL,
             languageCode TEXT NOT NULL,
             license TEXT NOT NULL,
-            version TEXT NOT NULL,
-            checksum INTEGER,
-            signature TEXT NOT NULL
+            version TEXT NOT NULL
           )
         `
       )
@@ -282,8 +266,7 @@ export class DbExporterService {
         `
           CREATE TABLE testaments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            code TEXT NOT NULL,
-            checksum INTEGER
+            code TEXT NOT NULL
           )
         `
       )
@@ -309,8 +292,7 @@ export class DbExporterService {
             toc2 TEXT NOT NULL,
             toc3 TEXT NOT NULL,
             mt1 TEXT NOT NULL,
-            mt2 TEXT,
-            checksum INTEGER
+            mt2 TEXT
           )
         `
       )
@@ -323,7 +305,6 @@ export class DbExporterService {
             bookId INTEGER,
             nbr INTEGER NOT NULL,
             sid TEXT NOT NULL,
-            checksum INTEGER,
             PRIMARY KEY (bookId, nbr),
             FOREIGN KEY (bookId) REFERENCES books(id)
           )
@@ -364,7 +345,6 @@ export class DbExporterService {
             sid TEXT NOT NULL,
             children TEXT NOT NULL,
             raw TEXT NOT NULL,
-            checksum INTEGER,
             UNIQUE (bookId, chapter, nbr),
             FOREIGN KEY (bookId) REFERENCES books(id)
             FOREIGN KEY (bookId, chapter) REFERENCES chapters(bookId, nbr)
@@ -380,8 +360,10 @@ export class DbExporterService {
       .run();
 
     /**
-     * Text between verses, such as Psalm titles. To place it, show the headings
-     * with afterVerseId = n - 1 before verse n, ordered by id.
+     * Text between verses, such as Psalm titles. afterVerseId is the verse a
+     * heading follows in the module, which can be in the previous chapter (a
+     * Psalm title follows the previous psalm's last verse). Place a heading
+     * within its own chapter, right after that verse, ordered by id.
      */
     this._db
       .prepare(

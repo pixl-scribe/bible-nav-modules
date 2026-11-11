@@ -8,7 +8,12 @@ fetchId: eng_kjv
 language: English
 languageCode: eng
 license: Public Domain
-version: 1.0.0
+version: 1.1.0
+# The exact edition, and where its source came from, for the signed manifest.
+# Not locked yet: before the first real signature, compare with eBible.org
+# directly and name which 1769 printing this is.
+edition: eBible.org eng-kjv2006 (King James Version, 1769 standardized text, with Strong's numbers)
+source: https://v1.fetch.bible/bibles/eng_kjv/usx/{book}.usx, fetch.bible commit 7f36064 (2026-07-15)
 testamentsIncluded:
   - OT
   - NT

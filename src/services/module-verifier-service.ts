@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import Database from 'better-sqlite3';
-import { xxHash32 } from 'js-xxhash';
 import { MODULE_FORMAT_VERSION } from './db-exporter-service';
 import {
   collapse,
@@ -125,7 +124,7 @@ export function verifyModule(dbFile: string, usxDir: string): VerifySummary {
       string | number | null
     >[];
     const verseRows = db.prepare(
-      'SELECT sid, raw, children, checksum FROM verses WHERE bookId = ? ORDER BY id'
+      'SELECT sid, raw, children FROM verses WHERE bookId = ? ORDER BY id'
     );
     const headingRows = db.prepare(
       `SELECT h.style, h.raw, h.children, COALESCE(v.sid, '') AS afterSid
@@ -171,7 +170,6 @@ export function verifyModule(dbFile: string, usxDir: string): VerifySummary {
         sid: string;
         raw: string;
         children: string;
-        checksum: number | null;
       }[];
       const sourceSids = [...source.verses.keys()];
       const storedSids = verses.map((verse) => verse.sid);
@@ -184,11 +182,6 @@ export function verifyModule(dbFile: string, usxDir: string): VerifySummary {
         const block = source.verses.get(verse.sid);
         if (!block) continue;
         compareBlock(verse.sid, block, verse.raw, verse.children, errors);
-        if (verse.checksum !== xxHash32(`${verse.sid}|${verse.raw}`)) {
-          errors.push(
-            `${verse.sid}: stale checksum, run the checksum command first`
-          );
-        }
       }
       summary.verses += verses.length;
       lastSid = sourceSids[sourceSids.length - 1] ?? lastSid;

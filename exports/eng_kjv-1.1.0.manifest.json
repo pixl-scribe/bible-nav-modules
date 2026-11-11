@@ -1,0 +1,24 @@
+{
+  "type": "bible-nav module manifest",
+  "manifestVersion": 1,
+  "module": {
+    "id": "eng_kjv",
+    "version": "1.1.0",
+    "formatVersion": 2,
+    "name": "King James Version (1769)",
+    "languageCode": "eng"
+  },
+  "file": {
+    "name": "eng_kjv-1.1.0.db",
+    "size": 36945920,
+    "sha256": "a97a27f54eb62d1eac3edf7ec8facf447351ff9dd2e2e647f1060fbb1ebfa0a9"
+  },
+  "text": {
+    "treeVersion": 1,
+    "edition": "eBible.org eng-kjv2006 (King James Version, 1769 standardized text, with Strong's numbers)",
+    "source": "https://v1.fetch.bible/bibles/eng_kjv/usx/{book}.usx, fetch.bible commit 7f36064 (2026-07-15)",
+    "textRoot": "0337278626457c9d994ffe85b0b941affd9cc5fce1d5be90618c46ed381e0b07",
+    "contentRoot": "f693db9b1a0f0739ad08682511cef50ec040b0a04c31834fabf95291a9e0a482"
+  },
+  "createdAt": "2026-11-11"
+}

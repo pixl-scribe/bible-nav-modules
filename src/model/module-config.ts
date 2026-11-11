@@ -11,5 +11,11 @@ export interface ModuleConfig {
   languageCode: string;
   license: string;
   version: string;
+  /**
+   * The exact edition the text is, and where its source came from, precisely
+   * enough to fetch it again. Both go into the signed manifest.
+   */
+  edition?: string;
+  source?: string;
   testamentsIncluded: string[];
 }
