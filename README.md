@@ -18,7 +18,7 @@ npm start -- generate --id eng_kjv
 # signatures against the module
 npm start -- verify --id eng_kjv
 # Adds a signature with a private key read from standard input
-npm start -- sign --id eng_kjv --key -
+npm start -- sign --id eng_kjv
 npm test
 npm run lint
 ```

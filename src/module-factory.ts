@@ -26,6 +26,7 @@ import {
   formatSignatures,
   keyId,
   parseSignatures,
+  readPrivateKey,
   signManifest,
 } from './services/signing-service';
 
@@ -155,10 +156,11 @@ export default class ModuleFactory {
    * Adds a signature to a module's manifest, after checking the module, so a
    * key never signs a module that doesn't match the USX and its manifest.
    *
-   * @param keyFile a PEM Ed25519 private key file, or '-' to read it from
-   *   standard input so it never has to be written to disk.
+   * @param keyFile a PEM Ed25519 private key file. Without one (or with
+   *   '-'), the key is read from standard input, so it never has to be
+   *   written to disk.
    */
-  public static sign(moduleId: string, keyFile: string): void {
+  public static async sign(moduleId: string, keyFile?: string): Promise<void> {
     ModuleFactory.verifyBeforeSigning(moduleId);
     const config = ModuleConfigService.getModuleConfig(moduleId);
     const files = moduleFiles(
@@ -166,8 +168,12 @@ export default class ModuleFactory {
       moduleId,
       config.version
     );
-    const pem = fs.readFileSync(keyFile === '-' ? 0 : keyFile);
-    const privateKey = createPrivateKey(pem);
+    const fromStdin = keyFile === undefined || keyFile === '-';
+    if (fromStdin && process.stdin.isTTY) {
+      console.error('Paste the private key PEM, then press Enter and Ctrl+D.');
+    }
+    const pem = fromStdin ? await readStdin() : fs.readFileSync(keyFile);
+    const privateKey = readPrivateKey(pem);
     const line = signManifest(fs.readFileSync(files.manifest), privateKey);
     addSignature(files.signatures, line);
     console.log(
@@ -344,4 +350,16 @@ export default class ModuleFactory {
       }
     }
   }
+}
+
+/**
+ * Reads standard input to its end as a stream. A synchronous read fails with
+ * EAGAIN when the terminal is in non-blocking mode, as it is under tsx.
+ */
+async function readStdin(): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of process.stdin) {
+    chunks.push(Buffer.from(chunk as Buffer));
+  }
+  return Buffer.concat(chunks);
 }

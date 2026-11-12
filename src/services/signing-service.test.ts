@@ -16,6 +16,7 @@ import {
   formatSignatures,
   keyId,
   parseSignatures,
+  readPrivateKey,
   signManifest,
 } from './signing-service';
 
@@ -146,5 +147,61 @@ describe('signatures', () => {
       fs.readFileSync(path.join(keys, 'public.pem'))
     );
     assert.equal(keyId(privateKey), keyId(publicKey));
+  });
+
+  test('a pasted private key is read despite damage to its layout', () => {
+    const { privateKey } = generateKeyPairSync('ed25519');
+    const pem = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
+    const id = keyId(privateKey);
+    const variants = [
+      pem,
+      pem.replace(/\n/g, ' '),
+      pem.replace(/\n/g, ''),
+      pem.replace(/\n/g, '\r\n'),
+      pem.replace(/^/gm, '    '),
+      `\x1b[200~${pem}\x1b[201~`,
+      `Primary key\n${pem}\nnotes`,
+    ];
+    for (const text of variants) {
+      assert.equal(
+        keyId(readPrivateKey(text)),
+        id,
+        JSON.stringify(text.length)
+      );
+    }
+  });
+
+  test('a key that cannot sign is refused with a reason, never the key', () => {
+    const { privateKey, publicKey } = generateKeyPairSync('ed25519');
+    const pem = privateKey.export({ type: 'pkcs8', format: 'pem' }).toString();
+    const body = pem.split('\n')[1];
+    const rsa = generateKeyPairSync('rsa', { modulusLength: 2048 })
+      .privateKey.export({ type: 'pkcs8', format: 'pem' })
+      .toString();
+    const cases: [string, RegExp][] = [
+      [body, /No PEM key found/],
+      [
+        publicKey.export({ type: 'spki', format: 'pem' }).toString(),
+        /public key/,
+      ],
+      [pem.replace(body, body.slice(0, 40)), /could not be read/],
+      [pem.replace(body, body.replace('A', '*')), /not Base64/],
+      [rsa, /rsa key/],
+      [
+        '-----BEGIN OPENSSH PRIVATE KEY-----\nAAAA\n-----END OPENSSH PRIVATE KEY-----',
+        /OpenSSH/,
+      ],
+      [
+        '-----BEGIN ENCRYPTED PRIVATE KEY-----\nAAAA\n-----END ENCRYPTED PRIVATE KEY-----',
+        /passphrase/,
+      ],
+    ];
+    for (const [text, reason] of cases) {
+      assert.throws(
+        () => readPrivateKey(text),
+        (error: Error) =>
+          reason.test(error.message) && !error.message.includes(body)
+      );
+    }
   });
 });

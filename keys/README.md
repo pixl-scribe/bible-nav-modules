@@ -27,11 +27,13 @@ somewhere safe, and remove it from the disk.
 To add a real signature, without writing the private key to disk:
 
 ```
-npm start -- sign --id eng_kjv --key -
+npm start -- sign --id eng_kjv
 ```
 
-and paste or pipe the private key PEM into standard input. `sign` checks the
-module against the USX and its manifest before signing.
+then paste the whole private key PEM, including its BEGIN and END lines,
+when asked, and press Enter and then Ctrl+D (or pipe the key in).
+`--key <file>` reads it from a file instead. `sign` checks the module against
+the USX and its manifest before signing.
 
 ## The old RSA key
 

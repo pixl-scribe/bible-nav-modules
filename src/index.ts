@@ -29,7 +29,7 @@ export const generateCommand: CommandModule<unknown, GenerateArgs> = {
 
 interface SignArgs {
   id: string;
-  key: string;
+  key?: string;
 }
 
 export const signCommand: CommandModule<unknown, SignArgs> = {
@@ -46,15 +46,14 @@ export const signCommand: CommandModule<unknown, SignArgs> = {
       .option('key', {
         type: 'string',
         describe:
-          'An Ed25519 private key PEM file, or - to read it from standard input',
-        demandOption: true,
+          'An Ed25519 private key PEM file. Leave it out to paste the key into standard input instead',
       })
       .help('h')
       .alias('h', 'help')
       .strict(),
 
-  handler: (argv) => {
-    ModuleFactory.sign(argv.id, argv.key);
+  handler: async (argv) => {
+    await ModuleFactory.sign(argv.id, argv.key);
   },
 };
 

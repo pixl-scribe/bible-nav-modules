@@ -1,5 +1,6 @@
 import {
   createHash,
+  createPrivateKey,
   createPublicKey,
   KeyObject,
   sign,
@@ -121,4 +122,66 @@ export function checkSignatures(
     }
   }
   return result;
+}
+
+/**
+ * Reads an Ed25519 private key from PKCS#8 PEM text, as `openssl genpkey`
+ * writes it. Tolerates what pasting from a password manager can do to it:
+ * line breaks turned into spaces or lost, Windows line ends, indentation,
+ * and a terminal's bracketed-paste markers. Error messages describe what was
+ * found without ever including the key.
+ */
+export function readPrivateKey(input: Buffer | string): KeyObject {
+  const text = input
+    .toString()
+    // eslint-disable-next-line no-control-regex -- removes the terminal's bracketed-paste markers
+    .replace(/\x1b\[20[01]~/g, '')
+    .replace(/\r/g, '');
+  const pem = /-----BEGIN ([A-Z0-9 ]+)-----([\s\S]*?)-----END \1-----/.exec(
+    text
+  );
+  if (!pem) {
+    const lines = text.split('\n').filter((line) => line.trim()).length;
+    throw new Error(
+      `No PEM key found in the ${text.length} characters (${lines} non-blank lines) received. ` +
+        'Paste the whole key, including the -----BEGIN PRIVATE KEY----- and -----END PRIVATE KEY----- lines.'
+    );
+  }
+  const label = pem[1];
+  const wrong: Record<string, string> = {
+    'PUBLIC KEY': 'This is a public key. Signing needs the private key.',
+    'ENCRYPTED PRIVATE KEY':
+      'This private key is encrypted with a passphrase, which sign does not support.',
+    'OPENSSH PRIVATE KEY':
+      'This is an OpenSSH key (from ssh-keygen). Make the key with the openssl commands in keys/README.md.',
+  };
+  if (label !== 'PRIVATE KEY') {
+    throw new Error(
+      wrong[label] ??
+        `Found a "${label}" PEM block, but sign needs a "PRIVATE KEY" block as written by openssl genpkey -algorithm ed25519.`
+    );
+  }
+  const body = pem[2].replace(/\s+/g, '');
+  if (!/^[A-Za-z0-9+/]+={0,2}$/.test(body)) {
+    throw new Error(
+      'The text between the BEGIN and END lines is not Base64. Was part of the key changed or cut off?'
+    );
+  }
+  const lines = body.match(/.{1,64}/g) ?? [];
+  let key: KeyObject;
+  try {
+    key = createPrivateKey(
+      `-----BEGIN PRIVATE KEY-----\n${lines.join('\n')}\n-----END PRIVATE KEY-----\n`
+    );
+  } catch {
+    throw new Error(
+      `The PRIVATE KEY block (${body.length} Base64 characters; an Ed25519 key has 64) could not be read as a key. Was part of it changed or cut off?`
+    );
+  }
+  if (key.asymmetricKeyType !== 'ed25519') {
+    throw new Error(
+      `This is an ${key.asymmetricKeyType ?? 'unknown'} key; sign needs an Ed25519 key.`
+    );
+  }
+  return key;
 }
