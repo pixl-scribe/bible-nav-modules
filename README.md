@@ -30,3 +30,7 @@ Each module comes as three files, such as `eng_kjv-1.1.0.db`,
 [`docs/integrity-spec.md`](docs/integrity-spec.md) explains how they are
 hashed and signed, and how to check a copy with standard tools.
 `tools/text-roots.py` recomputes a module's text root with Python alone.
+
+Each text's source is recorded in `assets/<module-id>/PROVENANCE.md`. For the
+King James Version, `tools/compare-ebible.py` compares a module verse by verse
+with eBible.org's signed release, kept in `assets/eng_kjv/ebible/`.

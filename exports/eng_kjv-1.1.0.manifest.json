@@ -15,8 +15,8 @@
   },
   "text": {
     "treeVersion": 1,
-    "edition": "eBible.org eng-kjv2006 (King James Version, 1769 standardized text, with Strong's numbers)",
-    "source": "https://v1.fetch.bible/bibles/eng_kjv/usx/{book}.usx, fetch.bible commit 7f36064 (2026-07-15)",
+    "edition": "eBible.org eng-kjv2006, 2026-11-10 release (CrossWire KJV: an electronic edition of Benjamin Blayney's 1769 Oxford text, with Strong's numbers)",
+    "source": "USX from https://v1.fetch.bible/bibles/eng_kjv/usx/{book}.usx (fetch.bible commit 7f36064, 2026-07-15), identical to eBible.org eng-kjv2006_usfx.zip of 2026-11-10 (SHA-256 ba858bf2c029179c7bd23ebd3888ed32280ab6c78ae1fe5b043ee7885038af84); see assets/eng_kjv/PROVENANCE.md",
     "textRoot": "0337278626457c9d994ffe85b0b941affd9cc5fce1d5be90618c46ed381e0b07",
     "contentRoot": "f693db9b1a0f0739ad08682511cef50ec040b0a04c31834fabf95291a9e0a482"
   },
