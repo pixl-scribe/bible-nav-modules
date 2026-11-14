@@ -39,6 +39,27 @@ when asked, and press Enter and then Ctrl+D (or pipe the key in).
 `--key <file>` reads it from a file instead. `sign` checks the module against
 the USX and its manifest before signing.
 
+## Versions and pinned texts
+
+A module's major version changes whenever its text changes (any word,
+italics, divine name, numbering, or Psalm title); minor and patch versions
+change only notes, Strong's numbers, red letters, other headings, layout,
+and titles. `generate` refuses a version whose text differs from another
+export with the same major version.
+
+Bible Nav pins the texts it bundles (the KJV, and later the Textus Receptus
+and Masoretic text) by module id and major version, in `PINNED_EDITIONS` in
+its `src-tauri/src/modules/pins.rs`. It refuses a pinned module whose text
+differs, or whose major version isn't pinned, whatever key signed it. So:
+
+- A new minor version of a pinned module needs nothing more: it opens in
+  every copy. Optionally add its manifest's `file.sha256` to the pin's
+  known files, so Bible Nav needn't compute its root at startup.
+- A new major version needs a new pin (module id, major version, the
+  manifest's `text.edition` and `text.textRoot`, and `file.sha256` as a
+  known file; `verify` prints them) and a Bible Nav release.
+- Never change or remove a pin.
+
 ## If the primary key is stolen, lost, or retired
 
 A key statement, signed with the backup key, revokes the primary key and

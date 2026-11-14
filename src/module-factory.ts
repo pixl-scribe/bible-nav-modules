@@ -29,6 +29,7 @@ import {
   signManifest,
 } from './services/signing-service';
 import { backupKeyIds, moduleKeys, readSigningKey } from './keys';
+import { checkVersionRule } from './services/version-rule';
 
 /**
  * Tracks position across books while exporting. paragraph numbers are global,
@@ -67,6 +68,12 @@ export default class ModuleFactory {
         `Verified ${summary.books} books, ${summary.paragraphs} paragraphs, ${summary.verses} verses, and ${summary.headings} headings against the USX.`
       );
       const roots = moduleRoots(tempFile);
+      checkVersionRule(
+        path.resolve('exports'),
+        moduleId,
+        config.version,
+        roots.textRoot
+      );
       const manifest = buildManifest(
         moduleId,
         config,

@@ -437,11 +437,55 @@ Then:
 
 4. Open the module read-only, and check that its `module` table's id,
    version, and format version match the manifest.
-5. If the app knows the edition named by `text.edition`, check that
-   `text.textRoot` is the root the app has for it. This protects a published
-   edition even against a stolen key.
+5. Compute the text root and content root from the module itself, and
+   check that they equal `text.textRoot` and `text.contentRoot` in the
+   manifest, with `text.treeVersion` 1. The manifest's roots are only what
+   its signer wrote, so the app never relies on them without computing
+   them.
+6. If the module's id is pinned (below), check that its major version is
+   pinned and its text root is the pinned one. This protects a published
+   text even against a stolen key.
 
 A module that fails any check isn't loaded, and the reader is told why.
+
+### Module versions
+
+A module's version is `major.minor.patch`. The **major** version changes
+whenever the text root changes: any word, any `add`, `nd`, or `tl` markup,
+any verse, chapter, or book numbering, or any canonical heading. Minor and
+patch versions change only what the text root leaves out, such as notes,
+Strong's numbers, red letters, other headings, layout, and titles. So every
+version of a module with the same major version has the same text root.
+
+### Pinned editions
+
+Bible Nav pins the texts it ships with: the locked editions of the King
+James Version, the Textus Receptus, and the Masoretic text. Its source
+holds a list of pins, beside its public keys. Each pin gives a module id, a
+major version, and the text root of that major version. It may also list
+the SHA-256 of module files already known to hold that text, so the app
+need not compute the root of a file it already knows; it still checks that
+the manifest gives the pinned root.
+
+For a module whose id has any pin:
+
+- Its major version must be pinned. A new major version, which means new
+  text, is refused until a release of Bible Nav pins it.
+- Its text root must be that pin's root.
+
+A module whose id has no pin, such as a downloaded Geneva Bible, isn't
+affected: it needs only a valid signature, a matching file, and matching
+roots.
+
+So a stolen key, or a maintainer forced to sign, can't change the text of a
+pinned module in any copy of Bible Nav that pins it, even under a new
+version number. Corrections to a pinned text reach readers with a new
+release of Bible Nav, which pins the new major version, can bundle the
+corrected module, and keeps the older pins so older copies of the module
+still open.
+
+Pinning can't stop a stolen key from signing a module with a new id. That
+is what revoking the key is for.
 
 ## Checking a copy without Bible Nav
 
