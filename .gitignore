@@ -150,3 +150,6 @@ keys/*/private.pem
 !keys/development/private.pem
 !keys/development-backup/private.pem
 *.db.tmp
+
+# Python environment for tools/import-ebible.py
+tools/venv/

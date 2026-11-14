@@ -148,6 +148,9 @@ function normalize<T extends VerseChild>(children: T[]): T[] {
   return trimEnd(normalizeInlines(children));
 }
 
+/** USX versions the parser reads. */
+const SUPPORTED_USX_VERSIONS = ['3.0', '3.1'];
+
 export default class UsxParserService {
   private parser: XMLParser;
   private location = '';
@@ -186,8 +189,13 @@ export default class UsxParserService {
     const contents = this.parser.parse(xml) as XmlNode[];
     const usx = contents.find((node) => tagOf(node) === 'usx');
     if (!usx) this.fail('no usx element found');
-    if (attr(usx, 'version') !== '3.0') {
-      this.fail('only USX version 3.0 files are supported');
+    // 3.1 (written by usfmtc, the USFM committee's reference converter)
+    // adds markers that 3.0 lacks; any of them still fails below as unknown
+    // content until it's deliberately supported.
+    if (!SUPPORTED_USX_VERSIONS.includes(attr(usx, 'version') ?? '')) {
+      this.fail(
+        `only USX versions ${SUPPORTED_USX_VERSIONS.join(' and ')} are supported`
+      );
     }
 
     const book: Book = {

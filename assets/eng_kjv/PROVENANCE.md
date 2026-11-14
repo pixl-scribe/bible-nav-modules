@@ -74,6 +74,16 @@ whitespace as one space, there were no differences at all in:
 
 So the fetch.bible copy and eBible's signed release hold the same text.
 
+On 2026-11-14 the module was also rebuilt from eBible's own USFM release
+(`eng-kjv2006_usfm.zip`, SHA-256
+`dce1ec3ea45a155ac05e975fc8d817da403a817713d554eb9cc3a2177a6cfd1c`, from the
+same signed release), converted to USX with `tools/import-ebible.py`. The
+result was byte for byte the same module file (SHA-256
+`a97a27f54eb62d1eac3edf7ec8facf447351ff9dd2e2e647f1060fbb1ebfa0a9`), with the
+same text and content roots. So eBible's signed USFM alone is enough to
+rebuild this module exactly, without fetch.bible, whose old USX addresses no
+longer serve files.
+
 ## Checking it yourself
 
 ```

@@ -196,3 +196,22 @@ describe('unknown content is an error', () => {
     /word needs a strong/
   );
 });
+
+describe('USX versions', () => {
+  test('reads USX 3.0 and 3.1, and refuses others', () => {
+    const body = verse('Words.');
+    for (const version of ['3.0', '3.1']) {
+      const book = parser.parseBookXml(
+        usx(body).replace('version="3.0"', `version="${version}"`)
+      );
+      assert.equal(book.code, 'TST');
+    }
+    assert.throws(
+      () =>
+        parser.parseBookXml(
+          usx(body).replace('version="3.0"', 'version="2.0"')
+        ),
+      /only USX versions 3\.0 and 3\.1/
+    );
+  });
+});

@@ -27,6 +27,26 @@ npm test
 npm run lint
 ```
 
+# Importing a text from eBible.org
+
+eBible.org publishes USFM and USFX, each archive with a PGP-signed list of
+its files' SHA-256 hashes. `tools/import-ebible.py` fetches a text's
+archives into `assets/<module-id>/ebible/`, checks eBible's signature and the
+hashes, and converts the USFM to USX with
+[usfmtc](https://gh.ali360.cloudns.ch/usfm-bible/usfmtc), the USFM technical
+committee's reference converter. It needs Python 3 and GnuPG:
+
+```
+python3 -m venv tools/venv
+tools/venv/bin/pip install -r tools/requirements.txt
+tools/venv/bin/python tools/import-ebible.py fetch englsv englsv
+tools/venv/bin/python tools/import-ebible.py convert englsv
+```
+
+Then write `assets/<module-id>/config.yaml` and generate as usual. The
+generator still refuses any USX content it doesn't know, so a new text shows
+exactly which markers need supporting.
+
 # Checking a module
 
 Each module comes as three files, such as `eng_kjv-1.1.0.db`,
