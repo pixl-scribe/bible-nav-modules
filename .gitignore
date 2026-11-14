@@ -153,3 +153,4 @@ keys/*/private.pem
 
 # Python environment for tools/import-ebible.py
 tools/venv/
+__pycache__/

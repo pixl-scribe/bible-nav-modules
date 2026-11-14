@@ -215,3 +215,16 @@ describe('USX versions', () => {
     );
   });
 });
+
+describe('attributes', () => {
+  test('an attribute the parser does not know fails, so no text hides in one', () => {
+    const xml = usx(verse('Has said, YHWH is calling!')).replace(
+      '<para style="p">',
+      '<para style="p" _unknown_="| And among the remnants whom ">'
+    );
+    assert.throws(
+      () => parser.parseBookXml(xml),
+      /unknown attribute "_unknown_" on <para>/
+    );
+  });
+});

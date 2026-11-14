@@ -274,7 +274,11 @@ export default class ModuleFactory {
       for (const usxFile of usxFiles) {
         console.log(`  importing ${usxFile}...`);
         const book = usxParser.parseBook(usxFile);
-        ModuleFactory.checkVerseCounts(book, chapters);
+        ModuleFactory.checkVerseCounts(
+          book,
+          chapters,
+          config.verseCountDifferences
+        );
         ModuleFactory.exportBook(dbExporter, testament, book, position);
       }
     }
@@ -284,30 +288,48 @@ export default class ModuleFactory {
 
   /**
    * Fails unless the book has the expected number of chapters, and each
-   * chapter the expected number of verses (assets/bible-verse-counts.yaml).
+   * chapter the expected number of verses: those in
+   * assets/bible-verse-counts.yaml (the KJV's numbering), except where the
+   * module's config lists a deliberate difference.
    */
   public static checkVerseCounts(
     book: Book,
-    chapters: TestamentVerseCounts | undefined
+    chapters: TestamentVerseCounts | undefined,
+    differences: Record<string, number> = {}
   ): void {
     const bookVerseCounts = chapters?.[book.code];
     if (bookVerseCounts === undefined) return;
-    if (book.chapters.length !== bookVerseCounts.length) {
-      throw new Error(
-        `Book ${book.code} chapter count of ${book.chapters.length} did not match the expected count of ${bookVerseCounts.length}.`
-      );
-    }
+    const expect = (key: string, kjv: number, actual: number, what: string) => {
+      const listed = differences[key];
+      if (listed !== undefined && listed === kjv) {
+        throw new Error(
+          `verseCountDifferences lists ${key}: ${listed}, which is no difference from the KJV's numbering.`
+        );
+      }
+      const expected = listed ?? kjv;
+      if (actual !== expected) {
+        throw new Error(
+          `${what} of ${actual} did not match the expected count of ${expected}.`
+        );
+      }
+    };
+    expect(
+      book.code,
+      bookVerseCounts.length,
+      book.chapters.length,
+      `Book ${book.code} chapter count`
+    );
     book.chapters.forEach((chapter, index) => {
-      const expected = bookVerseCounts[index];
       const parsed = chapter.paragraphs.reduce(
         (acc: number, paragraph: Paragraph) => acc + paragraph.verses.length,
         0
       );
-      if (expected !== parsed) {
-        throw new Error(
-          `Chapter ${chapter.sid} verse count of ${parsed} did not match the expected count of ${expected}.`
-        );
-      }
+      expect(
+        chapter.sid,
+        bookVerseCounts[index] ?? 0,
+        parsed,
+        `Chapter ${chapter.sid} verse count`
+      );
     });
   }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Compares eBible.org's eng-kjv2006 USFX with a Bible Nav module, verse by verse.
+Compares eBible.org's USFX of a text with a Bible Nav module, verse by verse.
 
     python3 tools/compare-ebible.py assets/eng_kjv/ebible/eng-kjv2006_usfx.zip \
         exports/eng_kjv-1.1.0.db
@@ -9,7 +9,7 @@ It first checks the USFX file against the SHA-256 list in eBible's
 signature.txt.asc inside the archive. (Checking that list's PGP signature
 needs GnuPG; see assets/eng_kjv/PROVENANCE.md.) Then it compares, for every
 verse: the text, the inline markup (each word's Strong's number, add, nd, wj,
-tl), and the footnotes; and the headings with their positions, the paragraph
+tl, bd, it), and the footnotes; and the headings with their positions, the paragraph
 styles, and the book names and titles. Whitespace runs count as one space,
 because USFX puts words on separate lines. It exits with status 1 if
 anything differs.
@@ -22,7 +22,7 @@ import collections, json, re, sqlite3, sys
 import xml.etree.ElementTree as ET
 
 ws = lambda s: re.sub(r'\s+', ' ', s).strip()
-INLINE = {'w', 'add', 'nd', 'wj', 'tl'}
+INLINE = {'w', 'add', 'nd', 'wj', 'tl', 'bd', 'it'}
 
 # ---- eBible USFX ----
 archive = zipfile.ZipFile(sys.argv[1])
@@ -90,6 +90,15 @@ def walk(node, state, in_note=False):
         ev[state['sid']]['text'].append(node.tail)
 
 walk(usfx, {'sid': None, 'book': None, 'chapter': 0, 'last': None})
+
+# eBible keeps a slot for a verse an edition doesn't have as a verse holding
+# only a dash; import-ebible.py leaves those out, so they're skipped here.
+placeholders = [sid for sid, v in ev.items()
+                if ws(''.join(v['text'])) == '-' and not v['marks'] and not v['notes']]
+for sid in placeholders:
+    del ev[sid]
+if placeholders:
+    print(f'Skipped eBible placeholder verses holding only "-": {", ".join(placeholders)}')
 
 # ---- Module ----
 db = sqlite3.connect(f'file:{sys.argv[2]}?immutable=1&mode=ro', uri=True)

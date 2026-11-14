@@ -15,7 +15,7 @@ export interface GlossaryWord {
  * See https://ubsicap.github.io/usx/charstyles.html
  */
 export interface StyledText {
-  style: 'add' | 'nd' | 'tl' | 'wj';
+  style: 'add' | 'nd' | 'tl' | 'wj' | 'bd' | 'it';
   children: Inline[];
 }
 

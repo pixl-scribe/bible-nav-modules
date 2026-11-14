@@ -22,7 +22,9 @@ import { TestamentVerseCounts } from '../model/bible-verse-counts';
  */
 type XmlNode = Record<string, unknown>;
 
-const STYLED_TEXT = new Set<string>(['add', 'nd', 'tl', 'wj']);
+// bd (bold) and it (italic) are formatting, as eBible marks the LSV's
+// [[or ...]] alternative readings.
+const STYLED_TEXT = new Set<string>(['add', 'nd', 'tl', 'wj', 'bd', 'it']);
 const NOTE_SEGMENTS = new Set<string>([
   'fr',
   'ft',
@@ -37,6 +39,22 @@ const VERSE_PARAGRAPHS = new Set(['p', 'q1']);
 const HEADING_PARAGRAPHS = new Set(['d', 's1']);
 // b is a blank line, such as between stanzas. It holds no text.
 const EMPTY_PARAGRAPHS = new Set(['b']);
+
+/**
+ * The attributes each element may have. Any other attribute fails: a
+ * converter that can't parse its input may put text in an attribute (usfmtc
+ * did, as `_unknown_`, for the LSV's literal `||`), and text there would be
+ * silently lost.
+ */
+const ALLOWED_ATTRIBUTES: Record<string, Set<string>> = {
+  usx: new Set(['version']),
+  book: new Set(['code', 'style']),
+  chapter: new Set(['style', 'number', 'sid', 'eid']),
+  verse: new Set(['style', 'number', 'sid', 'eid']),
+  para: new Set(['style']),
+  char: new Set(['style', 'strong']),
+  note: new Set(['style', 'caller']),
+};
 
 function attr(node: XmlNode, name: string): string | undefined {
   const attrs = node[':@'] as Record<string, string> | undefined;
@@ -184,11 +202,27 @@ export default class UsxParserService {
     return this.parseBookXml(fs.readFileSync(filename, 'utf-8'), filename);
   }
 
+  /** Fails on any element attribute not in ALLOWED_ATTRIBUTES. */
+  private checkAttributes(node: XmlNode): void {
+    const tag = tagOf(node);
+    if (tag === '#text') return;
+    const allowed = ALLOWED_ATTRIBUTES[tag] ?? new Set<string>();
+    const attrs = (node[':@'] ?? {}) as Record<string, string>;
+    for (const key of Object.keys(attrs)) {
+      const name = key.replace(/^@_/, '');
+      if (!allowed.has(name)) {
+        this.fail(`unknown attribute "${name}" on <${tag}>`);
+      }
+    }
+    for (const child of childrenOf(node) ?? []) this.checkAttributes(child);
+  }
+
   public parseBookXml(xml: string, source: string = 'USX'): Book {
     this.location = source;
     const contents = this.parser.parse(xml) as XmlNode[];
     const usx = contents.find((node) => tagOf(node) === 'usx');
     if (!usx) this.fail('no usx element found');
+    this.checkAttributes(usx);
     // 3.1 (written by usfmtc, the USFM committee's reference converter)
     // adds markers that 3.0 lacks; any of them still fails below as unknown
     // content until it's deliberately supported.

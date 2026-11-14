@@ -26,7 +26,10 @@ archive is for tools/compare-ebible.py, an independent check of the module.
 
 `convert <module-id>` checks the USFM archive's signature and hashes, then
 writes one <book>.usx per canonical book into assets/<module-id>/,
-replacing earlier ones, and their SHA256SUMS. Other books in the archive,
+replacing earlier ones, and their SHA256SUMS. Literal | characters in the
+text are escaped first (see escape_literal_bars), and verses holding only
+a dash, eBible's placeholders for verses the edition doesn't have, are left
+out (see drop_placeholder_verses). Other books in the archive,
 such as front matter or a glossary, are listed and left out.
 
 The PGP check needs GnuPG. It uses a temporary keyring, imports the key from
@@ -40,6 +43,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import urllib.error
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -64,6 +68,53 @@ def sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
+# A `|` separates a marker's attributes from its content only inside a
+# character marker (\w word|strong="H1"\w*, also nested as \+w) or in a
+# milestone (\qt-s |sid="..."\*). Anywhere else it's text. USFM expects a
+# literal bar to be escaped as \|, but some texts use it unescaped: the LSV
+# marks poetic line breaks with ||. usfmtc then reads the words after it as
+# attributes and drops them, so literal bars are escaped before converting.
+ATTRIBUTE_BAR = re.compile(
+    r'\\(\+?[A-Za-z0-9]+)\s[^\\|]*(\|)[^\\]*\\\1\*'
+    r'|\\[A-Za-z0-9]+-[se]\s*(\|)[^\\]*\\\*')
+
+
+def escape_literal_bars(usfm):
+    """Escapes every | that isn't an attribute separator. Returns the new
+    text and how many bars were escaped."""
+    separators = {match.start(2) if match.group(2) else match.start(3)
+                  for match in ATTRIBUTE_BAR.finditer(usfm)}
+    out, escaped = [], 0
+    for index, character in enumerate(usfm):
+        if (character == '|' and index not in separators
+                and not (index > 0 and usfm[index - 1] == '\\')):
+            out.append('\\')
+            escaped += 1
+        out.append(character)
+    return ''.join(out), escaped
+
+
+# eBible keeps a slot for a verse an edition doesn't have as a verse holding
+# only a dash (the LSV's 3 John 1:15 and Revelation 12:18, whose words are in
+# the KJV's 3 John 1:14 and Revelation 13:1). It isn't text, so it's left out.
+PLACEHOLDER_VERSE = re.compile(
+    r'\\v (\S+)[ \t]+-[ \t]*(?:\r?\n)?(?=\\c |\\v |\\p|\Z)')
+
+
+def drop_placeholder_verses(usfm, code):
+    """Removes verses holding only a dash. Returns the new text and the
+    references removed."""
+    dropped = []
+
+    def reference(match):
+        chapters = re.findall(r'\\c (\d+)', usfm[:match.start()])
+        dropped.append(f'{code} {chapters[-1] if chapters else "?"}:'
+                       f'{match.group(1)}')
+        return ''
+
+    return PLACEHOLDER_VERSE.sub(reference, usfm), dropped
+
+
 def fetch(module_id, ebible_id):
     folder = Path('assets', module_id, 'ebible')
     folder.mkdir(parents=True, exist_ok=True)
@@ -74,8 +125,14 @@ def fetch(module_id, ebible_id):
             fail(f'{target} already exists. It is the locked input: delete it '
                  'first only if you mean to replace it.')
         url = f'https://ebible.org/Scriptures/{name}'
-        with urllib.request.urlopen(url) as response:
-            data = response.read()
+        # eBible refuses Python's default user agent; send the tool's name.
+        request = urllib.request.Request(
+            url, headers={'User-Agent': 'bible-nav-modules import-ebible'})
+        try:
+            with urllib.request.urlopen(request) as response:
+                data = response.read()
+        except urllib.error.URLError as error:
+            fail(f'could not download {url}: {error}')
         target.write_bytes(data)
         print(f'{target}  {len(data)} bytes  SHA-256 {sha256(data)}')
 
@@ -138,10 +195,15 @@ def convert(module_id):
         else:
             skipped.append(f'{code} ({name})')
 
+    escaped_total, placeholders = 0, []
     with tempfile.TemporaryDirectory() as work:
         for code, (name, data) in books.items():
+            text, dropped = drop_placeholder_verses(data.decode('utf-8'), code)
+            placeholders += dropped
+            text, escaped = escape_literal_bars(text)
+            escaped_total += escaped
             source = Path(work, f'{code}.usfm')
-            source.write_bytes(data)
+            source.write_text(text, encoding='utf-8')
             target = Path(work, f'{code.lower()}.usx')
             subprocess.run([str(converter), '-q', '-e', '-F', 'usx',
                             '-o', str(target), str(source)], check=True)
@@ -157,6 +219,12 @@ def convert(module_id):
     sums.sort(key=lambda line: line[66:])
     (module / 'SHA256SUMS').write_text('\n'.join(sums) + '\n')
     print(f'Wrote {len(books)} books as USX to {module}/, with SHA256SUMS.')
+    if placeholders:
+        print('Left out placeholder verses holding only "-": '
+              + ', '.join(placeholders))
+    if escaped_total:
+        print(f'Escaped {escaped_total} literal | characters in the text, '
+              'so the converter keeps them as text.')
     if skipped:
         print('Left out (not canonical books): ' + ', '.join(skipped))
 
