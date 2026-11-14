@@ -154,3 +154,7 @@ keys/*/private.pem
 # Python environment for tools/import-ebible.py
 tools/venv/
 __pycache__/
+
+# Module databases are published in GitHub Releases, not git. Their signed
+# manifests and signatures stay tracked as the public record.
+exports/*.db

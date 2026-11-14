@@ -47,6 +47,15 @@ Then write `assets/<module-id>/config.yaml` and generate as usual. The
 generator still refuses any USX content it doesn't know, so a new text shows
 exactly which markers need supporting.
 
+# Where modules are published
+
+The module databases (`exports/*.db`) are published in this repository's
+GitHub Releases, not in git: they're large, and regenerating one would grow
+the history each time. Their manifests and signatures
+(`exports/*.manifest.json`, `exports/*.manifest.sig`) stay in git as the
+public record of what was signed. Builds are reproducible, so a database
+regenerated from the sources here matches its signed manifest byte for byte.
+
 # Checking a module
 
 Each module comes as three files, such as `eng_kjv-1.1.0.db`,
