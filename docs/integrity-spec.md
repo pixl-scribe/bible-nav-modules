@@ -284,6 +284,7 @@ certain things, and the app enforces this:
 | **Primary** | Module manifests, for everyday publishing. Nothing else. | By the maintainer, for regular use. |
 | **Backup** | Key statements only (below). Never a module. | By the maintainer, offline only, apart from the primary key, so that whatever exposes the primary key can't also expose it. |
 | **Development** | Module manifests, for testing. | With the source. Only development builds accept it; release builds reject it. |
+| **Development backup** | Key statements, for testing. | With the source. Only development builds accept it, as a backup key; release builds reject it. |
 
 - Signing keys are never stored in the repository, in CI, or with the module
   files.
@@ -303,9 +304,10 @@ A **key statement** revokes a primary key and names the key that replaces it.
 It's needed when the primary key is stolen, lost, or retired. Only a backup
 key can sign one.
 
-A statement is two files, like a manifest and its signatures, for example
-`bible-nav-keys-1.json` and `bible-nav-keys-1.sig`. The `.sig` file has the
-same form as a manifest's. The JSON's exact bytes are signed:
+A statement is two files, like a manifest and its signatures:
+`bible-nav-keys-<sequence>.json` and `bible-nav-keys-<sequence>.sig`, kept
+in a folder named `keys`. The `.sig` file has the same form as a
+manifest's. The JSON's exact bytes are signed:
 
 ```json
 {
@@ -346,9 +348,31 @@ The app accepts a statement only if:
 3. It revokes and adds only primary keys. A statement can never revoke or add
    a backup key, so a stolen primary key can't be used to undo the backup.
 
+Strictly, a statement is accepted only if all of this holds, and otherwise
+it is ignored as a whole, never in part:
+
+- It is a JSON object with exactly the fields shown above, no others:
+  `type`, `statementVersion` (1), `sequence` (a whole number from 1),
+  `issuedAt` (a date written `YYYY-MM-DD`), `revoke`, `add`, and
+  `keepModules`. Each list may be empty, but a statement must revoke or add
+  at least one key.
+- Each `revoke` entry has exactly `keyId` (16 lowercase hexadecimal digits)
+  and `reason` (text).
+- Each `add` entry has exactly `keyId`, `role` (`"primary"`), and
+  `publicKey`, which decodes to 32 bytes that are a valid Ed25519 public key
+  whose key id is `keyId`.
+- Each `keepModules` entry is 64 lowercase hexadecimal digits.
+- No key id is a backup key built into the app, and no key id appears in
+  both `revoke` and `add`.
+- A line of its `.sig` file is a valid signature of its exact bytes by a
+  backup key built into the app.
+
 Once accepted, a statement is permanent. Nothing un-revokes a key. A revoked
 key's signatures are ignored, except on a manifest listed in `keepModules`.
-An added key is trusted as a primary key.
+An added key is trusted as a primary key, unless any accepted statement,
+earlier or later, revokes it: revocation always wins, whatever order
+statements arrive in. The app reports a statement it ignores, with the
+reason, because a statement that fails to check may be a forgery.
 
 The dates in a manifest are written by whoever signs it, so a thief can
 backdate them. That's why the app never trusts "everything signed before the
@@ -467,5 +491,7 @@ text itself, without the module, is still to be written.
 - How a defective signed module is withdrawn, such as a list of minimum
   versions signed with the primary key. That's not a key statement, so it
   doesn't need the backup key.
-- Test vectors: worked examples of leaves, nodes, and roots, to be added with
-  the reference implementation.
+- Test vectors for the text tree: worked examples of leaves, nodes, and
+  roots. (Key statements have test vectors in `test-vectors/key-statements/`:
+  statements signed with the development backup key, with
+  `expected.json` saying which a checker must accept.)

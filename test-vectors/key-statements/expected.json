@@ -1,0 +1,65 @@
+{
+  "backupKey": "aecf25562bdc80f3",
+  "oldPrimary": "34750f98bd59fcfc",
+  "newPrimary": "6a3803d5f059902a",
+  "cases": {
+    "valid": {
+      "accept": true
+    },
+    "valid-revoke-only": {
+      "accept": true
+    },
+    "tampered": {
+      "accept": false,
+      "reason": "signature"
+    },
+    "signed-by-module-key": {
+      "accept": false,
+      "reason": "signature"
+    },
+    "unsigned": {
+      "accept": false,
+      "reason": "signature"
+    },
+    "extra-field": {
+      "accept": false,
+      "reason": "fields"
+    },
+    "unknown-version": {
+      "accept": false,
+      "reason": "kind"
+    },
+    "empty": {
+      "accept": false,
+      "reason": "neither"
+    },
+    "revokes-backup-key": {
+      "accept": false,
+      "reason": "backup"
+    },
+    "adds-backup-role": {
+      "accept": false,
+      "reason": "primary"
+    },
+    "added-key-id-mismatch": {
+      "accept": false,
+      "reason": "match"
+    },
+    "revokes-and-adds-same-key": {
+      "accept": false,
+      "reason": "both"
+    },
+    "bad-keep-hash": {
+      "accept": false,
+      "reason": "keepModules"
+    },
+    "bad-date": {
+      "accept": false,
+      "reason": "issuedAt"
+    },
+    "zero-sequence": {
+      "accept": false,
+      "reason": "sequence"
+    }
+  }
+}

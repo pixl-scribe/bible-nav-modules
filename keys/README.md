@@ -8,8 +8,12 @@ Modules are signed with Ed25519, as described in
 | `development/` | Development key. `generate` signs every module with it, so anyone can build and test. Only development builds of Bible Nav accept it. | Committed on purpose. It protects nothing. |
 | `primary/` | The maintainer's primary key, for publishing modules. Only `public.pem` belongs here. | Never in this repository, in CI, or with module files. |
 | `backup/` | The maintainer's backup key, which only signs key statements (revoking and replacing the primary key). Only `public.pem` belongs here. | Kept offline only, apart from the primary key. |
+| `development-backup/` | Development backup key, for testing key statements. It signs the test vectors in `test-vectors/key-statements/`. Only development builds of Bible Nav accept it. | Committed on purpose. It protects nothing. |
+| `statements/` | Published key statements, `bible-nav-keys-<sequence>.json` and `.sig`. None yet. | No private keys. |
 
-`verify` checks signatures with every `public.pem` in these folders.
+`verify` checks a module's signatures with the development and primary
+keys, and fails if a backup key signed a module. `sign` refuses a backup
+key, and `sign-statement` accepts only a backup key.
 
 ## Making a key
 
@@ -34,6 +38,43 @@ then paste the whole private key PEM, including its BEGIN and END lines,
 when asked, and press Enter and then Ctrl+D (or pipe the key in).
 `--key <file>` reads it from a file instead. `sign` checks the module against
 the USX and its manifest before signing.
+
+## If the primary key is stolen, lost, or retired
+
+A key statement, signed with the backup key, revokes the primary key and
+names its replacement. Bible Nav accepts it from any source, because only
+the backup key can sign it. See "Key statements" in the spec.
+
+1. Make a new primary key (above) and put its `public.pem` in `primary/`,
+   keeping the old one as `primary/revoked-<key id>.pem` for the record.
+2. Decide which modules the old key signed legitimately. If the key was
+   stolen, any of its signatures could be forged, so list only modules you
+   published and can identify by their manifests; or list none and sign
+   them all again with the new key.
+3. Write the statement, then read it carefully:
+
+   ```
+   npm start -- make-statement --sequence 1 \
+     --revoke <old key id>:stolen \
+     --add keys/primary/public.pem \
+     --keep exports/eng_kjv-1.1.0.manifest.json
+   ```
+
+   `--revoke` and `--keep` can be repeated. A statement is permanent, so
+   the command never replaces one: if it's wrong, delete the unsigned file
+   and write it again.
+4. On an offline computer, sign it with the backup key, pasting the key as
+   for `sign`:
+
+   ```
+   npm start -- sign-statement --sequence 1
+   npm start -- check-statement --sequence 1
+   ```
+
+5. Sign modules again with the new primary key as needed, and publish the
+   statement everywhere: beside every new module in a `keys` folder, in
+   Bible Nav (`npm run copy-db` copies it, then list it in `keys.rs`), in
+   releases, and on thumb drives.
 
 ## The old RSA key
 

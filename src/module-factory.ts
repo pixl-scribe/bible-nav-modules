@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { createPrivateKey, createPublicKey, KeyObject } from 'crypto';
+import { createPrivateKey } from 'crypto';
 import UsxParserService from './services/usx-parser-service';
 import {
   DbExporterService,
@@ -26,9 +26,9 @@ import {
   formatSignatures,
   keyId,
   parseSignatures,
-  readPrivateKey,
   signManifest,
 } from './services/signing-service';
+import { backupKeyIds, moduleKeys, readSigningKey } from './keys';
 
 /**
  * Tracks position across books while exporting. paragraph numbers are global,
@@ -44,14 +44,6 @@ export interface ExportPosition {
  * development builds of Bible Nav accept it.
  */
 const DEVELOPMENT_KEY = path.join('keys', 'development', 'private.pem');
-
-/**
- * Public keys `verify` checks signatures with, where present: the development
- * key, and the maintainer's primary and backup keys once they exist.
- */
-const PUBLIC_KEYS = ['development', 'primary', 'backup'].map((role) =>
-  path.join('keys', role, 'public.pem')
-);
 
 export default class ModuleFactory {
   /**
@@ -133,10 +125,19 @@ export default class ModuleFactory {
       `The manifest matches the module (text root ${manifest.text.textRoot}).`
     );
 
+    const lines = parseSignatures(fs.readFileSync(files.signatures, 'utf8'));
+    const byBackup = lines
+      .map((line) => line.keyId)
+      .filter((id) => backupKeyIds().includes(id));
+    if (byBackup.length > 0) {
+      throw new Error(
+        `The manifest is signed by a backup key, which must never sign a module: ${byBackup.join(', ')}`
+      );
+    }
     const signatures = checkSignatures(
       fs.readFileSync(files.manifest),
-      parseSignatures(fs.readFileSync(files.signatures, 'utf8')),
-      ModuleFactory.publicKeys()
+      lines,
+      moduleKeys()
     );
     for (const id of signatures.valid) console.log(`Valid signature: ${id}`);
     for (const id of signatures.unknown) {
@@ -168,12 +169,12 @@ export default class ModuleFactory {
       moduleId,
       config.version
     );
-    const fromStdin = keyFile === undefined || keyFile === '-';
-    if (fromStdin && process.stdin.isTTY) {
-      console.error('Paste the private key PEM, then press Enter and Ctrl+D.');
+    const privateKey = await readSigningKey(keyFile);
+    if (backupKeyIds().includes(keyId(privateKey))) {
+      throw new Error(
+        'This is a backup key. It signs only key statements, never a module: use the primary key.'
+      );
     }
-    const pem = fromStdin ? await readStdin() : fs.readFileSync(keyFile);
-    const privateKey = readPrivateKey(pem);
     const line = signManifest(fs.readFileSync(files.manifest), privateKey);
     addSignature(files.signatures, line);
     console.log(
@@ -230,16 +231,6 @@ export default class ModuleFactory {
       );
     }
     return manifest;
-  }
-
-  private static publicKeys(): KeyObject[] {
-    return PUBLIC_KEYS.map((file) => path.resolve(file))
-      .filter((file) => fs.existsSync(file))
-      .map((file) => {
-        const key = createPublicKey(fs.readFileSync(file));
-        keyId(key); // Fails for anything but an Ed25519 key.
-        return key;
-      });
   }
 
   private static async writeModule(
@@ -350,16 +341,4 @@ export default class ModuleFactory {
       }
     }
   }
-}
-
-/**
- * Reads standard input to its end as a stream. A synchronous read fails with
- * EAGAIN when the terminal is in non-blocking mode, as it is under tsx.
- */
-async function readStdin(): Promise<Buffer> {
-  const chunks: Buffer[] = [];
-  for await (const chunk of process.stdin) {
-    chunks.push(Buffer.from(chunk as Buffer));
-  }
-  return Buffer.concat(chunks);
 }

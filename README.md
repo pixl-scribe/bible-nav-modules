@@ -19,6 +19,10 @@ npm start -- generate --id eng_kjv
 npm start -- verify --id eng_kjv
 # Adds a signature with a private key read from standard input
 npm start -- sign --id eng_kjv
+# Key statements, which revoke and replace a primary key (see keys/README.md)
+npm start -- make-statement --sequence 1 --revoke <key id>:<reason> --add <public.pem>
+npm start -- sign-statement --sequence 1
+npm start -- check-statement --sequence 1
 npm test
 npm run lint
 ```

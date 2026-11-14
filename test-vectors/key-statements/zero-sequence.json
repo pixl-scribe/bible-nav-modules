@@ -1,0 +1,22 @@
+{
+  "type": "bible-nav key statement",
+  "statementVersion": 1,
+  "sequence": 0,
+  "issuedAt": "2027-01-01",
+  "revoke": [
+    {
+      "keyId": "34750f98bd59fcfc",
+      "reason": "stolen"
+    }
+  ],
+  "add": [
+    {
+      "keyId": "6a3803d5f059902a",
+      "role": "primary",
+      "publicKey": "gTl3Dqh9F19Wo1Rmw0x+zMuNipG07jeiXfYPW4/Js5Q="
+    }
+  ],
+  "keepModules": [
+    "75bce5c6ab4725e1ae9e630858192d94e05a36ad353ee3b999807c0c31c90e42"
+  ]
+}
