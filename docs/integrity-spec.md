@@ -221,6 +221,7 @@ never reformatted after signing. For example:
     "version": "1.0.0",
     "formatVersion": 2,
     "name": "King James Version (1769)",
+    "abbreviation": "KJV",
     "languageCode": "en"
   },
   "file": {

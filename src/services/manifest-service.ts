@@ -17,6 +17,7 @@ export interface Manifest {
     version: string;
     formatVersion: number;
     name: string;
+    abbreviation: string;
     languageCode: string;
   };
   file: { name: string; size: number; sha256: string };
@@ -58,6 +59,7 @@ export function buildManifest(
       version: config.version,
       formatVersion: MODULE_FORMAT_VERSION,
       name: config.name,
+      abbreviation: config.abbreviation,
       languageCode: config.languageCode,
     },
     file: {

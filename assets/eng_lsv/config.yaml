@@ -1,4 +1,5 @@
 name: Literal Standard Version
+abbreviation: LSV
 description: |
   The Holy Bible in English, Literal Standard Version: a modern, literal
   translation by Covenant Press, protocanon only.
@@ -10,7 +11,7 @@ languageCode: eng
 # CC BY-SA 4.0 requires this copyright and source information with every
 # copy. Bible Nav shows the license with the module.
 license: "Copyright © 2020 Covenant Press. Licensed under the Creative Commons Attribution-ShareAlike 4.0 International license (https://creativecommons.org/licenses/by-sa/4.0/). Source: eBible.org, https://ebible.org/details.php?id=englsv. Converted to Bible Nav's module format without changes to the text."
-version: 1.0.0
+version: 1.1.0
 # The exact edition, and where its source came from, for the signed manifest.
 edition: "eBible.org englsv, 2026-10-30 release (Literal Standard Version, Covenant Press, 2020)"
 source: "USFM from eBible.org englsv_usfm.zip of 2026-10-30 (SHA-256 b5fd551d49086785430ca4d670e2914b53c63fd65cb84717b7b200466305861f), converted to USX with usfmtc 0.4.10; see assets/eng_lsv/PROVENANCE.md"

@@ -3,6 +3,11 @@ export type ModuleType =
 
 export interface ModuleConfig {
   name: string;
+  /**
+   * The short name shown in tabs and menus, such as "KJV": 1 to 12
+   * characters, any script, no spaces at either end.
+   */
+  abbreviation: string;
   description: string;
   moduleType: ModuleType;
   year?: number;

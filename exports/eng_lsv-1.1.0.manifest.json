@@ -1,0 +1,25 @@
+{
+  "type": "bible-nav module manifest",
+  "manifestVersion": 1,
+  "module": {
+    "id": "eng_lsv",
+    "version": "1.1.0",
+    "formatVersion": 2,
+    "name": "Literal Standard Version",
+    "abbreviation": "LSV",
+    "languageCode": "eng"
+  },
+  "file": {
+    "name": "eng_lsv-1.1.0.db",
+    "size": 56004608,
+    "sha256": "f67f37209231db7386d9915b72985235859640fe20f65748bde21ea1a1d6c082"
+  },
+  "text": {
+    "treeVersion": 1,
+    "edition": "eBible.org englsv, 2026-10-30 release (Literal Standard Version, Covenant Press, 2020)",
+    "source": "USFM from eBible.org englsv_usfm.zip of 2026-10-30 (SHA-256 b5fd551d49086785430ca4d670e2914b53c63fd65cb84717b7b200466305861f), converted to USX with usfmtc 0.4.10; see assets/eng_lsv/PROVENANCE.md",
+    "textRoot": "988d5ae656ab96b8daa9d83dd21a110513fafa3550aa39c5836f2163db72d3db",
+    "contentRoot": "fe43a29977e4a3daca114a00d3798ff0e75542a48c26978b9544e04608a8c4fa"
+  },
+  "createdAt": "2026-11-15"
+}

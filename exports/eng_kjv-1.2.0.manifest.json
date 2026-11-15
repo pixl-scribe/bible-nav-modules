@@ -1,0 +1,25 @@
+{
+  "type": "bible-nav module manifest",
+  "manifestVersion": 1,
+  "module": {
+    "id": "eng_kjv",
+    "version": "1.2.0",
+    "formatVersion": 2,
+    "name": "King James Version (1769)",
+    "abbreviation": "KJV",
+    "languageCode": "eng"
+  },
+  "file": {
+    "name": "eng_kjv-1.2.0.db",
+    "size": 36945920,
+    "sha256": "1aecfa81874ba91f4a9f76fae1ee84470e9b6f8455cf3e2587eff90bdabfe7e5"
+  },
+  "text": {
+    "treeVersion": 1,
+    "edition": "eBible.org eng-kjv2006, 2026-11-10 release (CrossWire KJV: an electronic edition of Benjamin Blayney's 1769 Oxford text, with Strong's numbers)",
+    "source": "USX from https://v1.fetch.bible/bibles/eng_kjv/usx/{book}.usx (fetch.bible commit 7f36064, 2026-07-15), identical to eBible.org eng-kjv2006_usfx.zip of 2026-11-10 (SHA-256 ba858bf2c029179c7bd23ebd3888ed32280ab6c78ae1fe5b043ee7885038af84); see assets/eng_kjv/PROVENANCE.md",
+    "textRoot": "0337278626457c9d994ffe85b0b941affd9cc5fce1d5be90618c46ed381e0b07",
+    "contentRoot": "f693db9b1a0f0739ad08682511cef50ec040b0a04c31834fabf95291a9e0a482"
+  },
+  "createdAt": "2026-11-15"
+}

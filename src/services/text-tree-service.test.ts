@@ -191,6 +191,7 @@ const USX = (parts: {
 
 const CONFIG: ModuleConfig = {
   name: 'Test',
+  abbreviation: 'TST',
   description: 'Test',
   moduleType: 'bible',
   language: 'English',

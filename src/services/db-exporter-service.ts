@@ -31,6 +31,7 @@ export class DbExporterService {
       INSERT INTO module (
         formatVersion,
         name,
+        abbreviation,
         description,
         moduleType,
         year,
@@ -42,6 +43,7 @@ export class DbExporterService {
       ) VALUES (
         @formatVersion,
         @name,
+        @abbreviation,
         @description,
         @moduleType,
         @year,
@@ -56,6 +58,7 @@ export class DbExporterService {
     insert.run({
       formatVersion: MODULE_FORMAT_VERSION,
       name: config.name,
+      abbreviation: config.abbreviation,
       description: config.description,
       moduleType: config.moduleType,
       year: config.year ?? null,
@@ -248,6 +251,7 @@ export class DbExporterService {
           CREATE TABLE module (
             formatVersion INTEGER NOT NULL,
             name TEXT NOT NULL,
+            abbreviation TEXT NOT NULL,
             description TEXT NOT NULL,
             moduleType TEXT NOT NULL,
             year INTEGER,

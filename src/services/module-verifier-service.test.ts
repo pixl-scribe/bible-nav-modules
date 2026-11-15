@@ -29,6 +29,7 @@ const USX = `<?xml version="1.0" encoding="UTF-8"?>
 
 const CONFIG: ModuleConfig = {
   name: 'Test',
+  abbreviation: 'TST',
   description: 'Test',
   moduleType: 'bible',
   language: 'English',
