@@ -30,6 +30,11 @@ export function moduleKeys(): KeyObject[] {
   return publicKeys(MODULE_KEY_FOLDERS);
 }
 
+/** The maintainer's primary keys: the only module keys release builds trust. */
+export function primaryKeys(): KeyObject[] {
+  return publicKeys(['primary']);
+}
+
 /** The public keys that may sign key statements. */
 export function backupKeys(): KeyObject[] {
   return publicKeys(BACKUP_KEY_FOLDERS);

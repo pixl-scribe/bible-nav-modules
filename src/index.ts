@@ -2,6 +2,7 @@ import yargs, { CommandModule } from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import ModuleFactory from './module-factory';
 import StatementFactory from './statement-factory';
+import CatalogFactory from './catalog-factory';
 
 interface GenerateArgs {
   id: string;
@@ -193,6 +194,31 @@ export const checkStatementCommand: CommandModule<unknown, StatementArgs> = {
   },
 };
 
+interface PackageArgs {
+  id: string;
+}
+
+export const packageCommand: CommandModule<unknown, PackageArgs> = {
+  command: 'package',
+  describe:
+    'Checks a signed module, writes it compressed to dist/ for a release, and adds it to catalog.json',
+
+  builder: (y) =>
+    y
+      .option('id', {
+        type: 'string',
+        describe: 'The module ID to read from the assets folder',
+        demandOption: true,
+      })
+      .help('h')
+      .alias('h', 'help')
+      .strict(),
+
+  handler: async (argv) => {
+    CatalogFactory.package(argv.id);
+  },
+};
+
 // 5. Wire up to process.argv
 yargs(hideBin(process.argv))
   .command(generateCommand)
@@ -201,6 +227,7 @@ yargs(hideBin(process.argv))
   .command(makeStatementCommand)
   .command(signStatementCommand)
   .command(checkStatementCommand)
+  .command(packageCommand)
   .demandCommand(1, 'You need at least one command before moving on')
   .help()
   .fail(false)

@@ -158,3 +158,6 @@ __pycache__/
 # Module databases are published in GitHub Releases, not git. Their signed
 # manifests and signatures stay tracked as the public record.
 exports/*.db
+
+# Packaged modules, uploaded to GitHub Releases by hand
+dist/
