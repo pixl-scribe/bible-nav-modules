@@ -13,7 +13,7 @@ export const CATALOG_TYPE = 'bible-nav module catalog';
 
 /** Where Releases put a module's files: one release per module version. */
 export const RELEASE_BASE =
-  'https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download';
+  'https://github.com/pixl-scribe/bible-nav-modules/releases/download';
 
 export interface CatalogEntry {
   manifest: string;

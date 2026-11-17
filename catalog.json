@@ -10,7 +10,7 @@
         "size": 9305192,
         "sha256": "0beb8bfe9eb6b76399b79a3624adf6bf181e6b6c33abebc2e6ac57ddc1a0fb36",
         "urls": [
-          "https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download/eng_kjv-1.1.0/eng_kjv-1.1.0.db.gz"
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_kjv-1.1.0/eng_kjv-1.1.0.db.gz"
         ]
       },
       "about": {
@@ -27,7 +27,7 @@
         "size": 9305206,
         "sha256": "74b81b79132d762babcf842430d9fda393c31a2e3f0db2f96889e169dc7c3bfb",
         "urls": [
-          "https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download/eng_kjv-1.2.0/eng_kjv-1.2.0.db.gz"
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_kjv-1.2.0/eng_kjv-1.2.0.db.gz"
         ]
       },
       "about": {
@@ -44,7 +44,7 @@
         "size": 10372882,
         "sha256": "79e3066ec81b27ce426cef26509fb12921529746a089f2d77de309b28f155634",
         "urls": [
-          "https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download/eng_lsv-1.0.0/eng_lsv-1.0.0.db.gz"
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_lsv-1.0.0/eng_lsv-1.0.0.db.gz"
         ]
       },
       "about": {
@@ -61,7 +61,7 @@
         "size": 10372904,
         "sha256": "cc01a18cbe3853335cd1beafae0cfaf454b95cdbb1a7d1794f4d7d67dde77a66",
         "urls": [
-          "https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download/eng_lsv-1.1.0/eng_lsv-1.1.0.db.gz"
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_lsv-1.1.0/eng_lsv-1.1.0.db.gz"
         ]
       },
       "about": {

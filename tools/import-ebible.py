@@ -7,7 +7,7 @@ signature.txt.asc: a SHA-256 list of its files, PGP-signed by eBible's
 editors. This tool fetches the archives, checks that signature and those
 hashes, and converts the USFM to USX 3.1 with usfmtc, the reference
 converter of the USFM technical committee
-(https://gh.ali360.cloudns.ch/usfm-bible/usfmtc).
+(https://github.com/usfm-bible/usfmtc).
 
 Set up once, from bible-nav-modules:
 

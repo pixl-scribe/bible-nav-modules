@@ -33,7 +33,7 @@ eBible.org publishes USFM and USFX, each archive with a PGP-signed list of
 its files' SHA-256 hashes. `tools/import-ebible.py` fetches a text's
 archives into `assets/<module-id>/ebible/`, checks eBible's signature and the
 hashes, and converts the USFM to USX with
-[usfmtc](https://gh.ali360.cloudns.ch/usfm-bible/usfmtc), the USFM technical
+[usfmtc](https://github.com/usfm-bible/usfmtc), the USFM technical
 committee's reference converter. It needs Python 3 and GnuPG:
 
 ```

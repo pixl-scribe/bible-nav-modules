@@ -6,6 +6,7 @@ import zlib from 'node:zlib';
 import { after, describe, test } from 'node:test';
 import {
   CatalogEntry,
+  RELEASE_BASE,
   entryIdentity,
   gzipModule,
   readCatalog,
@@ -69,5 +70,32 @@ describe('the catalog', () => {
       statementsIn(keys).map((s) => s.statement),
       ['{"n":2}', '{"n":10}']
     );
+  });
+});
+
+/**
+ * The hosts modules may be downloaded from. On 2026-11-16 the release
+ * address and every download in catalog.json were found pointing at a
+ * third-party GitHub proxy: the full addresses had been rewritten on their
+ * way into the code. These tests catch that; keep this list short and
+ * readable, so a strange host stands out in review. Add biblenav.org when it
+ * serves modules.
+ */
+const trustedHosts = ['github.com'];
+
+describe('download addresses', () => {
+  test('the release address is on a trusted host', () => {
+    assert.ok(trustedHosts.includes(new URL(RELEASE_BASE).host), RELEASE_BASE);
+  });
+
+  test('every download in catalog.json is on a trusted host', () => {
+    const catalog = JSON.parse(fs.readFileSync('catalog.json', 'utf8')) as {
+      modules: { download: { urls: string[] } }[];
+    };
+    const urls = catalog.modules.flatMap((module) => module.download.urls);
+    assert.ok(urls.length > 0);
+    for (const url of urls) {
+      assert.ok(trustedHosts.includes(new URL(url).host), url);
+    }
   });
 });

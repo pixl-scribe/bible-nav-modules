@@ -18,8 +18,8 @@ copy can do is leave modules out.
 
 The catalog is published at these addresses, tried in order:
 
-1. `https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/raw/master/catalog.json`
-2. `https://raw-githubusercontent-com.072103.xyz/pixl-scribe/bible-nav-modules/master/catalog.json`
+1. `https://github.com/pixl-scribe/bible-nav-modules/raw/master/catalog.json`
+2. `https://raw.githubusercontent.com/pixl-scribe/bible-nav-modules/master/catalog.json`
 
 Some networks can't look up `raw.githubusercontent.com`, so GitHub's own
 address comes first.
@@ -42,7 +42,7 @@ file works, from anywhere, including a thumb drive.
         "size": 9071234,
         "sha256": "...",
         "urls": [
-          "https://gh.ali360.cloudns.ch/pixl-scribe/bible-nav-modules/releases/download/eng_kjv-1.1.0/eng_kjv-1.1.0.db.gz"
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_kjv-1.1.0/eng_kjv-1.1.0.db.gz"
         ]
       },
       "about": {
