@@ -1,0 +1,17 @@
+name: Strong's Greek Dictionary
+abbreviation: SG
+description: |
+  James Strong's Concise Dictionary of the Words in the Greek Testament,
+  with their Renderings in the Authorized English Version (1890), in Ulrik
+  Sandborg-Petersen's edition: every Greek word of the New Testament by its
+  Strong's number, with its derivation, meaning, and renderings in the KJV.
+moduleType: lexicon
+year: 1890
+fetchId: eng_strongs_grc
+language: English
+languageCode: eng
+license: "Public domain. James Strong, A Concise Dictionary of the Words in the Greek Testament (1890), from Michael Grier's e-text (1996) as edited with Unicode Greek by Ulrik Sandborg-Petersen, version 1.9 (2019), released under the CC0 waiver. Converted to Bible Nav's module format, with corrections listed in its PROVENANCE.md."
+version: 1.0.0
+# The exact edition, and where its source came from, for the signed manifest.
+edition: "Strong's Greek Dictionary (1890), Ulrik Sandborg-Petersen's XML edition 1.9 (2019), as published by MorphGNT"
+source: "MorphGNT strongs-dictionary-xml, strongsgreek.xml at commit dd6758b82f46b620804a8ea677d715844679eea1 (SHA-256 91474213b208a4e487d35f85c10e5c90737acc69082dad15dec5431406003545), converted to TEI by tools/import-strongs-greek.py; see assets/eng_strongs_grc/PROVENANCE.md"

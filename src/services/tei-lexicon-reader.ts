@@ -112,6 +112,9 @@ export function joinText(items: BodyItem[]): BodyItem[] {
   return joined.filter((item) => item !== '');
 }
 
+/** Links into another lexicon's file, which this lexicon can't check. */
+const EXTERNAL = new WeakSet<BodyElement>();
+
 function isSourceCorrection(node: XmlNode): boolean {
   return nameOf(node) === 'note' && attrsOf(node).type === 'sourceCorrection';
 }
@@ -138,17 +141,38 @@ function inline(nodes: XmlNode[], where: string): BodyItem[] {
         ['type', 'target', 'xml:lang', 'bn:translit', 'bn:pron'],
         where
       );
-      if (attrs.type !== 'entry' || !attrs.target?.startsWith('#')) {
+      const hash = attrs.target?.indexOf('#') ?? -1;
+      if (attrs.type !== 'entry' || hash < 0) {
         throw new Error(
-          `${where}: <ref> must be type="entry" with target="#..."`
+          `${where}: <ref> must be type="entry" with target="#..." or "<file>#..."`
         );
       }
-      const target = attrs.target.slice(1);
+      const target = attrs.target.slice(hash + 1);
       const strong = normalizeStrong(target);
+      const external = hash > 0;
+      // A link into another lexicon's file must be a Strong's number, which
+      // the app opens in a lexicon that has it.
+      if (external && strong !== target) {
+        throw new Error(
+          `${where}: a link into another lexicon must be to a Strong's number`
+        );
+      }
+      const ref = element(
+        'ref',
+        strong === target ? { strong } : { key: target },
+        inline(childrenOf(node), where)
+      );
+      if (external) EXTERNAL.add(ref);
+      items.push(ref);
+    } else if (name === 'foreign') {
+      expectAttrs(node, ['xml:lang'], where);
+      if (!attrs['xml:lang']) {
+        throw new Error(`${where}: <foreign> without xml:lang`);
+      }
       items.push(
         element(
-          'ref',
-          strong === target ? { strong } : { key: target },
+          'foreign',
+          { lang: attrs['xml:lang'] },
           inline(childrenOf(node), where)
         )
       );
@@ -201,6 +225,9 @@ function readEntry(node: XmlNode): LexiconEntry {
   let deriv: BodyElement | undefined;
   let def: BodyElement | undefined;
   let kjv: BodyElement | undefined;
+  /** Alternative forms of the headword, and remarks after the renderings. */
+  let forms: BodyElement | undefined;
+  let comment: BodyElement | undefined;
   let haveForm = false;
 
   for (const child of elements(node, where)) {
@@ -252,6 +279,16 @@ function readEntry(node: XmlNode): LexiconEntry {
       }
     } else if (isSourceCorrection(child)) {
       continue;
+    } else if (name === 'note' && attrsOf(child).type === 'forms' && !forms) {
+      expectAttrs(child, ['type'], where);
+      forms = element('form', {}, inline(childrenOf(child), where));
+    } else if (
+      name === 'note' &&
+      attrsOf(child).type === 'comment' &&
+      !comment
+    ) {
+      expectAttrs(child, ['type'], where);
+      comment = element('note', {}, inline(childrenOf(child), where));
     } else {
       throw new Error(`${where}: unexpected <${name}> in an entry`);
     }
@@ -259,7 +296,7 @@ function readEntry(node: XmlNode): LexiconEntry {
   if (!entry.headword || !entry.headwordLang) {
     throw new Error(`${where}: no headword`);
   }
-  entry.body = [deriv, def, kjv].filter(
+  entry.body = [forms, deriv, def, kjv, comment].filter(
     (part): part is BodyElement => part !== undefined
   );
   return entry;
@@ -286,6 +323,7 @@ function checkLinks(lexicon: Lexicon): void {
       if (
         item.style === 'ref' &&
         strong !== undefined &&
+        !EXTERNAL.has(item) &&
         !strongs.has(strong)
       ) {
         throw new Error(`${where}: link to ${strong}, which no entry has`);

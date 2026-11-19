@@ -56,7 +56,8 @@ function scanTei(xml: string): ScannedEntry[] {
       return found ? stripTags(found[1]) : '';
     };
     const links = [
-      ...body.matchAll(/<ref type="entry" target="#([^"]+)"/g),
+      // In this file ("#G25") or another lexicon's ("<file>#H5689").
+      ...body.matchAll(/<ref type="entry" target="[^"#]*#([^"]+)"/g),
     ].map((m) => m[1].replace(/^([HG])0*/, '$1'));
     const words = [
       ...body.matchAll(/<mentioned ([^>]*)>([^<]*)<\/mentioned>/g),
@@ -93,6 +94,8 @@ function scanTei(xml: string): ScannedEntry[] {
         one(/<pron>([^<]*)<\/pron>/, body, 'pronunciation', key)
       ),
       parts: {
+        form: part(/<note type="forms">([\s\S]*?)<\/note>/),
+        note: part(/<note type="comment">([\s\S]*?)<\/note>/),
         deriv: part(/<etym>([\s\S]*?)<\/etym>/),
         def: part(/<def>([\s\S]*?)<\/def>/),
         kjv: part(/<note type="kjvRenderings">([\s\S]*?)<\/note>/),
@@ -168,7 +171,7 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
       expect('transliteration', row.translit, tei.translit);
       expect('pronunciation', row.pronunciation, tei.pronunciation);
       const body = JSON.parse(row.body) as Stored[];
-      for (const style of ['deriv', 'def', 'kjv']) {
+      for (const style of ['form', 'deriv', 'def', 'kjv', 'note']) {
         const top = body.filter(
           (item) => typeof item !== 'string' && item.style === style
         );

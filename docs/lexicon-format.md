@@ -14,7 +14,7 @@ different.
 | Id | Abbreviation | Lexicon | Source | License |
 |---|---|---|---|---|
 | `eng_strongs_heb` | SH | Strong's Hebrew and Chaldee Dictionary (1890) | Open Scriptures `strongs`, `hebrew/StrongHebrewG.xml` | Public domain |
-| `eng_strongs_grc` | SG | Strong's Greek Dictionary (1890) | Open Scriptures `strongs`, `greek/StrongsGreekDictionaryXML_1.4/strongsgreek.xml` | Public domain |
+| `eng_strongs_grc` | SG | Strong's Greek Dictionary (1890) | Ulrik Sandborg-Petersen's XML 1.9 (2019), MorphGNT `strongs-dictionary-xml`, `strongsgreek.xml` | Public domain (CC0) |
 | `eng_middle_liddell` | LS | An Intermediate Greek-English Lexicon (Liddell and Scott, 1889) | Perseus 1999.04.0058, Benjamin Linskey's corrected copy | CC BY-SA 3.0 US |
 | `eng_bdb` | BDB | A Hebrew and English Lexicon of the Old Testament (Brown, Driver and Briggs, 1906), with its Aramaic section | Sefaria's "BDB Dictionary" and "BDB Aramaic Dictionary", from Sefaria's database dump | Public domain |
 
@@ -66,10 +66,15 @@ importer counts what it leaves out, so nothing is dropped by accident.
   module. Done: `tools/import-strongs-hebrew.py` and its independent check
   `tools/check-strongs-hebrew.py`.
 - **Strong's Greek.** Kept: the headword (`unicode`), transliteration,
-  pronunciation, `strongs_derivation` (From), `strongs_def` (Meaning) and
-  `kjv_def` (In the KJV), with their links (`strongsref`). The Beta Code
+  pronunciation, alternative forms ("or ..."), `strongs_derivation`
+  (From), `strongs_def` (Meaning), `kjv_def` (In the KJV), and Strong's
+  remarks after the renderings, with their Greek and Latin words and links
+  (`strongsref`), including links to Strong's Hebrew numbers. The Beta Code
   (`BETA`) is used only to test the Beta Code converter. The `see` lists
-  repeat the links already in the text and are left out.
+  repeat the links already in the text and are left out, and so are the
+  101 numbers Strong left unused. Done: `tools/import-strongs-greek.py` and
+  `tools/check-strongs-greek.py`; see its PROVENANCE.md for the two
+  corrections version 1.9 still needs, both links.
 - **Liddell and Scott.** Kept: every entry with its headword, etymology,
   numbered senses, translations, usage labels, Greek words, and links. The
   Greek is Beta Code and is converted to Unicode (NFC). All 36,490 entries
@@ -143,14 +148,16 @@ with optional attributes as further string fields. The styles are:
 | `tr` | | A translation, in bold | LS |
 | `usg` | `title` (optional) | A usage label, such as `NTest.`, with its meaning | LS |
 | `foreign` | `lang` | A Hebrew or Greek word inside English text | all |
-| `ref` | `strong` or `key` | A link to another entry; its children are the text shown | all |
+| `ref` | `strong` or `key` | A link to another entry; its children are the text shown. A Strong's number of another language (SG's links to Hebrew numbers) opens in that language's lexicon. In TEI such a link points into the other lexicon's file (`eng_strongs_heb.tei.xml#H85`) | all |
 | `word` | `lang`, `translit`, `pronunciation` (each optional except `lang`) | A Hebrew or Greek word with no link, such as an alternative spelling; its children are the word, and may be empty when the dictionary gives only a pronunciation | SH |
 
 A `foreign` element's `lang` is a language code (`hbo`, `arc`, `syc`,
 `ar`, `grc`, ...), so the app can choose the font and text direction.
 
 The top level holds only `deriv`, `def`, `kjv`, `etym`, `form`, `note` and
-`sense` elements. Any other style, or an attribute not listed, fails the
+`sense` elements. In Strong's Greek, `form` holds the alternative forms
+(TEI `note type="forms"`) and `note` Strong's remarks after the KJV
+renderings (TEI `note type="comment"`). Any other style, or an attribute not listed, fails the
 build, as unknown USX does for Bibles.
 
 A lexicon holds dictionary forms only. The grammar of a word as it appears
@@ -269,6 +276,9 @@ files"):
     Internet Archive, StrongsGreekAndHebrewDictionaries1890.
 ```
 
+- A link correction gives `link` (the number linked to) and `corr` (the
+  right number) instead of `find` and `sic`; the link must occur exactly
+  once in the entry.
 - `find` must occur exactly once in one text item of that entry, or the
   build fails. So if the source is fixed upstream, the build says so and the
   correction can be removed.

@@ -113,7 +113,7 @@ describe('TEI lexicon reader', () => {
   test('unknown markup fails, so nothing is dropped silently', () => {
     const cases = [
       entry('H2', '\n        <usg>x</usg>'),
-      entry('H2', '', 'from <foreign xml:lang="grc">x</foreign>'),
+      entry('H2', '', 'from <gloss>x</gloss>'),
       entry('H2', '', '<hi rend="bold">x</hi>'),
       entry('H2', '', '<mentioned xml:lang="hbo" bn:other="1">x</mentioned>'),
     ];
@@ -124,6 +124,44 @@ describe('TEI lexicon reader', () => {
         body
       );
     }
+  });
+
+  test('Greek entries: forms, Latin, remarks, and links into another lexicon', () => {
+    const greek = `      <entry xml:id="G1" xml:lang="en">
+        <form type="lemma">
+          <orth xml:lang="grc">A</orth>
+          <orth type="transliteration">a</orth>
+          <pron>al'-fah</pron>
+        </form>
+        <note type="forms">or <mentioned xml:lang="grc" bn:pron="p">B</mentioned></note>
+        <etym>for Latin <foreign xml:lang="la">aquila</foreign>, from <ref type="entry" target="eng_strongs_heb.tei.xml#H85" xml:lang="hbo">C</ref> and <choice xml:id="c1"><sic><ref type="entry" target="#G5689"/></sic><corr><ref type="entry" target="#G1" xml:lang="grc">A</ref></corr></choice>;</etym>
+        <note type="comment">Compare <ref type="entry" target="#G1" xml:lang="grc">A</ref>.</note>
+      </entry>`;
+    const [entry] = readTeiLexicon(tei(greek)).entries;
+    assert.deepEqual(
+      entry.body.map((part) => (part as { style: string }).style),
+      ['form', 'deriv', 'note']
+    );
+    assert.deepEqual(entry.body[1], {
+      style: 'deriv',
+      attributes: {},
+      children: [
+        'for Latin ',
+        { style: 'foreign', attributes: { lang: 'la' }, children: ['aquila'] },
+        ', from ',
+        // Into Strong's Hebrew: allowed, though this lexicon lacks it.
+        { style: 'ref', attributes: { strong: 'H85' }, children: ['C'] },
+        ' and ',
+        // The correction's link, not the source's.
+        { style: 'ref', attributes: { strong: 'G1' }, children: ['A'] },
+        ';',
+      ],
+    });
+  });
+
+  test('a link into this lexicon must still lead to an entry', () => {
+    const body = entry('G1', '', 'from <ref type="entry" target="#G2">B</ref>');
+    assert.throws(() => readTeiLexicon(tei(body)), /link to G2/);
   });
 
   test('two entries with one key fail', () => {

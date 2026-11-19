@@ -1,0 +1,32 @@
+# Corrections to the source (source/strongsgreek.xml, version 1.9), applied
+# by tools/import-strongs-greek.py. See docs/lexicon-format.md,
+# "Corrections", and assets/eng_strongs_heb/corrections.yaml.
+#
+# A text correction gives entry, find, sic, corr and evidence. A link
+# correction gives the number linked to (link) and the right one (corr)
+# instead of find and sic.
+#
+# Correct only real errors against the printed edition (Internet Archive,
+# StrongsGreekAndHebrewDictionaries1890, StrongGreekDictionary). In it,
+# "The numbers not in italics refer to the words in the Hebrew Dictionary"
+# (page 7); the plain-text e-text lost the italics, so a link's language
+# was guessed. Version 1.9 fixed most such guesses; these two remain.
+
+- entry: G912
+  link: H5
+  corr: G5
+  evidence: >-
+    Strong (1890), Greek Dictionary, page 18, entry 912: "of Chald. or.
+    [1347 and 5]; son of Abba", the 5 in italics (Greek: G5, Abba), the
+    1347 in roman type (Hebrew, kept as printed). Internet Archive,
+    StrongsGreekAndHebrewDictionaries1890, StrongGreekDictionary, image n15.
+- entry: G4567
+  link: H4566
+  corr: G4566
+  evidence: >-
+    Strong (1890), Greek Dictionary, page 64, entry 4567: "of Chald. or.
+    corresp. to 4566 (with the def. affix)", the number in italics (Greek:
+    G4566, Satan), as is "the same as 4549" in entry 4569 below it, while
+    the page's Hebrew numbers are roman, as in "[5429]" (entry 4568).
+    Internet Archive, StrongsGreekAndHebrewDictionaries1890,
+    StrongGreekDictionary, image n61.
