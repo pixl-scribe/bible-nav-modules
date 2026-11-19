@@ -77,8 +77,87 @@ export function buildManifest(
   };
 }
 
+/**
+ * A lexicon's manifest (docs/lexicon-format.md, "The manifest"): it names
+ * its module type, and has an `entries` section in place of `text`.
+ */
+export interface LexiconManifest {
+  type: 'bible-nav module manifest';
+  manifestVersion: 1;
+  module: {
+    id: string;
+    version: string;
+    moduleType: 'lexicon';
+    formatVersion: number;
+    name: string;
+    abbreviation: string;
+    languageCode: string;
+  };
+  file: { name: string; size: number; sha256: string };
+  entries: {
+    treeVersion: number;
+    edition: string;
+    source: string;
+    lookups: string[];
+    count: number;
+    keysRoot: string;
+    contentRoot: string;
+  };
+  createdAt: string;
+}
+
+export function buildLexiconManifest(
+  moduleId: string,
+  config: ModuleConfig,
+  dbFile: string,
+  fileName: string,
+  details: {
+    formatVersion: number;
+    treeVersion: number;
+    lookups: string[];
+    count: number;
+    keysRoot: string;
+    contentRoot: string;
+  },
+  createdAt: Date
+): LexiconManifest {
+  if (!config.edition || !config.source) {
+    throw new Error(
+      `config.yaml for ${moduleId} needs an edition and a source for the manifest`
+    );
+  }
+  return {
+    type: MANIFEST_TYPE,
+    manifestVersion: 1,
+    module: {
+      id: moduleId,
+      version: config.version,
+      moduleType: 'lexicon',
+      formatVersion: details.formatVersion,
+      name: config.name,
+      abbreviation: config.abbreviation,
+      languageCode: config.languageCode,
+    },
+    file: {
+      name: fileName,
+      size: fs.statSync(dbFile).size,
+      sha256: fileSha256(dbFile),
+    },
+    entries: {
+      treeVersion: details.treeVersion,
+      edition: config.edition,
+      source: config.source,
+      lookups: details.lookups,
+      count: details.count,
+      keysRoot: details.keysRoot,
+      contentRoot: details.contentRoot,
+    },
+    createdAt: createdAt.toISOString().slice(0, 10),
+  };
+}
+
 /** The manifest's bytes: two-space JSON, UTF-8, with a final newline. */
-export function manifestBytes(manifest: Manifest): Buffer {
+export function manifestBytes(manifest: Manifest | LexiconManifest): Buffer {
   return Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 }
 

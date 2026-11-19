@@ -30,6 +30,11 @@ import {
 } from './services/signing-service';
 import { backupKeyIds, moduleKeys, readSigningKey } from './keys';
 import { checkVersionRule } from './services/version-rule';
+import {
+  buildManifestFor,
+  checkLexiconExport,
+  writeLexicon,
+} from './lexicon-factory';
 
 /**
  * Tracks position across books while exporting. paragraph numbers are global,
@@ -62,27 +67,48 @@ export default class ModuleFactory {
     const tempFile = `${files.db}.tmp`;
 
     try {
-      await ModuleFactory.writeModule(moduleId, tempFile);
-      const summary = verifyModule(tempFile, path.resolve('assets', moduleId));
-      console.log(
-        `Verified ${summary.books} books, ${summary.paragraphs} paragraphs, ${summary.verses} verses, and ${summary.headings} headings against the USX.`
-      );
-      const roots = moduleRoots(tempFile);
-      checkVersionRule(
-        path.resolve('exports'),
-        moduleId,
-        config.version,
-        roots.textRoot
-      );
-      const manifest = buildManifest(
-        moduleId,
-        config,
-        tempFile,
-        path.basename(files.db),
-        roots,
-        new Date()
-      );
-      const bytes = manifestBytes(manifest);
+      let bytes: Buffer;
+      let fileSha: string;
+      if (config.moduleType === 'lexicon') {
+        const details = writeLexicon(moduleId, config, tempFile);
+        const manifest = buildManifestFor(
+          moduleId,
+          config,
+          tempFile,
+          path.basename(files.db),
+          details
+        );
+        bytes = manifestBytes(manifest);
+        fileSha = manifest.file.sha256;
+      } else {
+        await ModuleFactory.writeModule(moduleId, tempFile);
+        const summary = verifyModule(
+          tempFile,
+          path.resolve('assets', moduleId)
+        );
+        console.log(
+          `Verified ${summary.books} books, ${summary.paragraphs} paragraphs, ${summary.verses} verses, and ${summary.headings} headings against the USX.`
+        );
+        const roots = moduleRoots(tempFile);
+        checkVersionRule(
+          path.resolve('exports'),
+          moduleId,
+          config.version,
+          roots.textRoot
+        );
+        const manifest = buildManifest(
+          moduleId,
+          config,
+          tempFile,
+          path.basename(files.db),
+          roots,
+          new Date()
+        );
+        bytes = manifestBytes(manifest);
+        fileSha = manifest.file.sha256;
+        console.log(`Text root:    ${roots.textRoot}`);
+        console.log(`Content root: ${roots.contentRoot}`);
+      }
       const developmentKey = createPrivateKey(
         fs.readFileSync(path.resolve(DEVELOPMENT_KEY))
       );
@@ -95,9 +121,7 @@ export default class ModuleFactory {
         files.signatures,
         formatSignatures([signManifest(bytes, developmentKey)])
       );
-      console.log(`Text root:    ${roots.textRoot}`);
-      console.log(`Content root: ${roots.contentRoot}`);
-      console.log(`File SHA-256: ${manifest.file.sha256}`);
+      console.log(`File SHA-256: ${fileSha}`);
       console.log(
         `Wrote ${path.basename(files.db)} with its manifest, signed with the development key.`
       );
@@ -119,18 +143,22 @@ export default class ModuleFactory {
       moduleId,
       config.version
     );
-    const summary = verifyModule(files.db, path.resolve('assets', moduleId));
-    console.log(
-      `Verified ${summary.books} books, ${summary.paragraphs} paragraphs, ${summary.verses} verses, and ${summary.headings} headings against the USX.`
-    );
-    const manifest = ModuleFactory.checkManifest(
-      moduleId,
-      config.version,
-      files
-    );
-    console.log(
-      `The manifest matches the module (text root ${manifest.text.textRoot}).`
-    );
+    if (config.moduleType === 'lexicon') {
+      checkLexiconExport(moduleId, config.version);
+    } else {
+      const summary = verifyModule(files.db, path.resolve('assets', moduleId));
+      console.log(
+        `Verified ${summary.books} books, ${summary.paragraphs} paragraphs, ${summary.verses} verses, and ${summary.headings} headings against the USX.`
+      );
+      const manifest = ModuleFactory.checkManifest(
+        moduleId,
+        config.version,
+        files
+      );
+      console.log(
+        `The manifest matches the module (text root ${manifest.text.textRoot}).`
+      );
+    }
 
     const lines = parseSignatures(fs.readFileSync(files.signatures, 'utf8'));
     const byBackup = lines
@@ -196,6 +224,10 @@ export default class ModuleFactory {
       moduleId,
       config.version
     );
+    if (config.moduleType === 'lexicon') {
+      checkLexiconExport(moduleId, config.version);
+      return;
+    }
     verifyModule(files.db, path.resolve('assets', moduleId));
     ModuleFactory.checkManifest(moduleId, config.version, files);
   }
@@ -255,7 +287,7 @@ export default class ModuleFactory {
     const verseCounts = VerseCountService.getVerseCounts();
     const position: ExportPosition = { paragraph: 0, lastVerseId: 0 };
 
-    for (const testament of config.testamentsIncluded) {
+    for (const testament of config.testamentsIncluded ?? []) {
       let chapters: TestamentVerseCounts | undefined = undefined;
       switch (testament) {
         case 'OT':

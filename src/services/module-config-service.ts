@@ -17,6 +17,24 @@ export default class ModuleConfigService {
 
   /** Fails on settings a module can't be built without. */
   public static check(config: ModuleConfig, source: string): void {
+    if (config.moduleType === 'bible') {
+      if (
+        !Array.isArray(config.testamentsIncluded) ||
+        config.testamentsIncluded.length === 0
+      ) {
+        throw new Error(
+          `${source}: a Bible needs testamentsIncluded (OT, NT).`
+        );
+      }
+    } else if (config.moduleType === 'lexicon') {
+      if (config.testamentsIncluded !== undefined) {
+        throw new Error(`${source}: a lexicon has no testamentsIncluded.`);
+      }
+    } else {
+      throw new Error(
+        `${source}: moduleType ${String(config.moduleType)} can't be generated yet (bible or lexicon).`
+      );
+    }
     const abbreviation = config.abbreviation;
     if (
       typeof abbreviation !== 'string' ||

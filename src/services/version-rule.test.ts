@@ -43,6 +43,20 @@ describe('the versioning rule', () => {
     checkVersionRule(dir, 'tst', '1.0.0', 'z');
   });
 
+  test("a lexicon's major version follows its keys root", () => {
+    fs.writeFileSync(
+      path.join(dir, 'lex-1.0.0.manifest.json'),
+      JSON.stringify({ entries: { keysRoot: 'k' } })
+    );
+    // Corrected wording only: same keys, a minor version.
+    checkVersionRule(dir, 'lex', '1.1.0', 'k', 'keys');
+    assert.throws(
+      () => checkVersionRule(dir, 'lex', '1.1.0', 'k2', 'keys'),
+      /Added, removed, or renamed entries/
+    );
+    checkVersionRule(dir, 'lex', '2.0.0', 'k2', 'keys');
+  });
+
   test('versions must be major.minor.patch', () => {
     assert.throws(() => checkVersionRule(dir, 'tst', '1.1', 'a'), /major/);
   });

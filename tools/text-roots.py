@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Computes a Bible Nav module's text root and content root, following
-docs/integrity-spec.md and nothing else.
+docs/integrity-spec.md and nothing else; for a lexicon module, its keys root
+and content root, following docs/lexicon-format.md ("The lexicon tree").
 
 It shares no code with the generator, on purpose: if both agree, the spec is
 clear enough to implement and the generator follows it. It needs only Python 3
@@ -9,7 +10,8 @@ and its standard library, so anyone can check a copy:
 
     python3 tools/text-roots.py eng_kjv-1.1.0.db
 
-and compare the output with "textRoot" and "contentRoot" in the manifest.
+and compare the output with "textRoot" and "contentRoot" in the manifest
+(for a lexicon, "keysRoot" and "contentRoot" under "entries").
 """
 import hashlib, json, sqlite3, struct, sys
 
@@ -90,5 +92,37 @@ def roots(path):
         result[view] = H(b'\x01' + s('bible-nav text tree') + u32(1) + s(view) + u32(len(tests)) + b''.join(tests)).hex()
     return result
 
+def body_items(stored):
+    # Every key but style and children is an attribute.
+    out = []
+    for c in stored:
+        if isinstance(c, str):
+            out.append(c)
+        else:
+            attrs = [(k, v) for k, v in c.items() if k not in ('style', 'children')]
+            out.append((c['style'], attrs, body_items(c['children'])))
+    return out
+
+def lexicon_roots(path):
+    db = sqlite3.connect(f'file:{path}?immutable=1&mode=ro', uri=True)
+    rows = db.execute('SELECT key, headword, headwordLang, homograph, translit, pronunciation, '
+                      'allCited, body FROM entries ORDER BY id').fetchall()
+    looks = db.execute('SELECT l.kind, l.value, e.key FROM lookups l JOIN entries e ON e.id = l.entryId').fetchall()
+    looks.sort(key=lambda r: tuple(x.encode('utf-8') for x in r))
+    look_leaves = [H(b'\x00' + s('lookup') + s(k) + s(v) + s(e)) for k, v, e in looks]
+    tail = u32(len(look_leaves)) + b''.join(look_leaves)
+    head = lambda view: b'\x01' + s('bible-nav lexicon tree') + u32(1) + s(view) + u32(len(rows))
+    keys = H(head('keys') + b''.join(s(r[0]) for r in rows) + tail)
+    leaves = [H(b'\x00' + s('entry') + s(key) + s(hw) + s(lang) + s(hom) + s(tr) + s(pr) + u32(ac)
+                + enc_list(body_items(json.loads(body))))
+              for key, hw, lang, hom, tr, pr, ac, body in rows]
+    content = H(head('content') + b''.join(leaves) + tail)
+    return {'keys': keys.hex(), 'content': content.hex()}
+
+def is_lexicon(path):
+    db = sqlite3.connect(f'file:{path}?immutable=1&mode=ro', uri=True)
+    return db.execute('SELECT moduleType FROM module').fetchone()[0] == 'lexicon'
+
 if __name__ == '__main__':
-    print(json.dumps(roots(sys.argv[1]), indent=2))
+    path = sys.argv[1]
+    print(json.dumps(lexicon_roots(path) if is_lexicon(path) else roots(path), indent=2))

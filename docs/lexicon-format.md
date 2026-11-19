@@ -219,7 +219,7 @@ place of `text`:
     "formatVersion": 1,
     "name": "Strong's Hebrew Dictionary",
     "abbreviation": "SH",
-    "languageCode": "en"
+    "languageCode": "eng"
   },
   "file": { "name": "eng_strongs_heb-1.0.0.db", "size": 0, "sha256": "..." },
   "entries": {
@@ -284,7 +284,8 @@ As with Bibles, the build fails unless an independent reader, sharing no
 code with the converter or the generator, gives the same plain text for
 every entry: once from the source to the TEI file (after leaving out the
 same parts and applying the corrections), and once from the TEI file to the
-module. `tools/text-roots.py` gains the lexicon tree.
+module. `tools/text-roots.py` computes the lexicon tree too, sharing no code with
+the generator.
 
 For BDB, the converter also checks the Hebrew and Aramaic it quotes from
 Scripture: where a quotation sits beside a single reference, its words

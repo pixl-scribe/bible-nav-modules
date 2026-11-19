@@ -22,7 +22,8 @@ export interface ModuleConfig {
    */
   edition?: string;
   source?: string;
-  testamentsIncluded: string[];
+  /** Bibles only: the testaments to read, OT and/or NT. */
+  testamentsIncluded?: string[];
   /**
    * Where this text's numbering differs from assets/bible-verse-counts.yaml
    * (the KJV's), each one deliberate: "3JN 1": 15 means 3 John 1 has 15
