@@ -71,6 +71,23 @@
       }
     },
     {
+      "manifest": "{\n  \"type\": \"bible-nav module manifest\",\n  \"manifestVersion\": 1,\n  \"module\": {\n    \"id\": \"eng_strongs_grc\",\n    \"version\": \"1.0.0\",\n    \"moduleType\": \"lexicon\",\n    \"formatVersion\": 1,\n    \"name\": \"Strong's Greek Dictionary\",\n    \"abbreviation\": \"SG\",\n    \"languageCode\": \"eng\"\n  },\n  \"file\": {\n    \"name\": \"eng_strongs_grc-1.0.0.db\",\n    \"size\": 2207744,\n    \"sha256\": \"f784f35f5114ad15251d43c9a8ad03f37c6acfc4ccd2e9a557892778cb97a03e\"\n  },\n  \"entries\": {\n    \"treeVersion\": 1,\n    \"edition\": \"Strong's Greek Dictionary (1890), Ulrik Sandborg-Petersen's XML edition 1.9 (2019), as published by MorphGNT\",\n    \"source\": \"MorphGNT strongs-dictionary-xml, strongsgreek.xml at commit dd6758b82f46b620804a8ea677d715844679eea1 (SHA-256 91474213b208a4e487d35f85c10e5c90737acc69082dad15dec5431406003545), converted to TEI by tools/import-strongs-greek.py; see assets/eng_strongs_grc/PROVENANCE.md\",\n    \"lookups\": [\n      \"strong:G\"\n    ],\n    \"count\": 5523,\n    \"keysRoot\": \"1bb29528939fa8ede4489cbb9827db2a97fb009743458f9e3f8d355f70818eaf\",\n    \"contentRoot\": \"9ebcabfc3d030f631d5c39ce76edb350ca3ec33aa3fad69b7384b6c9523aa898\"\n  },\n  \"createdAt\": \"2026-11-19\"\n}\n",
+      "signatures": "ed25519 c7703a6f42bedeee S9D+xymRi/KWmeeV59JcnhZvli0IaX5HSs7HHh/lP7S8wm6iuGNVxkILzGqM2oqKkkZ4qZ9ghy3RQIZYSpfwBw==\ned25519 447d4fa16f501391 fJKlbiBxT5Aw0RMelZnaj9kLwpMEK1KeN5hm0cY9lrbauUnQxLFl5e3FqXk6UQIucUiYfLrPtwGL1HWujL16Cw==\n",
+      "download": {
+        "name": "eng_strongs_grc-1.0.0.db.gz",
+        "size": 534540,
+        "sha256": "698ef7d30099bc26ade17f97bc5ebddb4af25842f9faff3eefb434f19c9ce957",
+        "urls": [
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_strongs_grc-1.0.0/eng_strongs_grc-1.0.0.db.gz"
+        ]
+      },
+      "about": {
+        "description": "James Strong's Concise Dictionary of the Words in the Greek Testament,\nwith their Renderings in the Authorized English Version (1890), in Ulrik\nSandborg-Petersen's edition: every Greek word of the New Testament by its\nStrong's number, with its derivation, meaning, and renderings in the KJV.",
+        "language": "English",
+        "license": "Public domain. James Strong, A Concise Dictionary of the Words in the Greek Testament (1890), from Michael Grier's e-text (1996) as edited with Unicode Greek by Ulrik Sandborg-Petersen, version 1.9 (2019), released under the CC0 waiver. Converted to Bible Nav's module format, with corrections listed in its PROVENANCE.md."
+      }
+    },
+    {
       "manifest": "{\n  \"type\": \"bible-nav module manifest\",\n  \"manifestVersion\": 1,\n  \"module\": {\n    \"id\": \"eng_strongs_heb\",\n    \"version\": \"1.0.0\",\n    \"moduleType\": \"lexicon\",\n    \"formatVersion\": 1,\n    \"name\": \"Strong's Hebrew Dictionary\",\n    \"abbreviation\": \"SH\",\n    \"languageCode\": \"eng\"\n  },\n  \"file\": {\n    \"name\": \"eng_strongs_heb-1.0.0.db\",\n    \"size\": 3756032,\n    \"sha256\": \"89c9a7157275c75de4dbce5a194bce3f64a06923a99067169afdeb8a35ded138\"\n  },\n  \"entries\": {\n    \"treeVersion\": 1,\n    \"edition\": \"Strong's Hebrew Dictionary (1890), Open Scriptures OSIS edition of 2010 (David Troidl, David Instone-Brewer)\",\n    \"source\": \"Open Scriptures strongs, hebrew/StrongHebrewG.xml at commit 0acd2f251c2d35ff8db2dece4e0593979d3ac223 (SHA-256 1f9659ea208f4c498843a0280dacb1448627c33ca77712642d8705793ab66061), converted to TEI by tools/import-strongs-hebrew.py; see assets/eng_strongs_heb/PROVENANCE.md\",\n    \"lookups\": [\n      \"strong:H\"\n    ],\n    \"count\": 8674,\n    \"keysRoot\": \"ce2854969883b4f2152d4415aa274da0b09c4ccb8e63bfa281c0b9bfd55d5555\",\n    \"contentRoot\": \"5658e98cf24244d5fcaa8eaafb422d9281cab06a8fbb44b024de011f69485fe9\"\n  },\n  \"createdAt\": \"2026-11-19\"\n}\n",
       "signatures": "ed25519 c7703a6f42bedeee /fkpJISqvWNi479ZIfGcOWacO1EjmbV+x7bmGfn1J13BnXoLBaqvCGZbkdPkQjt0bpSfLhhOkrveJ+BFBhQTCQ==\ned25519 447d4fa16f501391 fDs+dH5Z+ZWrG+x3ptYUKITlCP8wMtC09GlyzKN/rvAbEbypz6z3KrOB2++6gQd9PPiEkNT6yl5FdDlWEqwtBw==\n",
       "download": {

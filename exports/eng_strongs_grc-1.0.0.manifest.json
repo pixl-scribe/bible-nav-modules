@@ -1,0 +1,30 @@
+{
+  "type": "bible-nav module manifest",
+  "manifestVersion": 1,
+  "module": {
+    "id": "eng_strongs_grc",
+    "version": "1.0.0",
+    "moduleType": "lexicon",
+    "formatVersion": 1,
+    "name": "Strong's Greek Dictionary",
+    "abbreviation": "SG",
+    "languageCode": "eng"
+  },
+  "file": {
+    "name": "eng_strongs_grc-1.0.0.db",
+    "size": 2207744,
+    "sha256": "f784f35f5114ad15251d43c9a8ad03f37c6acfc4ccd2e9a557892778cb97a03e"
+  },
+  "entries": {
+    "treeVersion": 1,
+    "edition": "Strong's Greek Dictionary (1890), Ulrik Sandborg-Petersen's XML edition 1.9 (2019), as published by MorphGNT",
+    "source": "MorphGNT strongs-dictionary-xml, strongsgreek.xml at commit dd6758b82f46b620804a8ea677d715844679eea1 (SHA-256 91474213b208a4e487d35f85c10e5c90737acc69082dad15dec5431406003545), converted to TEI by tools/import-strongs-greek.py; see assets/eng_strongs_grc/PROVENANCE.md",
+    "lookups": [
+      "strong:G"
+    ],
+    "count": 5523,
+    "keysRoot": "1bb29528939fa8ede4489cbb9827db2a97fb009743458f9e3f8d355f70818eaf",
+    "contentRoot": "9ebcabfc3d030f631d5c39ce76edb350ca3ec33aa3fad69b7384b6c9523aa898"
+  },
+  "createdAt": "2026-11-19"
+}
