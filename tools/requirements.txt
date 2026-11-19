@@ -1,6 +1,7 @@
-# For tools/import-ebible.py. Install into tools/venv:
+# For tools/import-ebible.py and the lexicon converters. Install into tools/venv:
 #   python3 -m venv tools/venv && tools/venv/bin/pip install -r tools/requirements.txt
 # Pinned, so a conversion can be repeated exactly.
 usfmtc==0.4.10
 rply==0.7.8
 regex==2026.11.9
+PyYAML==6.0.3

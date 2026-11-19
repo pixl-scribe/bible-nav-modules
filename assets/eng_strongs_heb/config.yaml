@@ -1,0 +1,17 @@
+name: Strong's Hebrew Dictionary
+abbreviation: SH
+description: |
+  James Strong's Concise Dictionary of the Words in the Hebrew Bible, with
+  their Renderings in the King James Version (1890), as edited by Open
+  Scriptures: every Hebrew and Aramaic word of the Old Testament by its
+  Strong's number, with its derivation, meaning, and renderings in the KJV.
+moduleType: lexicon
+year: 1890
+fetchId: eng_strongs_heb
+language: English
+languageCode: eng
+license: "Public domain. James Strong, A Concise Dictionary of the Words in the Hebrew Bible (1890), as edited by David Troidl and David Instone-Brewer for Open Scriptures. Converted to Bible Nav's module format, with corrections listed in its PROVENANCE.md."
+version: 1.0.0
+# The exact edition, and where its source came from, for the signed manifest.
+edition: "Strong's Hebrew Dictionary (1890), Open Scriptures OSIS edition of 2010 (David Troidl, David Instone-Brewer)"
+source: "Open Scriptures strongs, hebrew/StrongHebrewG.xml at commit 0acd2f251c2d35ff8db2dece4e0593979d3ac223 (SHA-256 1f9659ea208f4c498843a0280dacb1448627c33ca77712642d8705793ab66061), converted to TEI by tools/import-strongs-hebrew.py; see assets/eng_strongs_heb/PROVENANCE.md"

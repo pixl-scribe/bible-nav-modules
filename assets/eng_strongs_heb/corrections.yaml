@@ -1,0 +1,21 @@
+# Corrections to the source (source/StrongHebrewG.xml), applied by
+# tools/import-strongs-hebrew.py. See docs/lexicon-format.md, "Corrections".
+#
+# entry:    the Strong's number
+# find:     the source text around the error; must occur exactly once in the
+#           entry, or the conversion stops (so a fix made upstream is noticed)
+# sic:      the wrong text, exactly once inside `find`
+# corr:     what replaces it
+# evidence: where the printed edition shows the right reading
+#
+# Correct only real errors against the printed edition. Open Scriptures
+# spells out Strong's abbreviations on purpose; that is not an error.
+
+- entry: H7218
+  find: "rank, itc.)"
+  sic: "itc."
+  corr: "etc."
+  evidence: >-
+    Strong (1890), Hebrew and Chaldee Dictionary, page 106, entry 7218, reads
+    "rank, etc.)": Internet Archive, StrongsGreekAndHebrewDictionaries1890.
+    Checked by the maintainer, 2026-11-17.
