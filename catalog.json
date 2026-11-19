@@ -69,6 +69,23 @@
         "language": "English",
         "license": "Copyright © 2020 Covenant Press. Licensed under the Creative Commons Attribution-ShareAlike 4.0 International license (https://creativecommons.org/licenses/by-sa/4.0/). Source: eBible.org, https://ebible.org/details.php?id=englsv. Converted to Bible Nav's module format without changes to the text."
       }
+    },
+    {
+      "manifest": "{\n  \"type\": \"bible-nav module manifest\",\n  \"manifestVersion\": 1,\n  \"module\": {\n    \"id\": \"eng_strongs_heb\",\n    \"version\": \"1.0.0\",\n    \"moduleType\": \"lexicon\",\n    \"formatVersion\": 1,\n    \"name\": \"Strong's Hebrew Dictionary\",\n    \"abbreviation\": \"SH\",\n    \"languageCode\": \"eng\"\n  },\n  \"file\": {\n    \"name\": \"eng_strongs_heb-1.0.0.db\",\n    \"size\": 3756032,\n    \"sha256\": \"89c9a7157275c75de4dbce5a194bce3f64a06923a99067169afdeb8a35ded138\"\n  },\n  \"entries\": {\n    \"treeVersion\": 1,\n    \"edition\": \"Strong's Hebrew Dictionary (1890), Open Scriptures OSIS edition of 2010 (David Troidl, David Instone-Brewer)\",\n    \"source\": \"Open Scriptures strongs, hebrew/StrongHebrewG.xml at commit 0acd2f251c2d35ff8db2dece4e0593979d3ac223 (SHA-256 1f9659ea208f4c498843a0280dacb1448627c33ca77712642d8705793ab66061), converted to TEI by tools/import-strongs-hebrew.py; see assets/eng_strongs_heb/PROVENANCE.md\",\n    \"lookups\": [\n      \"strong:H\"\n    ],\n    \"count\": 8674,\n    \"keysRoot\": \"ce2854969883b4f2152d4415aa274da0b09c4ccb8e63bfa281c0b9bfd55d5555\",\n    \"contentRoot\": \"5658e98cf24244d5fcaa8eaafb422d9281cab06a8fbb44b024de011f69485fe9\"\n  },\n  \"createdAt\": \"2026-11-19\"\n}\n",
+      "signatures": "ed25519 c7703a6f42bedeee /fkpJISqvWNi479ZIfGcOWacO1EjmbV+x7bmGfn1J13BnXoLBaqvCGZbkdPkQjt0bpSfLhhOkrveJ+BFBhQTCQ==\ned25519 447d4fa16f501391 fDs+dH5Z+ZWrG+x3ptYUKITlCP8wMtC09GlyzKN/rvAbEbypz6z3KrOB2++6gQd9PPiEkNT6yl5FdDlWEqwtBw==\n",
+      "download": {
+        "name": "eng_strongs_heb-1.0.0.db.gz",
+        "size": 808060,
+        "sha256": "75b166645db0170f0acfe5bf00261609f715d3b43a787e2df480d1ea333dc142",
+        "urls": [
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_strongs_heb-1.0.0/eng_strongs_heb-1.0.0.db.gz"
+        ]
+      },
+      "about": {
+        "description": "James Strong's Concise Dictionary of the Words in the Hebrew Bible, with\ntheir Renderings in the King James Version (1890), as edited by Open\nScriptures: every Hebrew and Aramaic word of the Old Testament by its\nStrong's number, with its derivation, meaning, and renderings in the KJV.",
+        "language": "English",
+        "license": "Public domain. James Strong, A Concise Dictionary of the Words in the Hebrew Bible (1890), as edited by David Troidl and David Instone-Brewer for Open Scriptures. Converted to Bible Nav's module format, with corrections listed in its PROVENANCE.md."
+      }
     }
   ],
   "statements": []
