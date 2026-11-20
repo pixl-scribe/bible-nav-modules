@@ -119,8 +119,8 @@ class Source:
             lang = c.getAttribute('lang')
             if tag in ('usg', 'bibl'):
                 t = ''.join(x.data for x in c.childNodes if x.nodeType == x.TEXT_NODE)
-                # "id=..." is shown as "id."; a semicolon after it stays.
-                out.append(('id.' + (';' if t.strip().endswith(';') else '')) if t.startswith('id=') else t)
+                # "id=..." is shown as printed, "Id."; a semicolon after it stays.
+                out.append(('Id.' + (';' if t.strip().endswith(';') else '')) if t.startswith('id=') else t)
             elif tag == 'ref':
                 # Punctuation Perseus left at the end of a reference is
                 # English punctuation, not Greek.

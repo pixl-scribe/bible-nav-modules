@@ -23,7 +23,7 @@ Each entry keeps its Perseus id (n105) as its key, and becomes:
 
 Inside them: `tr` (a translation, printed in italics) becomes gloss; `usg`
 (an author or usage label) becomes usg, with Perseus's "id=Plat." shown
-as "id." meaning Plat.; `foreign` keeps its language (Greek converted from
+as "Id." meaning Plat. (capital I, as printed); `foreign` keeps its language (Greek converted from
 Beta Code, Latin and English as they are); a cross-reference (`ref`)
 becomes a link to the entry it names, or, when several entries share that
 headword, a link to all of them by headword; a form that is no headword
@@ -212,13 +212,14 @@ class Converter:
             text = ''.join(c.itertext())
             if len(c):
                 raise Stop(f'entry {entry_id}: <{tag}> with markup')
-            # Perseus writes LS's "id." (the same author) as "id=Plat.";
+            # Perseus writes LS's "Id." (the same author; printed with a
+            # capital I) as "id=Plat.";
             # also "id=" alone, "id=id=Aesch.", "id=???", and "id=Soph.;"
             # with a semicolon that belongs after the label.
             m = re.fullmatch(r'id=(?:id=)?(.*?)(;?)', text.strip())
             if m:
                 title, semi = m.group(1), m.group(2)
-                usg = f'<usg bn:title="{attr(title)}">id.</usg>' if title and title != '???' else '<usg>id.</usg>'
+                usg = f'<usg bn:title="{attr(title)}">Id.</usg>' if title and title != '???' else '<usg>Id.</usg>'
                 return usg + esc(semi)
             return f'<usg>{esc(text)}</usg>'
         if tag == 'foreign':
@@ -481,7 +482,7 @@ def header(source_sha, conv, entries_count):
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
-      <p>Each of the {entries_count} entries keeps its Perseus id as its xml:id; n is the homograph number where Perseus gives one, and bn:strong the Strong's Greek numbers whose headword is the same word. The note of type forms is the headword line (endings, article, principal parts); etym is the etymology (Perseus writes Liddell and Scott's "Hence" at the end of an entry as "from ..." on the next), and each sense a numbered sense, with its level in bn:level. gloss is a translation, usg an author or usage label (bn:title gives the author an "id." refers to), and foreign a Greek, Latin or English word. A ref of type entry links to one entry; a ref of type lemma links to every entry with the headword in bn:lemma. Greek is converted from Perseus's Beta Code to Unicode (NFC).</p>
+      <p>Each of the {entries_count} entries keeps its Perseus id as its xml:id; n is the homograph number where Perseus gives one, and bn:strong the Strong's Greek numbers whose headword is the same word. The note of type forms is the headword line (endings, article, principal parts); etym is the etymology (Perseus writes Liddell and Scott's "Hence" at the end of an entry as "from ..." on the next), and each sense a numbered sense, with its level in bn:level. gloss is a translation, usg an author or usage label (bn:title gives the author an "Id." refers to), and foreign a Greek, Latin or English word. A ref of type entry links to one entry; a ref of type lemma links to every entry with the headword in bn:lemma. Greek is converted from Perseus's Beta Code to Unicode (NFC).</p>
       <p>A headword beginning with * is one Liddell and Scott print with an asterisk, a form not found in use, such as their roots ({conv.counts.get("headwords marked * (a form not found in use)", 0)} entries; Perseus writes the asterisk after the word). It is looked up without the asterisk.</p>
       <p>English words Perseus left in the bare text of its Greek headword-line notes (such as "fut." and "or") are kept as English.</p>
       <p>Left out: Perseus's machine-made stem analysis ({conv.counts["machine stem analysis (gramGrp) left out"]} groups), the notes its linking tool left ("#skipped" and a word, {conv.counts.get('linking-tool notes ("#skipped") left out', 0)}), the alphabet headings, and {len(conv.dropped_length)} breves or macrons that no vowel can carry where they stand.</p>
