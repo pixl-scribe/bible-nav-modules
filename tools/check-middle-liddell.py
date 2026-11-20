@@ -34,6 +34,11 @@ GREEK_TEI = Path('assets') / 'eng_strongs_grc' / 'eng_strongs_grc.tei.xml'
 BROKEN = 'failing on lembuf []'
 DIAERESIS = unicodedata.lookup('COMBINING DIAERESIS')
 DRAFT = '--draft' in sys.argv[1:]
+# English words in the bare text of Greek headword-line notes, as the
+# converter documents them; the rest of that text is Beta Code.
+ENGLISH = {'fut.', 'or', 'adv.', 'and', 'poet.', 'ionic', 'gen.', 'doric', 'epic', 'attic', 'for',
+           'pl.', 'by', 'nature', 'heterog.', 'fem.', 'mostly', 'in', 'also', 'voc.', 'contr.',
+           'Eur.', 'rarely', 'later'}
 
 
 def elements(node, name=None):
@@ -45,8 +50,9 @@ def flat(text):
 
 
 def lookup_form(word):
-    """How a headword is looked up: NFC, no breve or macron, no digits."""
-    marks = {unicodedata.lookup('COMBINING MACRON'), unicodedata.lookup('COMBINING BREVE')}
+    """How a headword is looked up: NFC, no breve or macron, no digits, no
+    asterisk."""
+    marks = {unicodedata.lookup('COMBINING MACRON'), unicodedata.lookup('COMBINING BREVE'), '*'}
     d = unicodedata.normalize('NFD', word)
     return unicodedata.normalize('NFC', ''.join(c for c in d if c not in marks and not c.isdigit())).strip()
 
@@ -58,6 +64,8 @@ class Source:
 
     def greek(self, text, entry):
         fix = self.corrections.get((entry, text))
+        if isinstance(fix, tuple):
+            return fix[1]  # the printed text itself, not Beta Code
         if fix is not None:
             text = fix
         if DRAFT and BROKEN in text:
@@ -71,12 +79,39 @@ class Source:
                 return text
             raise
 
-    def plain(self, node, entry, greek=False):
+    def note_text(self, text, entry):
+        """Bare text of a Greek headword-line note: English words as they
+        are, everything between them as Beta Code. Done word by word over
+        white space, unlike the converter's single pattern."""
+        if (entry, text) in self.corrections:
+            return self.greek(text, entry)
+        pieces = re.split(r'(\s+)', text)
+        out, run = [], ''
+        for piece in pieces:
+            bare = piece.lstrip('[(').rstrip(',;:])')
+            if piece.strip() and bare in ENGLISH:
+                start = piece.index(bare)
+                run += piece[:start]
+                if run.strip():
+                    out.append(self.greek(run, entry))
+                else:
+                    out.append(run)
+                out.append(bare)
+                run = piece[start + len(bare):]
+            else:
+                run += piece
+        out.append(self.greek(run, entry) if run.strip() else run)
+        return ''.join(out)
+
+    def plain(self, node, entry, greek=False, note=False):
         """Plain text of a source element, as Bible Nav shows it."""
         out = []
         for c in node.childNodes:
             if c.nodeType == c.TEXT_NODE:
-                out.append(self.greek(c.data, entry) if greek and c.data.strip() else c.data)
+                if greek and c.data.strip():
+                    out.append(self.note_text(c.data, entry) if note else self.greek(c.data, entry))
+                else:
+                    out.append(c.data)
                 continue
             if c.nodeType != c.ELEMENT_NODE:
                 continue
@@ -114,7 +149,7 @@ class Source:
                 i += 2
                 continue
             greek = p.tagName == 'orth' or p.getAttribute('type') == 'alt'
-            texts.append(self.plain(p, entry, greek=greek))
+            texts.append(self.plain(p, entry, greek=greek, note=p.getAttribute('type') == 'alt'))
             i += 1
         return flat(' '.join(flat(t) for t in texts))
 
@@ -128,7 +163,7 @@ class Source:
                 data = c.data
                 if c is last:
                     data = data.rstrip()[: -len(BROKEN)] + rest
-                out.append(self.greek(data, entry) if data.strip() else data)
+                out.append(self.note_text(data, entry) if data.strip() else data)
             elif c.nodeType == c.ELEMENT_NODE:
                 inner = [t for t in walk_text(c)]
                 if last in inner:
@@ -159,13 +194,36 @@ def tei_plain(node):
     return ''.join(out)
 
 
-def read_source(corrections):
+def read_source(corrections, replacements, removals):
     src = Source(corrections)
-    doc = minidom.parse(str(SOURCE))
+    raw_text = SOURCE.read_text(encoding='utf-8')
+    doc = minidom.parseString(raw_text)
     entries = {}
     order = []
     for e in doc.getElementsByTagName('entry'):
         entry = e.getAttribute('id')
+        if entry in removals:
+            # A duplicate: same content after the headword as the entry it
+            # duplicates, by this checker's own comparison.
+            def after(node):
+                # Perseus's own ids of senses differ between the copies.
+                return flat(re.sub(r' id="[^"]*"', '', ''.join(c.toxml() for c in elements(node) if c.tagName != 'form')))
+            other = [x for x in doc.getElementsByTagName('entry') if x.getAttribute('id') == removals[entry]['duplicate_of']]
+            if len(other) != 1 or after(other[0]) != after(e):
+                raise SystemExit(f'{entry} is not a duplicate of {removals[entry]["duplicate_of"]}')
+            continue
+        if entry in replacements:
+            # Only for the entry it was written for: the source's content,
+            # found here by its own search, must be what the file names.
+            fix = replacements[entry]
+            found = re.search(r'<entry [^>]*id="' + entry + r'"[^>]*>([\s\S]*?)</entry>', raw_text)
+            if flat(found.group(1)) != flat(fix['source']):
+                raise SystemExit(f'{entry}: the replacement was written for other content')
+            head = [c for c in elements(e) if c.tagName == 'form' and not c.getAttribute('type')]
+            e = minidom.parseString(
+                f'<entry id="{entry}" key="{e.getAttribute("key")}">'
+                + ''.join(h.toxml() for h in head) + fix['replace'] + '</entry>'
+            ).documentElement
         order.append(entry)
         forms_parts, parts, lemma = [], [], None
         for c in elements(e):
@@ -174,14 +232,23 @@ def read_source(corrections):
             elif c.tagName == 'form':
                 forms_parts.append(elements(c, 'orth')[0])
             elif c.tagName == 'note' and c.getAttribute('type') in ('alt', 'infl'):
+                text = ''.join(t.data for t in walk_text(c))
+                if c.getAttribute('type') == 'alt' and not elements(c) and (
+                        text.startswith('#skipped ') or text.startswith('#skirred ')):
+                    continue  # the linking tool's notes are left out
                 forms_parts.append(c)
             elif c.tagName in ('etym', 'sense'):
                 text = flat(src.plain(c, entry))
                 if text:  # empty senses are left out
                     parts.append((c.tagName, text))
         head_raw = re.sub(r'\d+$', '', flat(''.join(t.data for t in walk_text(lemma))))
+        # LS's asterisk before a form not found in use: Perseus writes it
+        # after the word ("*)/era*"); it is shown before.
+        star = ''
+        if head_raw.endswith('*') and len(head_raw) > 1 and head_raw[-2] != '*':
+            head_raw, star = head_raw[:-1], '*'
         entries[entry] = {
-            'headword': src.greek(head_raw, entry),
+            'headword': star + src.greek(head_raw, entry),
             'homograph': (re.search(r'(\d+)$', e.getAttribute('key')) or [None, ''])[1],
             'forms': src.forms(forms_parts, entry) if forms_parts else '',
             'parts': parts,
@@ -220,10 +287,17 @@ def read_tei():
 
 
 def main():
-    corrections = {}
+    corrections, replacements, removals = {}, {}, {}
     for c in yaml.safe_load((ASSETS / 'corrections.yaml').read_text(encoding='utf-8')) or []:
-        corrections[(c['entry'], c['source'])] = c['corr']
-    src_order, src, source = read_source(corrections)
+        if 'duplicate_of' in c:
+            removals[c['entry']] = c
+        elif 'replace' in c:
+            replacements[c['entry']] = c
+        elif 'text' in c:
+            corrections[(c['entry'], c['source'])] = ('text', c['text'])
+        else:
+            corrections[(c['entry'], c['source'])] = c['corr']
+    src_order, src, source = read_source(corrections, replacements, removals)
     tei_order, tei, links = read_tei()
     problems = []
     if src_order != tei_order:
@@ -242,6 +316,8 @@ def main():
     for entry, kind, target, lemma, shown in links:
         if kind == 'entry':
             word = lookup_form(re.sub(r'[.,;:]+$', '', shown))
+            if word not in heads and re.search(r'\w-\w', word):
+                word = word.replace('-', '')  # a compound's hyphen, as printed
             if heads.get(word) != [target.lstrip('#')]:
                 problems.append(f'{entry}: link to {target} for {shown!r}, whose headword entries are {heads.get(word)}')
         elif kind == 'lemma':

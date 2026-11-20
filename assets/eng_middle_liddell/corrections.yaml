@@ -10,4 +10,358 @@
 #
 # The 65 words Perseus's conversion tool split in two ("failing on lembuf
 # []") are joined by a rule in the converter, not listed here.
-[]
+#
+# Where Perseus lost text, a whole entry is rewritten from the print:
+#
+# entry:    the Perseus id
+# source:   the entry's whole content in the source file (white space may
+#           differ); the rewrite applies only while this still matches
+# replace:  the entry's content after its headword, in Perseus's own
+#           markup, as the converter reads everything else
+# evidence: the printed page, and what it shows
+#
+# The entry's change note in the TEI file quotes both.
+#
+# Xerxes: Perseus writes capital xi as *c (15 times, *ce/rcew among them),
+# but three times as *j, which is no Beta Code letter.
+
+- entry: n2013
+  source: 'oi( a)mfi\ *je/rcea'
+  corr: 'oi( a)mfi\ *ce/rcea'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), entry amphi,
+    C. c. acc. I.3: "hoi amphi Xerxea his army, Hdt."; checked by the
+    maintainer on 2026-11-19.
+
+- entry: n4421
+  source: 'a)p. *je/rcea strateu/esqai'
+  corr: 'a)p. *ce/rcea strateu/esqai'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 106
+    (viewer page 111 of 919), entry apo-speudo: "ap. Xerxea strateuesthai Id."; checked by
+    the maintainer on 2026-11-19.
+
+- entry: n26248
+  source: "o( *je/rcew strato\\s au)to\\s u(p' e(wutou= e)/pese"
+  corr: "o( *ce/rcew strato\\s au)to\\s u(p' e(wutou= e)/pese"
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 640
+    (viewer page 645 of 919), entry pipto, B. II.2: "ho Xerxeo stratos
+    autos hyp' heoutou epese, Lat. mole sua corruit"; checked by the
+    maintainer on 2026-11-19.
+
+# A whole entry rewritten: Perseus lost "he," and "Anth." and ran the rest
+# into one cross-reference, with the accent on a consonant.
+
+- entry: n2808
+  source: >-
+    <form opt="n"><orth extent="full" lang="greek" opt="n">a)nhnemi/a</orth></form>
+    <etym opt="n">from <ref targOrder="U" lang="greek">a)nhn/nemos, = nhnemi/a</ref></etym>
+  replace: >-
+    <note type="alt" lang="greek">a)nhnemi/a, h(,</note>
+    <sense>= <foreign lang="greek">nhnemi/a</foreign>, <usg>Anth.</usg></sense>
+    <etym>from <ref lang="greek">a)nh/nemos</ref></etym>
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 70
+    (viewer page 75 of 919): "anenemia, he, = nenemia, Anth. From", followed
+    by the entry anenemos, on, (anemos) without wind; checked by the
+    maintainer on 2026-11-19.
+
+# ERA: Perseus lost "he," and "hence Adv. eraze" (which it made an entry of
+# its own, n13065), and tagged the English "earth" as Latin.
+
+- entry: n13064
+  source: >-
+    <form opt="n"><orth extent="full" lang="greek" opt="n">*)/era*</orth></form>
+    <sense level="0" n="0" id="n13064.0" opt="n">the Lat. <foreign lang="la">terra, earth.</foreign></sense>
+  replace: >-
+    <note type="alt" lang="greek">*)/era, h(,</note>
+    <sense>the Lat. <foreign lang="la">terra</foreign>, <trans><tr>earth</tr></trans>:—hence Adv. <ref lang="greek">e)/raze</ref>.</sense>
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 310
+    (viewer page 315 of 919): "*ERA, he, the Lat. terra, earth:—hence Adv.
+    eraze, to earth, to the ground, Hom.; Dor. erasde Theocr."; checked by
+    the maintainer on 2026-11-19.
+
+- entry: n13445
+  source: 'a)poteix/izw'
+  corr: 'a)poteixi/zw'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 322
+    (viewer page 327 of 919), entry eu-apoteichistos: "(apoteichizo) easy
+    to wall off", the accent on the iota; checked by the maintainer on
+    2026-11-19.
+
+# Perseus has "*ergo, to do work, obsol. Root" twice: as n13105 with LS's
+# asterisk, and as n13106 with a homograph number. It is printed once.
+
+- entry: n13106
+  source: >-
+    <form opt="n"><orth extent="full" lang="greek" opt="n">e)/rgw2</orth></form>
+    <sense level="0" n="0" id="n13106.0" opt="n"><trans opt="n"><tr opt="n">to do work</tr></trans>, obsol. Root, for which <foreign lang="greek">e)/rdw, r(e/zw, e)rga/zomai</foreign> are used in the pres.: for the fut., aor1 and perf., v. <ref targOrder="U" lang="greek">e)/rdw.</ref></sense>
+  duplicate_of: n13105
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 312
+    (viewer page 317 of 919): one entry "*ergo, to do work, obsol. Root",
+    after ERGO (to shut in); checked by the maintainer on 2026-11-19.
+
+- entry: n15807
+  source: 'i). *b|akxou'
+  corr: 'i). *ba/kxou'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 378
+    (viewer page 383 of 919), entry IKMAS: "i. Bakchou, i.e. wine", the
+    accent on the alpha; checked by the maintainer on 2026-11-19.
+
+# kathareuteon: Perseus changed the printed headword (-teon) to the
+# dictionary form (-teos) and added "verb. adj of kathareuo", which the
+# print doesn't have, marking the English as Greek.
+
+- entry: n16221
+  source: 'kaqareute/os'
+  corr: 'kaqareute/on'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 388
+    (viewer page 393 of 919): the headword is printed "kathareuteon";
+    checked by the maintainer on 2026-11-19.
+
+- entry: n16221
+  source: >-
+    <form opt="n"><orth extent="full" lang="greek" opt="n">kaqareute/os</orth></form>
+    <etym opt="n"><foreign lang="greek">verb. adj of</foreign> <foreign lang="greek">kaqareu/w</foreign></etym>
+    <sense level="0" n="0" id="n16221.0" opt="n"><trans opt="n"><tr opt="n">one must keep oneself clean</tr></trans>, <usg opt="n">Luc.</usg></sense>
+  replace: >-
+    <sense><trans><tr>one must keep oneself clean</tr></trans>, <usg>Luc.</usg></sense>
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 388
+    (viewer page 393 of 919): "kathareuteon, one must keep oneself clean,
+    Luc.", with no "verb. adj. of"; checked by the maintainer on
+    2026-11-19.
+
+# kiko: the headword line, printed "*KIKO" in capitals with LS's asterisk,
+# garbled; written as Perseus writes the other starred roots' lines (first
+# letter capital, as "*r(u/w," for rhuo), the asterisk being on the
+# headword.
+
+- entry: n17963
+  source: '**k*i*/k*w,'
+  corr: '*ki/kw,'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 432
+    (viewer page 437 of 919): "*KIKO, a verb only found in Dor. aor. 1
+    ekixa, = enegka, Anth."; checked by the maintainer on 2026-11-19.
+
+# Kretikos: a metrical foot, which Beta Code can't write: "text" gives the
+# printed signs (EN DASH, METRICAL BREVE, EN DASH), escaped here.
+
+- entry: n18679
+  source: '[\h\ \v\ \h\]'
+  text: "[\u2013\u23d1\u2013]"
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 450
+    (viewer page 455 of 919), entry Kretikos, 2: "a Cretic, a metrical
+    foot [long short long], e.g. Antiphon"; checked by the maintainer on
+    2026-11-19.
+
+- entry: n20306
+  source: 'margw=n\'
+  corr: 'margw=n'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 486
+    (viewer page 491 of 919), entry margao: "only used in part. margon,
+    raging, Aesch."; no grave accent after the nu (Beta Code's "\" there);
+    checked by the maintainer on 2026-11-19.
+
+# Psi ("y") typed for upsilon ("u") in six headword lines. In each,
+# Perseus's own key for the entry has the upsilon. The maintainer checked
+# pyle and pymatos in the print; the other four rest on the key and on
+# those two.
+
+- entry: n21164
+  source: 'mhny/w,'
+  corr: 'mhnu/w,'
+  evidence: >-
+    Perseus's key "mhnu/w"; 1889 printing (Internet Archive
+    intermediategree00lidd), page 511 (viewer page 516 of 919), not
+    checked separately: the same slip as pyle and pymatos (page 710).
+
+- entry: n21481
+  source: 'moly/nw,'
+  corr: 'molu/nw,'
+  evidence: >-
+    Perseus's key "molu/nw"; 1889 printing, page 519 (viewer page 524 of
+    919), not checked separately: the same slip as pyle and pymatos (page
+    710).
+
+- entry: n26477
+  source: 'ploy=tos, o(,'
+  corr: 'plou=tos, o(,'
+  evidence: >-
+    Perseus's key "plou=tos1"; 1889 printing, page 649 (viewer page 654 of
+    919), not checked separately: the same slip as pyle and pymatos (page
+    710).
+
+- entry: n28799
+  source: 'py/lh, h(,'
+  corr: 'pu/lh, h(,'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 710
+    (viewer page 715 of 919): "PYLE [y], he, one wing of a pair of double
+    gates"; checked by the maintainer on 2026-11-19.
+
+- entry: n28813
+  source: 'py/ma^tos, h, on'
+  corr: 'pu/ma^tos, h, on'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 710
+    (viewer page 715 of 919): "PYMATOS [y], e, on, hindmost, last";
+    checked by the maintainer on 2026-11-19.
+
+- entry: n29860
+  source: 'sky/zomai,'
+  corr: 'sku/zomai,'
+  evidence: >-
+    Perseus's key "sku/zomai"; 1889 printing, page 736 (viewer page 741 of
+    919), not checked separately: the same slip as pyle and pymatos (page
+    710).
+
+- entry: n27211
+  source: 'po/tnia bel/ewn'
+  corr: 'po/tnia be/lewn'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 664
+    (viewer page 669 of 919), entry potnia, 1: "potnia beleon Pind.", the
+    accent on the first epsilon; checked by the maintainer on 2026-11-19.
+
+# Patroklos: LS's asterisk (a form not found in use) before a capital,
+# which Beta Code can't write: "text" gives "*Patrokleus", escaped here
+# (built from the Beta Code converter's own output for *patrokleu/s).
+
+- entry: n25242
+  source: '**patrokleu/s'
+  text: "*\u03a0\u03b1\u03c4\u03c1\u03bf\u03ba\u03bb\u03b5\u03cd\u03c2"
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 612
+    (viewer page 617 of 919): "the obl. cases as if from *Patrokleus, gen.
+    Patrokleos"; checked by the maintainer on 2026-11-19.
+
+- entry: n25352
+  source: 'peirhtz/)w,'
+  corr: 'peirhti/zw,'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 616
+    (viewer page 621 of 919): "peiretizo, Ep. form of peirao"; checked by
+    the maintainer on 2026-11-19.
+
+# myops: the conversion tool split the headword line, and "ho, he," was
+# lost; Perseus also dropped the Greek of sense II and has "good" for
+# "goad". Rewritten with the rest of the entry as the source has it.
+
+- entry: n21811
+  source: >-
+    <form opt="n"><orth extent="full" lang="greek" opt="n">mu/wy</orth></form> <note anchored="yes" type="alt" lang="greek" place="unspecified">mu/-wfailing on lembuf []</note> <note anchored="yes" type="alt" lang="greek" place="unspecified">y, wpos,</note> <etym opt="n"><xr opt="n"><ref targOrder="U" lang="greek">mu/w, w)/y</ref></xr></etym> <sense level="2" n="I" id="n21811.0" opt="n"><trans opt="n"><tr opt="n">contracting the eyes</tr></trans>, as shortsighted people do, <trans opt="n"><tr opt="n">shortsighted</tr></trans>, <usg opt="n">Arist.</usg></sense> <sense level="2" n="II" id="n21811.1" opt="n">as Subst., <trans opt="n"><tr opt="n">the horsefly</tr> or <tr opt="n">gadfly</tr></trans>, Lat. <foreign lang="la">tabanus</foreign>, <usg opt="n">Aesch.</usg>, <usg opt="n">Plat.</usg></sense> <sense level="3" n="2" id="n21811.2" opt="n"><trans opt="n"><tr opt="n">a good, spur</tr></trans>, <usg opt="n">Xen.</usg>, <usg opt="n">Theophr.</usg>:—metaph. <trans opt="n"><tr opt="n">a stimulant</tr></trans>, <usg opt="n">Luc.</usg>, <usg opt="n">Anth.</usg></sense>
+  replace: >-
+    <note type="alt" lang="greek">mu/-wy, wpos, o(, h(,</note> <etym opt="n"><xr opt="n"><ref targOrder="U" lang="greek">mu/w, w)/y</ref></xr></etym> <sense level="2" n="I" id="n21811.0" opt="n"><trans opt="n"><tr opt="n">contracting the eyes</tr></trans>, as shortsighted people do, <trans opt="n"><tr opt="n">shortsighted</tr></trans>, <usg opt="n">Arist.</usg></sense> <sense level="2" n="II" id="n21811.1" opt="n">as Subst., <foreign lang="greek">mu/wy, wpos, o(,</foreign> <trans opt="n"><tr opt="n">the horsefly</tr> or <tr opt="n">gadfly</tr></trans>, Lat. <foreign lang="la">tabanus</foreign>, <usg opt="n">Aesch.</usg>, <usg opt="n">Plat.</usg></sense> <sense level="3" n="2" id="n21811.2" opt="n"><trans opt="n"><tr opt="n">a goad, spur</tr></trans>, <usg opt="n">Xen.</usg>, <usg opt="n">Theophr.</usg>:—metaph. <trans opt="n"><tr opt="n">a stimulant</tr></trans>, <usg opt="n">Luc.</usg>, <usg opt="n">Anth.</usg></sense>
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 522
+    (viewer page 527 of 919): "myops, opos, ho, he, (myo, ops) contracting
+    the eyes ... II. as Subst., myops, opos, ho, the horsefly ... 2. a goad,
+    spur"; checked by the maintainer on 2026-11-19.
+
+- entry: n24068
+  source: 'pa^q/h, h(,'
+  corr: 'pa^/qh, h(,'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 582
+    (viewer page 587 of 919): "pathe [a short], he, (pathein) a passive
+    state", the accent on the alpha; checked by the maintainer on
+    2026-11-19.
+
+- entry: n28893
+  source: 'pu_ro-lg/os, on,'
+  corr: 'pu_ro-lo/gos, on,'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 712
+    (viewer page 717 of 919): "pyro-logos, on, (pyros, lego) reaping
+    wheat, Anth."; checked by the maintainer on 2026-11-19. The long
+    upsilon is kept, as in Perseus's other compounds of pyros, wheat.
+
+- entry: n29091
+  source: 'ku=/distos'
+  corr: 'ku/distos'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 718
+    (viewer page 723 of 919), entry rhigistos: "(as kydistos from kydos)",
+    with an acute, not a circumflex; checked by the maintainer on
+    2026-11-19.
+
+# The letter article for sigma: Perseus lost the lunate sigma, wrote final
+# sigma and double sigma as plain s and ss, garbled stigma and sampi, left
+# out sense II.2, and misnumbered 10 and 11 ("II"). Letter shapes are given
+# as characters (escaped); stigma and sampi as Beta Code numerals.
+
+- entry: n29501
+  source: "<form opt=\"n\"><orth extent=\"full\" lang=\"greek\" opt=\"n\">si=gma</orth></form> <sense level=\"0\" n=\"0\" id=\"n29501.0\" opt=\"n\"><foreign lang=\"greek\">*s, s, si=gma</foreign>, <foreign lang=\"greek\">to/</foreign>, indecl., a semi-vowel, eighteenth letter of the Gr. Alph.: as numeral <foreign lang=\"greek\">s\u02B9</foreign> = 200, but <foreign lang=\"greek\">\u0375s</foreign> = 200,000.</sense> <sense level=\"2\" n=\"I\" id=\"n29501.1\" opt=\"n\">beside the form <foreign lang=\"greek\">*s</foreign>, it was written as a semicircle . In the written character, final <foreign lang=\"greek\">s</foreign> became <foreign lang=\"greek\">s</foreign>: from which must be distinguished the character <foreign lang=\"greek\">s41</foreign> = 6. There was also a Doric name <foreign lang=\"greek\">sa/n [a^]</foreign> (cf. <foreign lang=\"greek\">sam-fo/ras</foreign>), which appeared at the end of the alphabet as <foreign lang=\"greek\">sampi/</foreign> or <foreign lang=\"greek\">sampi=, \\\\y\\\\,</foreign> = 900.</sense> <sense level=\"2\" n=\"II\" id=\"n29501.2\" opt=\"n\">dialectic and other changes:</sense> <sense level=\"3\" n=\"1\" id=\"n29501.3\" opt=\"n\">aeolic and ionic into <foreign lang=\"greek\">d</foreign>, as <foreign lang=\"greek\">o)dmh/ i)/dmen</foreign> for <foreign lang=\"greek\">o)smh/ i)/smen.</foreign> </sense> <sense level=\"3\" n=\"3\" id=\"n29501.4\" opt=\"n\">in aeolic and doric, and in Poets, <foreign lang=\"greek\">s</foreign> was often doubled, as <foreign lang=\"greek\">o(/ssos me/ssos o)pi/ssw</foreign> for <foreign lang=\"greek\">o(/sos me/sos o)pi/sw</foreign>, and in fut. and aor. 1 forms, as <foreign lang=\"greek\">dama/ssw o)le/ssw</foreign>, etc. for <foreign lang=\"greek\">dama/sw o)le/sw</foreign>, etc.</sense> <sense level=\"3\" n=\"4\" id=\"n29501.5\" opt=\"n\"><foreign lang=\"greek\">s</foreign> sometimes passed into <foreign lang=\"greek\">pt</foreign> or vice versa, as <foreign lang=\"greek\">pe/ssw</foreign> and <foreign lang=\"greek\">pe/ptw, o)/yomai</foreign> (*<foreign lang=\"greek\">o)/ptw</foreign>) and <foreign lang=\"greek\">o)/ssomai, e)ni/ssw</foreign> and <foreign lang=\"greek\">e)ni/ptw.</foreign> </sense> <sense level=\"3\" n=\"5\" id=\"n29501.6\" opt=\"n\">doric into <foreign lang=\"greek\">c</foreign>, in fut. and aor1 of Verbs, with their deriv. Nouns, as <foreign lang=\"greek\">e)rga/comai xei/ricis</foreign> for <foreign lang=\"greek\">e)rga/somai xei/risis</foreign>:\u2014so in ionic, <foreign lang=\"greek\">dico/s trico/s</foreign> for <foreign lang=\"greek\">disso/s trisso/s</foreign>; and in old attic, the prep. <foreign lang=\"greek\">su/n</foreign>, with all its Compds., was written <foreign lang=\"greek\">cu/n.</foreign> </sense> <sense level=\"3\" n=\"6\" id=\"n29501.7\" opt=\"n\">attic <foreign lang=\"greek\">s</foreign> and <foreign lang=\"greek\">ss</foreign> sometimes passed into <foreign lang=\"greek\">y</foreign>, cf. <foreign lang=\"greek\">*y y</foreign> III.</sense> <sense level=\"3\" n=\"7\" id=\"n29501.8\" opt=\"n\">in aeolic, as in Lat., <foreign lang=\"greek\">s</foreign> represents the aspirate, <foreign lang=\"greek\">*salmudhsso/s *(almudhsso/s, su=s</foreign> (Lat. <foreign lang=\"la\">sus</foreign>) <foreign lang=\"greek\">u(=s, a(/ls</foreign> <trans opt=\"n\"><tr opt=\"n\">sal</tr></trans>, <foreign lang=\"greek\">e(/c</foreign> <trans opt=\"n\"><tr opt=\"n\">sex</tr></trans>, <foreign lang=\"greek\">e(pta/</foreign> <trans opt=\"n\"><tr opt=\"n\">septem</tr></trans>, <foreign lang=\"greek\">e(/rpw</foreign> <trans opt=\"n\"><tr opt=\"n\">serpo</tr></trans>, <foreign lang=\"greek\">u(/lh</foreign> <trans opt=\"n\"><tr opt=\"n\">sylva.</tr></trans> </sense> <sense level=\"3\" n=\"8\" id=\"n29501.9\" opt=\"n\">prefixed to words beginning with <foreign lang=\"greek\">m</foreign> and <foreign lang=\"greek\">t, mu/raina smu/raina, mikro/s smikro/s, te/gos ste/gw</foreign>, Lat. <foreign lang=\"la\">tego</foreign>; more rarely before <foreign lang=\"greek\">k</foreign> and <foreign lang=\"greek\">f, ski/dnamai ki/dnamai, sfa/llw</foreign> <trans opt=\"n\"><tr opt=\"n\">fallo</tr></trans>, <foreign lang=\"greek\">sfendo/nh</foreign> <trans opt=\"n\"><tr opt=\"n\">funda.</tr></trans> </sense> <sense level=\"3\" n=\"9\" id=\"n29501.10\" opt=\"n\"><foreign lang=\"greek\">s</foreign> was inserted in the middle of words before <foreign lang=\"greek\">q</foreign>, esp. by Poets in the 1 pers. pl. pass. and mid., as <foreign lang=\"greek\">tupto/mesqa</foreign> for <foreign lang=\"greek\">tupto/meqa</foreign>; so <foreign lang=\"greek\">o)/pisqen</foreign> for <foreign lang=\"greek\">o)/piqen.</foreign> </sense> <sense level=\"0\" n=\"10\" id=\"n29501.11\" opt=\"n\">conversely, the Lacon. used to throw out <foreign lang=\"greek\">s</foreign> between two vowels, writing <foreign lang=\"greek\">*mw=a</foreign> for <foreign lang=\"greek\">*mou=sa.</foreign> </sense> <sense level=\"2\" n=\"II\" id=\"n29501.12\" opt=\"n\"><foreign lang=\"greek\">s</foreign> changed into <foreign lang=\"greek\">r</foreign>, doric and attic, when another <foreign lang=\"greek\">r</foreign> goes before, as <foreign lang=\"greek\">a)/rrhn</foreign> for <foreign lang=\"greek\">a)/rshn, qa/rros</foreign> for <foreign lang=\"greek\">qa/rsos.</foreign> </sense> <sense level=\"3\" n=\"12\" id=\"n29501.13\" opt=\"n\">Lacon., <foreign lang=\"greek\">s</foreign> is substituted for <foreign lang=\"greek\">q</foreign>, as <foreign lang=\"greek\">sio/s *)asa/na parse/nos</foreign> for <foreign lang=\"greek\">qeo/s *)aqh/nh parqe/nos.</foreign> </sense> <sense level=\"3\" n=\"13\" id=\"n29501.14\" opt=\"n\">doric, <foreign lang=\"greek\">sd</foreign> for <foreign lang=\"greek\">z</foreign>, as <foreign lang=\"greek\">masdo/s tra/pesda</foreign> for <foreign lang=\"greek\">mazo/s tra/peza.</foreign> </sense> <sense level=\"3\" n=\"14\" id=\"n29501.15\" opt=\"n\"><foreign lang=\"greek\">s</foreign> is appended to <foreign lang=\"greek\">ou(/tw a)/xri me/xri</foreign> before a vowel.</sense>"
+  replace: "<sense level=\"0\" n=\"0\" id=\"n29501.0\" opt=\"n\"><foreign lang=\"greek\">*s, s, si=gma</foreign>, <foreign lang=\"greek\">to/</foreign>, indecl., a semi-vowel, eighteenth letter of the Gr. Alph.: as numeral <foreign lang=\"greek\">s\u02B9</foreign> = 200, but <foreign lang=\"greek\">\u0375s</foreign> = 200,000.</sense> <sense level=\"2\" n=\"I\" id=\"n29501.1\" opt=\"n\">beside the form <foreign lang=\"greek\">*s</foreign>, it was written as a semicircle \u03F9. In the written character, final <foreign lang=\"greek\">s</foreign> became \u03C2: from which must be distinguished the character <foreign lang=\"greek\">#2#</foreign> = 6. There was also a Doric name <foreign lang=\"greek\">sa/n [a^]</foreign> (cf. <foreign lang=\"greek\">sam-fo/ras</foreign>), which appeared at the end of the alphabet as <foreign lang=\"greek\">sampi/</foreign> or <foreign lang=\"greek\">sampi=, #5,</foreign> = 900.</sense> <sense level=\"2\" n=\"II\" id=\"n29501.2\" opt=\"n\">dialectic and other changes:</sense> <sense level=\"3\" n=\"1\" id=\"n29501.3\" opt=\"n\">aeolic and ionic into <foreign lang=\"greek\">d</foreign>, as <foreign lang=\"greek\">o)dmh/ i)/dmen</foreign> for <foreign lang=\"greek\">o)smh/ i)/smen.</foreign> </sense> <sense level=\"3\" n=\"2\">aeolic and doric into <foreign lang=\"greek\">t</foreign>, <foreign lang=\"greek\">tu/ i)/ttw *poti/dan poti/ fati/</foreign> for <foreign lang=\"greek\">su/ i)/stw *poseidw=n pro/s fhsi/</foreign>:\u2014so in later attic, as <foreign lang=\"greek\">me/taulos th/meron</foreign> for <foreign lang=\"greek\">me/saulos sh/meron</foreign>:\u2014in later attic, also \u03C3\u03C3 passed into <foreign lang=\"greek\">tt</foreign>, <foreign lang=\"greek\">pra/ttw ta/ttw</foreign> for <foreign lang=\"greek\">pra/ssw ta/ssw</foreign>, <foreign lang=\"greek\">qa/latta h(/ttwn</foreign> for <foreign lang=\"greek\">qa/lassa h(/sswn</foreign>.</sense> <sense level=\"3\" n=\"3\" id=\"n29501.4\" opt=\"n\">in aeolic and doric, and in Poets, <foreign lang=\"greek\">s</foreign> was often doubled, as <foreign lang=\"greek\">o(/ssos me/ssos o)pi/ssw</foreign> for <foreign lang=\"greek\">o(/sos me/sos o)pi/sw</foreign>, and in fut. and aor. 1 forms, as <foreign lang=\"greek\">dama/ssw o)le/ssw</foreign>, etc. for <foreign lang=\"greek\">dama/sw o)le/sw</foreign>, etc.</sense> <sense level=\"3\" n=\"4\" id=\"n29501.5\" opt=\"n\"><foreign lang=\"greek\">s</foreign> sometimes passed into <foreign lang=\"greek\">pt</foreign> or vice versa, as <foreign lang=\"greek\">pe/ssw</foreign> and <foreign lang=\"greek\">pe/ptw, o)/yomai</foreign> (*<foreign lang=\"greek\">o)/ptw</foreign>) and <foreign lang=\"greek\">o)/ssomai, e)ni/ssw</foreign> and <foreign lang=\"greek\">e)ni/ptw.</foreign> </sense> <sense level=\"3\" n=\"5\" id=\"n29501.6\" opt=\"n\">doric into <foreign lang=\"greek\">c</foreign>, in fut. and aor1 of Verbs, with their deriv. Nouns, as <foreign lang=\"greek\">e)rga/comai xei/ricis</foreign> for <foreign lang=\"greek\">e)rga/somai xei/risis</foreign>:\u2014so in ionic, <foreign lang=\"greek\">dico/s trico/s</foreign> for <foreign lang=\"greek\">disso/s trisso/s</foreign>; and in old attic, the prep. <foreign lang=\"greek\">su/n</foreign>, with all its Compds., was written <foreign lang=\"greek\">cu/n.</foreign> </sense> <sense level=\"3\" n=\"6\" id=\"n29501.7\" opt=\"n\">attic <foreign lang=\"greek\">s</foreign> and \u03C3\u03C3 sometimes passed into <foreign lang=\"greek\">y</foreign>, cf. <foreign lang=\"greek\">*y y</foreign> III.</sense> <sense level=\"3\" n=\"7\" id=\"n29501.8\" opt=\"n\">in aeolic, as in Lat., <foreign lang=\"greek\">s</foreign> represents the aspirate, <foreign lang=\"greek\">*salmudhsso/s *(almudhsso/s, su=s</foreign> (Lat. <foreign lang=\"la\">sus</foreign>) <foreign lang=\"greek\">u(=s, a(/ls</foreign> <trans opt=\"n\"><tr opt=\"n\">sal</tr></trans>, <foreign lang=\"greek\">e(/c</foreign> <trans opt=\"n\"><tr opt=\"n\">sex</tr></trans>, <foreign lang=\"greek\">e(pta/</foreign> <trans opt=\"n\"><tr opt=\"n\">septem</tr></trans>, <foreign lang=\"greek\">e(/rpw</foreign> <trans opt=\"n\"><tr opt=\"n\">serpo</tr></trans>, <foreign lang=\"greek\">u(/lh</foreign> <trans opt=\"n\"><tr opt=\"n\">sylva.</tr></trans> </sense> <sense level=\"3\" n=\"8\" id=\"n29501.9\" opt=\"n\">prefixed to words beginning with <foreign lang=\"greek\">m</foreign> and <foreign lang=\"greek\">t, mu/raina smu/raina, mikro/s smikro/s, te/gos ste/gw</foreign>, Lat. <foreign lang=\"la\">tego</foreign>; more rarely before <foreign lang=\"greek\">k</foreign> and <foreign lang=\"greek\">f, ski/dnamai ki/dnamai, sfa/llw</foreign> <trans opt=\"n\"><tr opt=\"n\">fallo</tr></trans>, <foreign lang=\"greek\">sfendo/nh</foreign> <trans opt=\"n\"><tr opt=\"n\">funda.</tr></trans> </sense> <sense level=\"3\" n=\"9\" id=\"n29501.10\" opt=\"n\"><foreign lang=\"greek\">s</foreign> was inserted in the middle of words before <foreign lang=\"greek\">q</foreign>, esp. by Poets in the 1 pers. pl. pass. and mid., as <foreign lang=\"greek\">tupto/mesqa</foreign> for <foreign lang=\"greek\">tupto/meqa</foreign>; so <foreign lang=\"greek\">o)/pisqen</foreign> for <foreign lang=\"greek\">o)/piqen.</foreign> </sense> <sense level=\"3\" n=\"10\" id=\"n29501.11\" opt=\"n\">conversely, the Lacon. used to throw out <foreign lang=\"greek\">s</foreign> between two vowels, writing <foreign lang=\"greek\">*mw=a</foreign> for <foreign lang=\"greek\">*mou=sa.</foreign> </sense> <sense level=\"3\" n=\"11\" id=\"n29501.12\" opt=\"n\"><foreign lang=\"greek\">s</foreign> changed into <foreign lang=\"greek\">r</foreign>, doric and attic, when another <foreign lang=\"greek\">r</foreign> goes before, as <foreign lang=\"greek\">a)/rrhn</foreign> for <foreign lang=\"greek\">a)/rshn, qa/rros</foreign> for <foreign lang=\"greek\">qa/rsos.</foreign> </sense> <sense level=\"3\" n=\"12\" id=\"n29501.13\" opt=\"n\">Lacon., <foreign lang=\"greek\">s</foreign> is substituted for <foreign lang=\"greek\">q</foreign>, as <foreign lang=\"greek\">sio/s *)asa/na parse/nos</foreign> for <foreign lang=\"greek\">qeo/s *)aqh/nh parqe/nos.</foreign> </sense> <sense level=\"3\" n=\"13\" id=\"n29501.14\" opt=\"n\">doric, <foreign lang=\"greek\">sd</foreign> for <foreign lang=\"greek\">z</foreign>, as <foreign lang=\"greek\">masdo/s tra/pesda</foreign> for <foreign lang=\"greek\">mazo/s tra/peza.</foreign> </sense> <sense level=\"3\" n=\"14\" id=\"n29501.15\" opt=\"n\">\u03C2 is appended to <foreign lang=\"greek\">ou(/tw a)/xri me/xri</foreign> before a vowel.</sense>"
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 720 (viewer page 725 of 919), the letter article \"S, s, sigma\": \"it was written as a semicircle [lunate sigma]. In the written character, final sigma became [final sigma]: from which must be distinguished the character [stigma]' = 6 ... as sampi or sampi, [sampi], = 900\"; II. 2 \"Aeol. and Dor. into t, ty itto Potidan poti phati for sy isto Poseidon pros phesi:\u2014so in later Att., as metaulos temeron for mesaulos semeron:\u2014in later Att., also ss passed into tt, pratto tatto for prasso tasso, thalatta hetton for thalassa hesson\"; 6 \"sigma and double sigma\"; 10 and 11 numbered under II; 14 \"[final sigma] is appended\"; checked by the maintainer on 2026-11-19 from screenshots of the page."
+
+# The letter article for zeta: Perseus garbled stigma, wrote the digamma
+# small where the print has a capital, and lost two ":—".
+
+- entry: n14462
+  source: "<form opt=\"n\"><orth extent=\"full\" lang=\"greek\" opt=\"n\">zh=ta</orth></form> <sense level=\"0\" n=\"0\" id=\"n14462.0\" opt=\"n\"><foreign lang=\"greek\">*z, z, zh=ta</foreign>, <foreign lang=\"greek\">to/</foreign>, indecl., sixth letter of Gk. Alphabet: as numeral <foreign lang=\"greek\">z\u02B9 = e(pta/</foreign> and <foreign lang=\"greek\">e(/bdomos</foreign> (the obsol. <foreign lang=\"greek\">\\s\\#</foreign>, i.e. <foreign lang=\"greek\">v</foreign>, <trans opt=\"n\"><tr opt=\"n\">vau</tr></trans>, the digamma, being retained to represent <foreign lang=\"greek\">e(/c, e(/ktos</foreign>) , but <foreign lang=\"greek\">\u0375z</foreign> = 7000. <foreign lang=\"greek\">*z z</foreign> is composed of <foreign lang=\"greek\">s</foreign> and <foreign lang=\"greek\">d</foreign>, so that in aeolic it becomes <foreign lang=\"greek\">sd</foreign>, as <foreign lang=\"greek\">*sdeu/s kwma/sdw yiquri/sdw</foreign> for <foreign lang=\"greek\">*zeu/s kwma/zw yiquri/zw</foreign> reversely, in attic, <foreign lang=\"greek\">sd</foreign> becomes <foreign lang=\"greek\">z, *)aqh/naze qu/raze</foreign> for <foreign lang=\"greek\">*)aqh/nasde qu/rasde.</foreign> But <foreign lang=\"greek\">s</foreign> often disappears in aeolic, where <foreign lang=\"greek\">za/ = dia</foreign>, see <foreign lang=\"greek\">za/, za-</foreign>so in aeolic and doric, as we have <foreign lang=\"greek\">*deu/s *da/n</foreign> for <foreign lang=\"greek\">*zeu/s *za/n, dorka/s = zorka/s</foreign>:\u2014so also <foreign lang=\"greek\">a)ri/zhlos</foreign> for <foreign lang=\"greek\">a)ri/dhlos; a)lapadno/s</foreign> from <ref targOrder=\"U\" lang=\"greek\">a)lapa/zw, paidno/s</ref> from <ref targOrder=\"U\" lang=\"greek\">pai/zw</ref>:\u2014doric, in the middle of words, it becomes <foreign lang=\"greek\">dd</foreign>, as <foreign lang=\"greek\">qeri/ddw</foreign> for <foreign lang=\"greek\">-i/zw, ma/dda</foreign> for <foreign lang=\"greek\">ma=za.</foreign> Zeta, being a double conson., made a short vowel at the end of the foregoing syllable long by position. But Homer used the vowel short before two prop. names, which could not otherwise come into the Hexam., viz. <foreign lang=\"greek\">a)/stu^ *zelei/hs, u(lh/essa^ *za/kunqos.</foreign></sense>"
+  replace: "<sense level=\"0\" n=\"0\" id=\"n14462.0\" opt=\"n\"><foreign lang=\"greek\">*z, z, zh=ta</foreign>, <foreign lang=\"greek\">to/</foreign>, indecl., sixth letter of Gk. Alphabet: as numeral <foreign lang=\"greek\">z\u02B9 = e(pta/</foreign> and <foreign lang=\"greek\">e(/bdomos</foreign> (the obsol. <foreign lang=\"greek\">#2#</foreign>, i.e. <foreign lang=\"greek\">*v</foreign>, <trans opt=\"n\"><tr opt=\"n\">vau</tr></trans>, the digamma, being retained to represent <foreign lang=\"greek\">e(/c, e(/ktos</foreign>) , but <foreign lang=\"greek\">\u0375z</foreign> = 7000. <foreign lang=\"greek\">*z z</foreign> is composed of <foreign lang=\"greek\">s</foreign> and <foreign lang=\"greek\">d</foreign>, so that in aeolic it becomes <foreign lang=\"greek\">sd</foreign>, as <foreign lang=\"greek\">*sdeu/s kwma/sdw yiquri/sdw</foreign> for <foreign lang=\"greek\">*zeu/s kwma/zw yiquri/zw</foreign>:\u2014reversely, in attic, <foreign lang=\"greek\">sd</foreign> becomes <foreign lang=\"greek\">z, *)aqh/naze qu/raze</foreign> for <foreign lang=\"greek\">*)aqh/nasde qu/rasde.</foreign> But <foreign lang=\"greek\">s</foreign> often disappears in aeolic, where <foreign lang=\"greek\">za/ = dia</foreign>, see <foreign lang=\"greek\">za/, za-</foreign>:\u2014so in aeolic and doric, as we have <foreign lang=\"greek\">*deu/s *da/n</foreign> for <foreign lang=\"greek\">*zeu/s *za/n, dorka/s = zorka/s</foreign>:\u2014so also <foreign lang=\"greek\">a)ri/zhlos</foreign> for <foreign lang=\"greek\">a)ri/dhlos; a)lapadno/s</foreign> from <ref targOrder=\"U\" lang=\"greek\">a)lapa/zw, paidno/s</ref> from <ref targOrder=\"U\" lang=\"greek\">pai/zw</ref>:\u2014doric, in the middle of words, it becomes <foreign lang=\"greek\">dd</foreign>, as <foreign lang=\"greek\">qeri/ddw</foreign> for <foreign lang=\"greek\">-i/zw, ma/dda</foreign> for <foreign lang=\"greek\">ma=za.</foreign> Zeta, being a double conson., made a short vowel at the end of the foregoing syllable long by position. But Homer used the vowel short before two prop. names, which could not otherwise come into the Hexam., viz. <foreign lang=\"greek\">a)/stu^ *zelei/hs, u(lh/essa^ *za/kunqos.</foreign></sense>"
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 342 (viewer page 347 of 919), the letter article \"Z, z, zeta\": \"(the obsol. [stigma]', i.e. [capital digamma], vau, the digamma, ...)\", \"psithurizo:\u2014reversely\", \"za-:\u2014so in Aeol.\"; checked by the maintainer on 2026-11-19 from a screenshot of the page."
+
+# synaigden: "=" typed for the diaeresis ("+") in the headword and in
+# aisso; Perseus also lost the headword line and "Adv.".
+
+- entry: n31089
+  source: sunai/=gdhn
+  corr: sunai+/gdhn
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 766 (viewer page 771 of 919): "syn-aigden [long alpha, diaeresis and acute on the iota], (aisso) Adv. pressing violently together, Hes."; checked by the maintainer on 2026-11-19.'
+- entry: n31089
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">sunai/=gdhn</orth></form> <etym opt="n"><xr opt="n"><ref targOrder="U" lang="greek">a)i/=ssw</ref></xr></etym> <sense level="0" n="0" id="n31089.0" opt="n"><trans opt="n"><tr opt="n">pressing violently together</tr></trans>, <usg opt="n">Hes.</usg></sense>
+  replace: <note type="alt" lang="greek">sun-a_i+/gdhn,</note> <etym><xr><ref lang="greek">a)i+/ssw</ref></xr></etym> <sense>Adv. <trans><tr>pressing violently together</tr></trans>, <usg>Hes.</usg></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 766 (viewer page 771 of 919): "syn-aigden [long alpha, diaeresis and acute on the iota], (aisso) Adv. pressing violently together, Hes."; checked by the maintainer on 2026-11-19.'
+
+# synepitithemi: "\66\" is junk, and the English "to" sits inside the Greek.
+
+- entry: n31468
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">sunepiti/qhmi</orth></form> <note anchored="yes" type="infl" place="unspecified">fut. <foreign lang="greek">-qh/sw</foreign></note> <sense level="2" n="I" id="n31468.0" opt="n"><trans opt="n"><tr opt="n">to help in putting on</tr></trans>, <usg opt="n">Plut.</usg></sense> <sense level="2" n="II" id="n31468.1" opt="n">Mid. <trans opt="n"><tr opt="n">to join in attacking</tr></trans>, <foreign lang="greek">tini</foreign> <usg opt="n">Thuc.</usg>; <foreign lang="greek">c. tw=| e)/rgw| \66\to</foreign> fall to the work <trans opt="n"><tr opt="n">together</tr></trans>, <usg opt="n">id=Thuc.</usg></sense>
+  replace: <note anchored="yes" type="infl" place="unspecified">fut. <foreign lang="greek">-qh/sw</foreign></note> <sense level="2" n="I" id="n31468.0" opt="n"><trans opt="n"><tr opt="n">to help in putting on</tr></trans>, <usg opt="n">Plut.</usg></sense> <sense level="2" n="II" id="n31468.1" opt="n">Mid. <trans opt="n"><tr opt="n">to join in attacking</tr></trans>, <foreign lang="greek">tini</foreign> <usg opt="n">Thuc.</usg>; <foreign lang="greek">c. tw=| e)/rgw|</foreign> to fall to the work <trans opt="n"><tr opt="n">together</tr></trans>, <usg opt="n">id=Thuc.</usg></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 774 (viewer page 779 of 919), entry syn-epitithemi, II: "x. to ergo to fall to the work together, Id."; checked by the maintainer on 2026-11-19.'
+
+# soter: the conversion tool split the headword line and its second half
+# is lost; rewritten from the print.
+
+- entry: n32041
+  source: '<form opt="n"><orth extent="full" lang="greek" opt="n">swth/r</orth></form> <note anchored="yes" type="alt" lang="greek" place="unspecified">swthfailing on lembuf []</note> <etym opt="n"><xr opt="n"><ref targOrder="U" lang="greek">sw/zw</ref></xr></etym> <sense level="2" n="I" id="n32041.0" opt="n"><trans opt="n"><tr opt="n">a saviour, deliverer, preserver</tr></trans>, c. gen. subjecti, <foreign lang="greek">th=s *(ella/dos</foreign> <trans opt="n"><tr opt="n">saviour</tr></trans> of Greece, <usg opt="n">Hdt.</usg>; also c. gen. objecti, <foreign lang="greek">s. no/sou, kakw=n</foreign> <trans opt="n"><tr opt="n">a preserver from</tr></trans> disease, ills, <usg opt="n">Soph.</usg>, <usg opt="n">Eur.</usg></sense> <sense level="3" n="2" id="n32041.1" opt="n">epith. of <trans opt="n"><tr opt="n">protecting</tr></trans> gods, esp. of <foreign lang="greek">*zeu\s *swth/r</foreign>, <usg opt="n">Pind.</usg>, <usg opt="n">Trag.</usg>: to him <trans opt="n"><tr opt="n">the third cup</tr></trans> of wine was dedicated, <foreign lang="greek">tri/ton *swth=ri spe/ndein</foreign> <usg opt="n">Pind.</usg>, etc.; proverb., <foreign lang="greek">to\ tri/ton tw=| swth=ri</foreign> the third (i. e. the lucky) time, <usg opt="n">Plat.</usg>; of other gods, as of Apollo, Hermes, <usg opt="n">Aesch.</usg>; even with fem. deities, <foreign lang="greek">*tu/xh swth/r</foreign>, for <foreign lang="greek">sw/teira</foreign>, <usg opt="n">id=Aesch.</usg></sense> <sense level="3" n="3" id="n32041.2" opt="n">in <usg opt="n">NTest.</usg> <trans opt="n"><tr opt="n">the Saviour.</tr></trans> </sense> <sense level="2" n="II" id="n32041.3" opt="n">in Poets, as an adj., <trans opt="n"><tr opt="n">saving</tr></trans>, <usg opt="n">Aesch.</usg>; with fem. Subst., <foreign lang="greek">swth=res timai/</foreign> the office or prerogative <trans opt="n"><tr opt="n">of saving</tr></trans>, of the Dioscuri, <usg opt="n">Eur.</usg></sense>'
+  replace: '<note type="alt" lang="greek">swth/r, h=ros, o(,</note> <note type="infl">voc. <foreign lang="greek">sw=ter</foreign>:</note> <etym opt="n"><xr opt="n"><ref targOrder="U" lang="greek">sw/zw</ref></xr></etym> <sense level="2" n="I" id="n32041.0" opt="n"><trans opt="n"><tr opt="n">a saviour, deliverer, preserver</tr></trans>, c. gen. subjecti, <foreign lang="greek">th=s *(ella/dos</foreign> <trans opt="n"><tr opt="n">saviour</tr></trans> of Greece, <usg opt="n">Hdt.</usg>; also c. gen. objecti, <foreign lang="greek">s. no/sou, kakw=n</foreign> <trans opt="n"><tr opt="n">a preserver from</tr></trans> disease, ills, <usg opt="n">Soph.</usg>, <usg opt="n">Eur.</usg></sense> <sense level="3" n="2" id="n32041.1" opt="n">epith. of <trans opt="n"><tr opt="n">protecting</tr></trans> gods, esp. of <foreign lang="greek">*zeu\s *swth/r</foreign>, <usg opt="n">Pind.</usg>, <usg opt="n">Trag.</usg>: to him <trans opt="n"><tr opt="n">the third cup</tr></trans> of wine was dedicated, <foreign lang="greek">tri/ton *swth=ri spe/ndein</foreign> <usg opt="n">Pind.</usg>, etc.; proverb., <foreign lang="greek">to\ tri/ton tw=| swth=ri</foreign> the third (i. e. the lucky) time, <usg opt="n">Plat.</usg>; of other gods, as of Apollo, Hermes, <usg opt="n">Aesch.</usg>; even with fem. deities, <foreign lang="greek">*tu/xh swth/r</foreign>, for <foreign lang="greek">sw/teira</foreign>, <usg opt="n">id=Aesch.</usg></sense> <sense level="3" n="3" id="n32041.2" opt="n">in <usg opt="n">NTest.</usg> <trans opt="n"><tr opt="n">the Saviour.</tr></trans> </sense> <sense level="2" n="II" id="n32041.3" opt="n">in Poets, as an adj., <trans opt="n"><tr opt="n">saving</tr></trans>, <usg opt="n">Aesch.</usg>; with fem. Subst., <foreign lang="greek">swth=res timai/</foreign> the office or prerogative <trans opt="n"><tr opt="n">of saving</tr></trans>, of the Dioscuri, <usg opt="n">Eur.</usg></sense>'
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 788 (viewer page 793 of 919): \"soter, eros, ho, voc. soter: (sozo) :\u2014a saviour, deliverer, preserver\"; checked by the maintainer on 2026-11-19."
+
+# hydrops: the conversion tool split the headword line, and "ho," was lost.
+
+- entry: n33428
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">u(/drwy</orth></form> <note anchored="yes" type="alt" lang="greek" place="unspecified">u(/drwfailing on lembuf []</note> <note anchored="yes" type="alt" lang="greek" place="unspecified">y, wpos,</note> <etym opt="n"><xr opt="n"><ref targOrder="U" lang="greek">u(/dwr</ref></xr></etym> <sense level="2" n="I" id="n33428.0" opt="n"><trans opt="n"><tr opt="n">dropsy.</tr></trans> </sense> <sense level="2" n="II" id="n33428.1" opt="n"><trans opt="n"><tr opt="n">a dropsical person.</tr></trans></sense>
+  replace: <note type="alt" lang="greek">u(/drwy, wpos, o(,</note> <etym opt="n"><xr opt="n"><ref targOrder="U" lang="greek">u(/dwr</ref></xr></etym> <sense level="2" n="I" id="n33428.0" opt="n"><trans opt="n"><tr opt="n">dropsy.</tr></trans> </sense> <sense level="2" n="II" id="n33428.1" opt="n"><trans opt="n"><tr opt="n">a dropsical person.</tr></trans></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 828 (viewer page 833 of 919): "hydrops, opos, ho, (hydor) dropsy. II. a dropsical person."; checked by the maintainer on 2026-11-19.'
+
+# philanthropeo and philanthropia: "From phil-anthropos" at the end of
+# both; the "/" stands where LS prints the compound's hyphen.
+
+- entry: n34735
+  source: 'fil/anqrwpos'
+  corr: 'fil-a/nqrwpos'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 860
+    (viewer page 865 of 919): "philanthropeo ... and philanthropia ...
+    From phil-anthropos"; checked by the maintainer on 2026-11-19.
+
+- entry: n34736
+  source: 'fil/anqrwpos'
+  corr: 'fil-a/nqrwpos'
+  evidence: >-
+    1889 printing (Internet Archive intermediategree00lidd), page 860
+    (viewer page 865 of 919): "philanthropeo ... and philanthropia ...
+    From phil-anthropos"; checked by the maintainer on 2026-11-19.

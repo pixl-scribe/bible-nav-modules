@@ -120,7 +120,10 @@ Tables:
   - `strong`: a Strong's number in normal form (below). Every Strong's entry
     has one. In LS, an entry gets one when its headword matches the lemma of
     a Strong's Greek entry (checked against CrossWire's `MLStrong`).
-  - `lemma`: the headword as the TR or Masoretic text's lemma would give it.
+  - `lemma`: the headword as the TR or Masoretic text's lemma would give it:
+    Unicode NFC, without breve or macron (editors' marks of vowel length),
+    homograph digits, or the asterisk LS prints before a form not found in
+    use (LS's root \*ERA, "earth", is shown with it and looked up without).
 
 There is no full-text search table (FTS5): an entry is only ever found by
 an exact value, through `lookups`' index on `(kind, value)` or the unique

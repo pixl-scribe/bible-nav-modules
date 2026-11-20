@@ -79,6 +79,24 @@ LENGTH_MARKS = {unicodedata.lookup('COMBINING MACRON'), unicodedata.lookup('COMB
 DIAERESIS = unicodedata.lookup('COMBINING DIAERESIS')
 
 
+# English that Perseus left in the bare text of its Greek headword-line
+# notes ("filanqrwpe/w, fut. <foreign>-h/sw</foreign>", "o(/moios, or"):
+# every such word found in the source, each checked in context. Anything
+# else there is Beta Code.
+ENGLISH_IN_GREEK_NOTES = (
+    'fut.', 'or', 'adv.', 'and', 'poet.', 'ionic', 'gen.', 'doric', 'epic',
+    'attic', 'for', 'pl.', 'by', 'nature', 'heterog.', 'fem.', 'mostly', 'in',
+    'also', 'voc.', 'contr.', 'Eur.', 'rarely', 'later',
+)
+ENGLISH_WORD = re.compile(
+    r'(?:(?<=[\s\[(])|^)(' + '|'.join(re.escape(w) for w in ENGLISH_IN_GREEK_NOTES)
+    + r')(?=[\s,;:\])]|$)'
+)
+# Perseus's linking tool left notes such as "#skipped kente/w" for each
+# cross-reference it skipped; not Liddell and Scott's text.
+TOOL_NOTE = re.compile(r'#(?:skipped|skirred) ')
+
+
 class Stop(Exception):
     """The source holds something this converter doesn't know."""
 
@@ -137,7 +155,10 @@ class Converter:
             self.used.add((entry_id, raw))
             ident = f'corr{len(self.applied) + 1}'
             self.applied.append((ident, entry_id, raw, fix))
-            corr = beta_to_unicode(fix['corr'], drop_stray_length=True, dropped=self.dropped_length)
+            if 'text' in fix:
+                corr = fix['text']  # not Greek letters, such as metrical signs
+            else:
+                corr = beta_to_unicode(fix['corr'], drop_stray_length=True, dropped=self.dropped_length)
             return (f'<choice xml:id="{ident}"><sic><seg type="betacode">{esc(raw)}</seg></sic>'
                     f'<corr>{esc(corr)}</corr></choice>')
         try:
@@ -150,16 +171,35 @@ class Converter:
 
     # -- inline content ---------------------------------------------------
 
-    def inline(self, el, entry_id, greek=False):
+    def inline(self, el, entry_id, greek=False, note=False):
         """An element's content as TEI. `greek` means bare text inside it is
-        Beta Code (a Greek note, or a Greek foreign word)."""
+        Beta Code (a Greek note, or a Greek foreign word); `note` that it is a
+        headword-line note, whose bare text may also hold English words."""
+        convert = self.greek_note if note else self.greek
         out = []
         if el.text:
-            out.append(self.greek(el.text, entry_id, el.tag) if greek else esc(el.text))
+            out.append(convert(el.text, entry_id, el.tag) if greek else esc(el.text))
         for child in el:
             out.append(self.child(child, entry_id))
             if child.tail:
-                out.append(self.greek(child.tail, entry_id, el.tag) if greek else esc(child.tail))
+                out.append(convert(child.tail, entry_id, el.tag) if greek else esc(child.tail))
+        return ''.join(out)
+
+    def greek_note(self, raw, entry_id, where):
+        """Bare text of a Greek headword-line note: Beta Code, apart from the
+        English words in ENGLISH_IN_GREEK_NOTES, kept as they are."""
+        if (entry_id, raw) in self.corrections or not ENGLISH_WORD.search(raw):
+            return self.greek(raw, entry_id, where)
+        out, at = [], 0
+        for m in ENGLISH_WORD.finditer(raw):
+            if raw[at:m.start()]:
+                out.append(self.greek(raw[at:m.start()], entry_id, where))
+            out.append(esc(m.group(1)))
+            self.counts['English words in Greek headword-line notes'] = \
+                self.counts.get('English words in Greek headword-line notes', 0) + 1
+            at = m.end()
+        if raw[at:]:
+            out.append(self.greek(raw[at:], entry_id, where))
         return ''.join(out)
 
     def child(self, c, entry_id):
@@ -212,13 +252,18 @@ class Converter:
         trail = raw[len(raw.rstrip()):]
         shown = self.greek(word, entry_id, 'ref')
         if '<choice' in shown:
-            target_word = beta_to_unicode(self.corrections[(entry_id, word)]['corr'], drop_stray_length=True)
+            fix = self.corrections[(entry_id, word)]
+            target_word = (fix['text'].lstrip('*') if 'text' in fix
+                           else beta_to_unicode(fix['corr'], drop_stray_length=True))
         else:
             try:
                 target_word = beta_to_unicode(word, drop_stray_length=True)
             except BetaCodeError:
                 target_word = None  # only in a draft: greek() reported it
         targets = self.by_head.get(bare(target_word), []) if target_word else []
+        if not targets and target_word and re.search(r'\w-\w', target_word):
+            # LS's compound hyphen (phil-anthropos), not in the headword.
+            targets = self.by_head.get(bare(target_word.replace('-', '')), [])
         if len(targets) == 1:
             out = f'<ref type="entry" target="#{targets[0]}" xml:lang="grc">{shown}</ref>'
             self.counts['cross-references to one entry'] = self.counts.get('cross-references to one entry', 0) + 1
@@ -255,7 +300,7 @@ class Converter:
                 i += 2
                 continue
             greek = n.get('type') == 'alt' or n.tag == 'orth'
-            parts.append(self.inline(n, entry_id, greek=greek))
+            parts.append(self.inline(n, entry_id, greek=greek, note=n.get('type') == 'alt'))
             i += 1
         return ' '.join(p.strip() for p in parts)
 
@@ -283,7 +328,7 @@ class Converter:
                         raise Stop(f'entry {entry_id}: "{LEMBUF}" not where expected')
                     piece = piece.rstrip()[:-len(LEMBUF)] + rest
                     found = True
-                out.append(self.greek(piece, entry_id, 'note') if piece else '')
+                out.append(self.greek_note(piece, entry_id, 'note') if piece else '')
             elif i == last:
                 if piece.tag != 'foreign' or piece.get('lang') != 'greek' or len(piece) \
                         or not (piece.text or '').rstrip().endswith(LEMBUF):
@@ -306,8 +351,13 @@ class Converter:
         if len(lemma_forms) != 1 or lemma_forms[0].find('orth') is None or len(lemma_forms[0].find('orth')):
             raise Stop(f'entry {entry_id}: one plain <form><orth> expected')
         orth = lemma_forms[0].find('orth')
-        head_raw = re.sub(r'\d+$', '', (orth.text or '').strip())
+        head_raw, starred = headword_beta(orth.text)
         headword = self.greek(head_raw, entry_id, 'orth')
+        if starred:
+            # As printed: the asterisk before the word.
+            headword = '*' + headword
+            self.counts['headwords marked * (a form not found in use)'] = \
+                self.counts.get('headwords marked * (a form not found in use)', 0) + 1
         notes, rest = [], []
         for c in e:
             if c is lemma_forms[0]:
@@ -318,6 +368,9 @@ class Converter:
                 if o is None or len(c) != 1 or len(o):
                     raise Stop(f'entry {entry_id}: unexpected <form type="infl">')
                 notes.append(o)
+            elif c.tag == 'note' and c.get('type') == 'alt' and not len(c) and TOOL_NOTE.match(c.text or ''):
+                self.counts['linking-tool notes ("#skipped") left out'] = \
+                    self.counts.get('linking-tool notes ("#skipped") left out', 0) + 1
             elif c.tag == 'note' and c.get('type') in ('alt', 'infl'):
                 notes.append(c)
             elif c.tag == 'gramGrp':
@@ -363,6 +416,16 @@ class Converter:
         return '\n'.join(lines)
 
 
+def headword_beta(text):
+    """A headword's Beta Code without the homograph number, and whether it
+    is starred: Perseus writes the asterisk Liddell and Scott print before
+    a form not found in use (*ERA, a root) after the word ("*)/era*",
+    "e)/rgw*"). The headword is shown with it, and looked up without."""
+    word = re.sub(r'\d+$', '', (text or '').strip())
+    bare_word = re.sub(r'(?<=[a-z/\\=()|+])\*$', '', word)
+    return bare_word, bare_word != word
+
+
 def strong_numbers(ls_heads):
     """Strong's Greek numbers by LS headword: Strong's headword equal to an
     LS headword (both looked up as `bare`), or else equal once diaeresis is
@@ -384,7 +447,11 @@ def header(source_sha, conv, entries_count):
         f'      <change target="#{ident}">{entry}: '
         + ('a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).'
            if fix.get('evidence') == 'join rule'
-           else f'"{esc(raw)}" corrected to "{esc(fix["corr"])}". Evidence: {esc(fix["evidence"].strip())}')
+           else f'removed, a duplicate of {fix["duplicate_of"]} (the same text after the headword), printed once. The source had: "{esc(flat(fix["source"]))}". Evidence: {esc(flat(fix["evidence"]))}'
+           if 'duplicate_of' in fix
+           else f'rewritten from the printed page, where the source had lost text. The source had: "{esc(flat(fix["source"]))}"; the rewrite, in the source\'s markup: "{esc(flat(fix["replace"]))}". Evidence: {esc(flat(fix["evidence"]))}'
+           if 'replace' in fix
+           else f'"{esc(raw)}" corrected to "{esc(fix.get("corr", fix.get("text")))}". Evidence: {esc(flat(fix["evidence"]))}')
         + '</change>'
         for ident, entry, raw, fix in conv.applied
     )
@@ -415,7 +482,9 @@ def header(source_sha, conv, entries_count):
     </fileDesc>
     <encodingDesc>
       <p>Each of the {entries_count} entries keeps its Perseus id as its xml:id; n is the homograph number where Perseus gives one, and bn:strong the Strong's Greek numbers whose headword is the same word. The note of type forms is the headword line (endings, article, principal parts); etym is the etymology (Perseus writes Liddell and Scott's "Hence" at the end of an entry as "from ..." on the next), and each sense a numbered sense, with its level in bn:level. gloss is a translation, usg an author or usage label (bn:title gives the author an "id." refers to), and foreign a Greek, Latin or English word. A ref of type entry links to one entry; a ref of type lemma links to every entry with the headword in bn:lemma. Greek is converted from Perseus's Beta Code to Unicode (NFC).</p>
-      <p>Left out: Perseus's machine-made stem analysis ({conv.counts["machine stem analysis (gramGrp) left out"]} groups), the alphabet headings, and {len(conv.dropped_length)} breves or macrons that no vowel can carry where they stand.</p>
+      <p>A headword beginning with * is one Liddell and Scott print with an asterisk, a form not found in use, such as their roots ({conv.counts.get("headwords marked * (a form not found in use)", 0)} entries; Perseus writes the asterisk after the word). It is looked up without the asterisk.</p>
+      <p>English words Perseus left in the bare text of its Greek headword-line notes (such as "fut." and "or") are kept as English.</p>
+      <p>Left out: Perseus's machine-made stem analysis ({conv.counts["machine stem analysis (gramGrp) left out"]} groups), the notes its linking tool left ("#skipped" and a word, {conv.counts.get('linking-tool notes ("#skipped") left out', 0)}), the alphabet headings, and {len(conv.dropped_length)} breves or macrons that no vowel can carry where they stand.</p>
     </encodingDesc>
     <revisionDesc>
 {changes or "      <change>No corrections.</change>"}
@@ -426,14 +495,75 @@ def header(source_sha, conv, entries_count):
 '''
 
 
+def flat(text):
+    return ' '.join(text.split())
+
+
+def entry_sources():
+    """Each entry's content exactly as the source file has it (between its
+    tags, white space runs made single), for checking a replacement."""
+    text = SOURCE.read_text(encoding='utf-8')
+    return {
+        m.group(1): flat(m.group(2))
+        for m in re.finditer(r'<entry [^>]*\bid="([^"]+)"[^>]*>(.*?)</entry>', text, flags=re.S)
+    }
+
+
 def load_corrections():
+    """Two kinds: a piece of Greek corrected (entry, source, corr,
+    evidence), and a whole entry rewritten from the print, in Perseus's
+    own markup, where Perseus lost text (entry, source, replace,
+    evidence; source is the entry's whole content in the source file, so
+    the replacement applies only to the entry it was written for)."""
     items = yaml.safe_load(CORRECTIONS.read_text(encoding='utf-8')) or []
-    out = {}
+    out, replacements, removals = {}, {}, {}
+    sources = None
     for index, c in enumerate(items, start=1):
-        if set(c) != {'entry', 'source', 'corr', 'evidence'}:
-            raise Stop(f'correction {index} must have exactly entry, source, corr and evidence')
-        out[(c['entry'], c['source'])] = c
-    return out
+        if set(c) in ({'entry', 'source', 'corr', 'evidence'}, {'entry', 'source', 'text', 'evidence'}):
+            # corr is Beta Code; text is the printed text itself, for what
+            # Beta Code can't write (metrical signs).
+            out[(c['entry'], c['source'])] = c
+        elif set(c) == {'entry', 'source', 'replace', 'evidence'}:
+            sources = sources or entry_sources()
+            if sources.get(c['entry']) != flat(c['source']):
+                raise Stop(f'correction {index}: entry {c["entry"]} no longer matches its source; check it again')
+            if c['entry'] in replacements:
+                raise Stop(f'correction {index}: entry {c["entry"]} replaced twice')
+            replacements[c['entry']] = c
+        elif set(c) == {'entry', 'source', 'duplicate_of', 'evidence'}:
+            # An entry Perseus has twice: removed, if its content is still
+            # the source's and, after its headword, the same as the other's.
+            sources = sources or entry_sources()
+            if sources.get(c['entry']) != flat(c['source']):
+                raise Stop(f'correction {index}: entry {c["entry"]} no longer matches its source; check it again')
+            # Perseus's own ids of senses differ between the copies.
+            after = lambda text: re.sub(r' id="[^"]*"', '', re.sub(r'^<form .*?</form>', '', text)).strip()  # noqa: E731
+            if after(sources[c['entry']]) != after(sources.get(c['duplicate_of'], '')):
+                raise Stop(f'correction {index}: {c["entry"]} is not a duplicate of {c["duplicate_of"]}')
+            removals[c['entry']] = c
+        else:
+            raise Stop(f'correction {index} must have entry, source and evidence, and one of corr, text, replace or duplicate_of')
+    return out, replacements, removals
+
+
+def replaced(e, fix):
+    """The entry as rewritten: its own headword, then the replacement."""
+    new = ET.Element('entry', dict(e.attrib))
+    for f in e.findall('form'):
+        if f.get('type') is None:
+            new.append(f)
+    try:
+        body = ET.fromstring(f'<body>{fix["replace"]}</body>')
+    except ET.ParseError as error:
+        raise Stop(f'the replacement of {e.get("id")} is not well-formed: {error}') from None
+    if body.text and body.text.strip():
+        raise Stop(f'the replacement of {e.get("id")} has text outside its elements')
+    for c in body:
+        if c.tail and c.tail.strip():
+            raise Stop(f'the replacement of {e.get("id")} has text outside its elements')
+        c.tail = None
+        new.append(c)
+    return new
 
 
 def main():
@@ -441,14 +571,20 @@ def main():
     source_sha = check_source()
     root = ET.parse(SOURCE).getroot()
     entries = list(root.iter('entry'))
-    corrections = load_corrections()
+    corrections, replacements, removals = load_corrections()
+    entries = [e for e in entries if e.get('id') not in removals]
+    entries = [replaced(e, replacements[e.get('id')]) if e.get('id') in replacements else e for e in entries]
     conv = Converter(corrections, draft=draft)
+    for entry_id, fix in replacements.items():
+        conv.applied.append((entry_id, entry_id, 'replace', fix))
+    for entry_id, fix in removals.items():
+        conv.applied.append((fix['duplicate_of'], entry_id, 'remove', fix))
     # Every headword, for cross-references and Strong's numbers.
     conv.by_head = {}
     conv.head_bare = {}
     heads = set()
     for e in entries:
-        raw = re.sub(r'\d+$', '', (e.find('form/orth').text or '').strip())
+        raw = headword_beta(e.find('form/orth').text)[0]
         try:
             h = bare(beta_to_unicode(raw, drop_stray_length=True))
         except BetaCodeError:

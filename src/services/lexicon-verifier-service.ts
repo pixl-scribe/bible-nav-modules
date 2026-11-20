@@ -54,12 +54,14 @@ function attrIn(attrs: string, name: string): string {
 
 /**
  * How a headword is looked up, as docs/lexicon-format.md defines it:
- * Unicode NFC, without combining breve (U+0306) or macron (U+0304), and
- * without digits.
+ * Unicode NFC, without combining breve (U+0306) or macron (U+0304),
+ * digits, or an asterisk.
  */
 function lemmaOf(word: string): string {
   return [...word.normalize('NFD')]
-    .filter((c) => c !== '\u0304' && c !== '\u0306' && !/[0-9]/.test(c))
+    .filter(
+      (c) => c !== '\u0304' && c !== '\u0306' && c !== '*' && !/[0-9]/.test(c)
+    )
     .join('')
     .normalize('NFC')
     .trim();

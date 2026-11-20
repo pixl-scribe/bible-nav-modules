@@ -161,8 +161,13 @@ def beta_to_unicode(text, drop_stray_length=False, dropped=None):
         if lower in LETTERS and ch.isascii():
             if lower == 's':
                 following = text[i + 1] if i + 1 < n else ''
+                # Final only at the end of a word with a letter before it: a
+                # sigma cited alone, as the letter ("s", "s# = 200"), is not.
+                after_letter = bool(out) and unicodedata.category(
+                    unicodedata.normalize('NFD', out[-1])[:1] or ' ').startswith('L')
                 is_final = (
-                    not (following.isascii() and following.isalpha())
+                    after_letter
+                    and not (following.isascii() and following.isalpha())
                     and following not in ('*', '-')
                 )
                 out.append(FINAL_SIGMA if is_final else LETTERS['s'])

@@ -78,6 +78,9 @@ class BetaCode(unittest.TestCase):
         self.assertEqual(beta_to_unicode('qeo/s'), nfc(letter('THETA'), letter('EPSILON'), letter('OMICRON'), ACUTE, FINAL))
         self.assertEqual(beta_to_unicode('qeo/s, '), beta_to_unicode('qeo/s') + ', ')
         self.assertTrue(beta_to_unicode('sw/zw').startswith(SIGMA))
+        # Cited alone, as the letter, sigma is not final.
+        self.assertEqual(beta_to_unicode('s'), SIGMA)
+        self.assertEqual(beta_to_unicode('o( s'), nfc(letter('OMICRON'), ROUGH) + ' ' + SIGMA)
         # A word part keeps sigma; a homograph number ends the word.
         self.assertTrue(beta_to_unicode('dus-').endswith(SIGMA + '-'))
         self.assertTrue(beta_to_unicode('a(/lios2').endswith(FINAL + '2'))

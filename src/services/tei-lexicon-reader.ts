@@ -349,13 +349,13 @@ function isStrongsSense(node: XmlNode): boolean {
 
 /**
  * How a headword is looked up (docs/lexicon-format.md): Unicode NFC,
- * without breve or macron (editors' marks of vowel length), and without a
- * homograph number.
+ * without breve or macron (editors' marks of vowel length), a homograph
+ * number, or the asterisk before a form not found in use.
  */
 export function lemmaForm(word: string): string {
   return word
     .normalize('NFD')
-    .replace(/[\u0304\u0306\d]/g, '')
+    .replace(/[\u0304\u0306\d*]/g, '')
     .normalize('NFC')
     .trim();
 }
