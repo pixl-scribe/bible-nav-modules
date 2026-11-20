@@ -113,7 +113,7 @@ describe('TEI lexicon reader', () => {
   test('unknown markup fails, so nothing is dropped silently', () => {
     const cases = [
       entry('H2', '\n        <usg>x</usg>'),
-      entry('H2', '', 'from <gloss>x</gloss>'),
+      entry('H2', '', 'from <term>x</term>'),
       entry('H2', '', '<hi rend="bold">x</hi>'),
       entry('H2', '', '<mentioned xml:lang="hbo" bn:other="1">x</mentioned>'),
     ];
@@ -162,6 +162,64 @@ describe('TEI lexicon reader', () => {
   test('a link into this lexicon must still lead to an entry', () => {
     const body = entry('G1', '', 'from <ref type="entry" target="#G2">B</ref>');
     assert.throws(() => readTeiLexicon(tei(body)), /link to G2/);
+  });
+
+  test('Liddell and Scott: parts in order, senses, labels, links by headword, lookups', () => {
+    // Built from code points, so no combining mark is typed: a breve
+    // (U+0306) and a homograph number are left out of the lemma lookup.
+    const breve = String.fromCodePoint(0x306);
+    const ls = `      <entry xml:id="n1" xml:lang="en" n="1" bn:strong="G25 G26">
+        <form type="lemma"><orth xml:lang="grc">a${breve}ga</orth></form>
+        <note type="forms">ab, <foreign xml:lang="en">doric</foreign> <foreign xml:lang="grc">ac</foreign></note>
+        <etym>from <ref type="lemma" xml:lang="grc" bn:lemma="be">be</ref></etym>
+        <sense n="I" bn:level="2"><gloss>love</gloss>, <usg>Plat.</usg>, <usg bn:title="Plat.">id.</usg></sense>
+        <etym>= <ref type="entry" target="#n2" xml:lang="grc">be</ref></etym>
+        <sense>plain</sense>
+      </entry>
+      <entry xml:id="n2" xml:lang="en" n="1"><form type="lemma"><orth xml:lang="grc">be</orth></form></entry>
+      <entry xml:id="n3" xml:lang="en" n="2"><form type="lemma"><orth xml:lang="grc">be</orth></form></entry>`;
+    const lexicon = readTeiLexicon(tei(ls));
+    const [first] = lexicon.entries;
+    assert.equal(first.homograph, '1');
+    assert.deepEqual(
+      first.body.map((part) => (typeof part === 'string' ? part : part.style)),
+      ['form', 'deriv', 'sense', 'deriv', 'sense']
+    );
+    assert.deepEqual(first.body[2], {
+      style: 'sense',
+      attributes: { n: 'I', level: '2' },
+      children: [
+        { style: 'tr', attributes: {}, children: ['love'] },
+        ', ',
+        { style: 'usg', attributes: {}, children: ['Plat.'] },
+        ', ',
+        { style: 'usg', attributes: { title: 'Plat.' }, children: ['id.'] },
+      ],
+    });
+    assert.deepEqual(first.body[1], {
+      style: 'deriv',
+      attributes: {},
+      children: [
+        'from ',
+        { style: 'ref', attributes: { lemma: 'be' }, children: ['be'] },
+      ],
+    });
+    assert.deepEqual(
+      lexicon.lookups.map((l) => `${l.kind} ${l.value} ${l.entryKey}`),
+      [
+        'lemma aga n1',
+        'strong G25 n1',
+        'strong G26 n1',
+        'lemma be n2',
+        'lemma be n3',
+      ]
+    );
+  });
+
+  test('a link by headword must lead to an entry with that headword', () => {
+    const ls = `      <entry xml:id="n1" xml:lang="en"><form type="lemma"><orth xml:lang="grc">a</orth></form>
+        <etym><ref type="lemma" xml:lang="grc" bn:lemma="zz">zz</ref></etym></entry>`;
+    assert.throws(() => readTeiLexicon(tei(ls)), /headword zz/);
   });
 
   test('two entries with one key fail', () => {

@@ -1,0 +1,13 @@
+# Corrections to the source (source/Perseus_text_1999.04.0058.xml), applied
+# by tools/import-middle-liddell.py, each checked against the 1889 printing
+# (Internet Archive, intermediategree00lidd; printed page = image - 5).
+#
+# entry:    the Perseus id, such as n2013
+# source:   the whole Greek text of one element, in Beta Code, exactly as
+#           the source has it (the converter matches it exactly)
+# corr:     what it should be, in Beta Code
+# evidence: the printed page, and what it shows
+#
+# The 65 words Perseus's conversion tool split in two ("failing on lembuf
+# []") are joined by a rule in the converter, not listed here.
+[]

@@ -8,21 +8,61 @@ import Database from 'better-sqlite3';
  * Never merge the two.
  *
  * Compared for every entry: the key and order, headword, its language,
- * transliteration, pronunciation, the plain text of the derivation,
- * definition and KJV renderings (after leaving out the source editors'
- * notes and the <sic> of each correction), and each link's target and
- * each unlinked word's attributes. Every Strong's key must have its lookup.
+ * homograph number, transliteration, pronunciation; each part of the body
+ * (forms, derivations, definition, KJV renderings, senses with their
+ * number and level, comment) in order, as plain text, after leaving out
+ * the source editors' notes and the <sic> of each correction; each link's
+ * target (an entry, a Strong's number, or a headword); each unlinked
+ * word's attributes, each usage label's title and each foreign word's
+ * language. The lookups must be exactly those the TEI file implies: a
+ * Strong's key's own number, or else the headword as a lemma and any
+ * bn:strong numbers.
  */
 
 interface ScannedEntry {
   key: string;
   headword: string;
   headwordLang: string;
+  homograph: string;
   translit: string;
   pronunciation: string;
-  parts: Record<string, string>;
+  parts: string[];
   links: string[];
   words: string[];
+  titles: string[];
+  langs: string[];
+  strong: string[];
+}
+
+/** Top-level parts of an entry, in order: [TEI pattern, module style]. */
+const PARTS = new RegExp(
+  [
+    '<note type="forms">([\\s\\S]*?)</note>',
+    '<note type="comment">([\\s\\S]*?)</note>',
+    '<etym>([\\s\\S]*?)</etym>',
+    '<def>([\\s\\S]*?)</def>',
+    '<note type="kjvRenderings">([\\s\\S]*?)</note>',
+    '<sense((?: [^>]*)?)>([\\s\\S]*?)</sense>',
+  ].join('|'),
+  'g'
+);
+const PART_STYLES = ['form', 'note', 'deriv', 'def', 'kjv'];
+
+function attrIn(attrs: string, name: string): string {
+  return unescape(new RegExp(`${name}="([^"]*)"`).exec(attrs)?.[1] ?? '');
+}
+
+/**
+ * How a headword is looked up, as docs/lexicon-format.md defines it:
+ * Unicode NFC, without combining breve (U+0306) or macron (U+0304), and
+ * without digits.
+ */
+function lemmaOf(word: string): string {
+  return [...word.normalize('NFD')]
+    .filter((c) => c !== '\u0304' && c !== '\u0306' && !/[0-9]/.test(c))
+    .join('')
+    .normalize('NFC')
+    .trim();
 }
 
 function unescape(text: string): string {
@@ -48,17 +88,40 @@ function scanTei(xml: string): ScannedEntry[] {
   const entryPattern = /<entry xml:id="([^"]+)"[^>]*>([\s\S]*?)<\/entry>/g;
   for (const match of xml.matchAll(entryPattern)) {
     const key = match[1];
+    const entryAttrs = /^<entry ([^>]*)>/.exec(match[0])?.[1] ?? '';
     const body = match[2]
       .replace(/<note type="sourceCorrection"[^>]*>[\s\S]*?<\/note>/g, '')
       .replace(/<sic>[\s\S]*?<\/sic>/g, '');
-    const part = (pattern: RegExp) => {
-      const found = pattern.exec(body);
-      return found ? stripTags(found[1]) : '';
-    };
+    // Strong's senses only wrap a definition and KJV renderings.
+    const unwrapped = body.replace(
+      /<sense>(\s*<(?:def>|note type="kjvRenderings">)[\s\S]*?)<\/sense>/g,
+      '$1'
+    );
+    const parts = [...unwrapped.matchAll(PARTS)].map((m) => {
+      const index = m.slice(1, 6).findIndex((g) => g !== undefined);
+      if (index >= 0)
+        return `${PART_STYLES[index]}: ${stripTags(m[index + 1])}`;
+      const n = attrIn(m[6], 'n');
+      const level = attrIn(m[6], 'bn:level');
+      return `sense ${n}/${level}: ${stripTags(m[7])}`;
+    });
     const links = [
-      // In this file ("#G25") or another lexicon's ("<file>#H5689").
-      ...body.matchAll(/<ref type="entry" target="[^"#]*#([^"]+)"/g),
-    ].map((m) => m[1].replace(/^([HG])0*/, '$1'));
+      // In this file ("#G25") or another lexicon's ("<file>#H5689"), or
+      // every entry with a headword.
+      ...body.matchAll(
+        /<ref type="entry" target="[^"#]*#([^"]+)"|<ref type="lemma" [^>]*bn:lemma="([^"]*)"/g
+      ),
+    ].map((m) =>
+      m[1] !== undefined
+        ? m[1].replace(/^([HG])0*/, '$1')
+        : `lemma:${unescape(m[2])}`
+    );
+    const titles = [...body.matchAll(/<usg( [^>]*)?>/g)].map((m) =>
+      attrIn(m[1] ?? '', 'bn:title')
+    );
+    const langs = [...body.matchAll(/<foreign xml:lang="([^"]*)">/g)].map(
+      (m) => m[1]
+    );
     const words = [
       ...body.matchAll(/<mentioned ([^>]*)>([^<]*)<\/mentioned>/g),
     ].map((m) => {
@@ -73,8 +136,8 @@ function scanTei(xml: string): ScannedEntry[] {
     });
     entries.push({
       key,
-      headword: unescape(
-        one(/<orth xml:lang="[^"]+">([^<]*)<\/orth>/, body, 'headword', key)
+      headword: stripTags(
+        one(/<orth xml:lang="[^"]+">([\s\S]*?)<\/orth>/, body, 'headword', key)
       ),
       headwordLang: one(
         /<orth xml:lang="([^"]+)">/,
@@ -82,26 +145,17 @@ function scanTei(xml: string): ScannedEntry[] {
         'headword language',
         key
       ),
+      homograph: attrIn(entryAttrs, 'n'),
       translit: unescape(
-        one(
-          /<orth type="transliteration">([^<]*)<\/orth>/,
-          body,
-          'transliteration',
-          key
-        )
+        /<orth type="transliteration">([^<]*)<\/orth>/.exec(body)?.[1] ?? ''
       ),
-      pronunciation: unescape(
-        one(/<pron>([^<]*)<\/pron>/, body, 'pronunciation', key)
-      ),
-      parts: {
-        form: part(/<note type="forms">([\s\S]*?)<\/note>/),
-        note: part(/<note type="comment">([\s\S]*?)<\/note>/),
-        deriv: part(/<etym>([\s\S]*?)<\/etym>/),
-        def: part(/<def>([\s\S]*?)<\/def>/),
-        kjv: part(/<note type="kjvRenderings">([\s\S]*?)<\/note>/),
-      },
+      pronunciation: unescape(/<pron>([^<]*)<\/pron>/.exec(body)?.[1] ?? ''),
+      parts,
       links,
       words,
+      titles,
+      langs,
+      strong: attrIn(entryAttrs, 'bn:strong').split(/\s+/).filter(Boolean),
     });
   }
   return entries;
@@ -139,13 +193,15 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
   try {
     const rows = db
       .prepare(
-        `SELECT key, headword, headwordLang, translit, pronunciation, body
+        `SELECT key, headword, headwordLang, homograph, translit,
+                pronunciation, body
          FROM entries ORDER BY id`
       )
       .all() as {
       key: string;
       headword: string;
       headwordLang: string;
+      homograph: string;
       translit: string;
       pronunciation: string;
       body: string;
@@ -168,23 +224,44 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
       expect('key', row.key, tei.key);
       expect('headword', row.headword, tei.headword);
       expect('headword language', row.headwordLang, tei.headwordLang);
+      expect('homograph', row.homograph, tei.homograph);
       expect('transliteration', row.translit, tei.translit);
       expect('pronunciation', row.pronunciation, tei.pronunciation);
       const body = JSON.parse(row.body) as Stored[];
-      for (const style of ['form', 'deriv', 'def', 'kjv', 'note']) {
-        const top = body.filter(
-          (item) => typeof item !== 'string' && item.style === style
-        );
-        expect(style, storedText(top), tei.parts[style]);
-      }
+      const parts = body.map((item) => {
+        if (typeof item === 'string') return `text: ${item}`;
+        if (item.style !== 'sense') {
+          return `${item.style}: ${storedText(item.children)}`;
+        }
+        const n = String(item.n ?? '');
+        const level = String(item.level ?? '');
+        return `sense ${n}/${level}: ${storedText(item.children)}`;
+      });
+      expect('parts', parts.join('\n'), tei.parts.join('\n'));
+      expect(
+        'usage titles',
+        collect(body, 'usg')
+          .map((u) => String((u as { title?: string }).title ?? ''))
+          .join('|'),
+        tei.titles.join('|')
+      );
+      expect(
+        'foreign languages',
+        collect(body, 'foreign')
+          .map((f) => String((f as { lang?: string }).lang ?? ''))
+          .join(' '),
+        tei.langs.join(' ')
+      );
       expect(
         'links',
         collect(body, 'ref')
           .map((ref) =>
-            String(
-              (ref as { strong?: string }).strong ??
-                (ref as { key?: string }).key
-            )
+            (ref as { lemma?: string }).lemma !== undefined
+              ? `lemma:${String((ref as { lemma?: string }).lemma)}`
+              : String(
+                  (ref as { strong?: string }).strong ??
+                    (ref as { key?: string }).key
+                )
           )
           .join(' '),
         tei.links.join(' ')
@@ -217,13 +294,20 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
       )
       .all() as { kind: string; value: string; key: string }[];
     const have = new Set(lookups.map((l) => `${l.kind} ${l.value} ${l.key}`));
+    const wanted = new Set<string>();
     for (const tei of scanned) {
-      if (
-        /^[HG][1-9]\d*$/.test(tei.key) &&
-        !have.has(`strong ${tei.key} ${tei.key}`)
-      ) {
-        problems.push(`entry ${tei.key} has no Strong's lookup`);
+      if (/^[HG][1-9]\d*$/.test(tei.key)) {
+        wanted.add(`strong ${tei.key} ${tei.key}`);
+        continue;
       }
+      wanted.add(`lemma ${lemmaOf(tei.headword)} ${tei.key}`);
+      for (const n of tei.strong) wanted.add(`strong ${n} ${tei.key}`);
+    }
+    for (const w of wanted) {
+      if (!have.has(w)) problems.push(`missing lookup: ${w}`);
+    }
+    for (const h of have) {
+      if (!wanted.has(h)) problems.push(`unexpected lookup: ${h}`);
     }
     if (problems.length > 0) {
       throw new Error(

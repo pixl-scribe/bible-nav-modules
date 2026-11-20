@@ -71,7 +71,10 @@ describe('lexicon tree', () => {
       .run();
     handle.prepare(`UPDATE entries SET headword = 'X' WHERE key = 'H1'`).run();
     handle.close();
-    assert.throws(() => verifyLexicon(db, teiFile), /H1 headword[\s\S]*H2 def/);
+    assert.throws(
+      () => verifyLexicon(db, teiFile),
+      /H1 headword[\s\S]*H2 parts/
+    );
   });
 
   test('the independent Python checker gives the same roots', (t) => {

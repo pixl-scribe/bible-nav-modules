@@ -135,6 +135,28 @@ function inline(nodes: XmlNode[], where: string): BodyItem[] {
         throw new Error(`${where}: <hi> must have rend="italic" only`);
       }
       items.push(element('em', {}, inline(childrenOf(node), where)));
+    } else if (name === 'gloss') {
+      expectAttrs(node, [], where);
+      items.push(element('tr', {}, inline(childrenOf(node), where)));
+    } else if (name === 'usg') {
+      expectAttrs(node, ['bn:title'], where);
+      const title = attrs['bn:title'];
+      items.push(
+        element('usg', title ? { title } : {}, inline(childrenOf(node), where))
+      );
+    } else if (name === 'ref' && attrs.type === 'lemma') {
+      // A link to every entry with this headword (LS's homographs).
+      expectAttrs(node, ['type', 'xml:lang', 'bn:lemma'], where);
+      if (!attrs['bn:lemma']) {
+        throw new Error(`${where}: <ref type="lemma"> without bn:lemma`);
+      }
+      items.push(
+        element(
+          'ref',
+          { lemma: attrs['bn:lemma'] },
+          inline(childrenOf(node), where)
+        )
+      );
     } else if (name === 'ref') {
       expectAttrs(
         node,
@@ -208,7 +230,7 @@ function readEntry(node: XmlNode): LexiconEntry {
   const key = attrs['xml:id'];
   const where = `entry ${key}`;
   if (!key) throw new Error('an entry has no xml:id');
-  expectAttrs(node, ['xml:id', 'xml:lang'], where);
+  expectAttrs(node, ['xml:id', 'xml:lang', 'n', 'bn:strong'], where);
   if (attrs['xml:lang'] !== 'en') {
     throw new Error(`${where}: xml:lang must be "en"`);
   }
@@ -216,18 +238,14 @@ function readEntry(node: XmlNode): LexiconEntry {
     key,
     headword: '',
     headwordLang: '',
-    homograph: '',
+    homograph: attrs.n ?? '',
     translit: '',
     pronunciation: '',
     allCited: false,
     body: [],
   };
-  let deriv: BodyElement | undefined;
-  let def: BodyElement | undefined;
-  let kjv: BodyElement | undefined;
-  /** Alternative forms of the headword, and remarks after the renderings. */
-  let forms: BodyElement | undefined;
-  let comment: BodyElement | undefined;
+  /** The body's parts, in the order the TEI file gives them. */
+  const parts: BodyElement[] = [];
   let haveForm = false;
 
   for (const child of elements(node, where)) {
@@ -241,7 +259,10 @@ function readEntry(node: XmlNode): LexiconEntry {
         const partAttrs = attrsOf(part);
         if (nameOf(part) === 'orth' && partAttrs.type === undefined) {
           expectAttrs(part, ['xml:lang'], where);
-          entry.headword = plainText(part, where);
+          // A corrected headword holds a <choice>; its text is the <corr>.
+          entry.headword = inline(childrenOf(part), where)
+            .map((item) => (typeof item === 'string' ? item : ''))
+            .join('');
           entry.headwordLang = partAttrs['xml:lang'] ?? '';
         } else if (
           nameOf(part) === 'orth' &&
@@ -258,37 +279,43 @@ function readEntry(node: XmlNode): LexiconEntry {
       }
     } else if (name === 'etym') {
       expectAttrs(child, [], where);
-      if (deriv) throw new Error(`${where}: two <etym>`);
-      deriv = element('deriv', {}, inline(childrenOf(child), where));
-    } else if (name === 'sense') {
+      parts.push(element('deriv', {}, inline(childrenOf(child), where)));
+    } else if (name === 'sense' && isStrongsSense(child)) {
+      // Strong's: a definition and the KJV renderings.
       expectAttrs(child, [], where);
       for (const part of elements(child, where)) {
-        if (nameOf(part) === 'def' && !def) {
+        if (nameOf(part) === 'def') {
           expectAttrs(part, [], where);
-          def = element('def', {}, inline(childrenOf(part), where));
+          parts.push(element('def', {}, inline(childrenOf(part), where)));
         } else if (
           nameOf(part) === 'note' &&
-          attrsOf(part).type === 'kjvRenderings' &&
-          !kjv
+          attrsOf(part).type === 'kjvRenderings'
         ) {
           expectAttrs(part, ['type'], where);
-          kjv = element('kjv', {}, inline(childrenOf(part), where));
+          parts.push(element('kjv', {}, inline(childrenOf(part), where)));
         } else {
           throw new Error(`${where}: unexpected <${nameOf(part)}> in <sense>`);
         }
       }
+    } else if (name === 'sense') {
+      // Liddell and Scott: a numbered sense holding its text.
+      expectAttrs(child, ['n', 'bn:level'], where);
+      const senseAttrs: Attributes = {};
+      if (attrsOf(child).n) senseAttrs.n = attrsOf(child).n;
+      if (attrsOf(child)['bn:level']) {
+        senseAttrs.level = attrsOf(child)['bn:level'];
+      }
+      parts.push(
+        element('sense', senseAttrs, inline(childrenOf(child), where))
+      );
     } else if (isSourceCorrection(child)) {
       continue;
-    } else if (name === 'note' && attrsOf(child).type === 'forms' && !forms) {
+    } else if (name === 'note' && attrsOf(child).type === 'forms') {
       expectAttrs(child, ['type'], where);
-      forms = element('form', {}, inline(childrenOf(child), where));
-    } else if (
-      name === 'note' &&
-      attrsOf(child).type === 'comment' &&
-      !comment
-    ) {
+      parts.push(element('form', {}, inline(childrenOf(child), where)));
+    } else if (name === 'note' && attrsOf(child).type === 'comment') {
       expectAttrs(child, ['type'], where);
-      comment = element('note', {}, inline(childrenOf(child), where));
+      parts.push(element('note', {}, inline(childrenOf(child), where)));
     } else {
       throw new Error(`${where}: unexpected <${name}> in an entry`);
     }
@@ -296,18 +323,68 @@ function readEntry(node: XmlNode): LexiconEntry {
   if (!entry.headword || !entry.headwordLang) {
     throw new Error(`${where}: no headword`);
   }
-  entry.body = [forms, deriv, def, kjv, comment].filter(
-    (part): part is BodyElement => part !== undefined
+  entry.body = parts;
+  STRONG_ATTRS.set(
+    entry,
+    (attrs['bn:strong'] ?? '').split(/\s+/).filter(Boolean)
   );
   return entry;
 }
 
-/** The lookups an entry gets from its key: its Strong's number, if it is one. */
+/** Strong's own bn:strong numbers, kept for lookupsFor. */
+const STRONG_ATTRS = new WeakMap<LexiconEntry, string[]>();
+
+/** Strong's senses hold only <def> and <note type="kjvRenderings">. */
+function isStrongsSense(node: XmlNode): boolean {
+  return (
+    Object.keys(attrsOf(node)).length === 0 &&
+    childrenOf(node).every((child) =>
+      isText(child)
+        ? textOf(child).trim() === ''
+        : nameOf(child) === 'def' ||
+          (nameOf(child) === 'note' && attrsOf(child).type === 'kjvRenderings')
+    )
+  );
+}
+
+/**
+ * How a headword is looked up (docs/lexicon-format.md): Unicode NFC,
+ * without breve or macron (editors' marks of vowel length), and without a
+ * homograph number.
+ */
+export function lemmaForm(word: string): string {
+  return word
+    .normalize('NFD')
+    .replace(/[\u0304\u0306\d]/g, '')
+    .normalize('NFC')
+    .trim();
+}
+
+/**
+ * An entry's lookups: its key, if that is a Strong's number (Strong's own
+ * dictionaries); otherwise its headword, as a lemma, and the Strong's
+ * numbers the TEI file gives it (bn:strong, in Liddell and Scott).
+ * Strong's dictionaries get no lemma lookups, so their published keys
+ * roots stay as they are.
+ */
 function lookupsFor(entry: LexiconEntry): Lookup[] {
   const strong = normalizeStrong(entry.key);
-  return strong === entry.key
-    ? [{ kind: 'strong', value: strong, entryKey: entry.key }]
-    : [];
+  if (strong === entry.key) {
+    return [{ kind: 'strong', value: strong, entryKey: entry.key }];
+  }
+  const lookups: Lookup[] = [
+    { kind: 'lemma', value: lemmaForm(entry.headword), entryKey: entry.key },
+  ];
+  for (const number of STRONG_ATTRS.get(entry) ?? []) {
+    const normal = normalizeStrong(number);
+    if (normal !== number) {
+      throw new Error(
+        `entry ${entry.key}: "${number}" is not a Strong's number`
+      );
+    }
+    lookups.push({ kind: 'strong', value: normal, entryKey: entry.key });
+  }
+  return lookups;
 }
 
 /** Every link in a body leads to an entry, or this fails. */
@@ -315,6 +392,9 @@ function checkLinks(lexicon: Lexicon): void {
   const keys = new Set(lexicon.entries.map((entry) => entry.key));
   const strongs = new Set(
     lexicon.lookups.filter((l) => l.kind === 'strong').map((l) => l.value)
+  );
+  const lemmas = new Set(
+    lexicon.lookups.filter((l) => l.kind === 'lemma').map((l) => l.value)
   );
   const visit = (items: BodyItem[], where: string) => {
     for (const item of items) {
@@ -330,6 +410,12 @@ function checkLinks(lexicon: Lexicon): void {
       }
       if (item.style === 'ref' && key !== undefined && !keys.has(key)) {
         throw new Error(`${where}: link to entry ${key}, which doesn't exist`);
+      }
+      const { lemma } = item.attributes;
+      if (item.style === 'ref' && lemma !== undefined && !lemmas.has(lemma)) {
+        throw new Error(
+          `${where}: link to headword ${lemma}, which no entry has`
+        );
       }
       visit(item.children, where);
     }
