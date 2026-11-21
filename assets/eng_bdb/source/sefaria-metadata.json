@@ -1,0 +1,99 @@
+{
+ "fetched": "2026-11-21",
+ "lexicons": {
+  "from": "https://www.sefaria.org/api/words/<word> (parent_lexicon_details)",
+  "details": {
+   "BDB Dictionary": {
+    "name": "BDB Dictionary",
+    "language": "heb.biblical",
+    "to_language": "eng",
+    "text_categories": [],
+    "source": "BDB Dictionary",
+    "attribution": "F. Brown, S. Driver & C. Briggs",
+    "index_title": "BDB",
+    "version_title": "A Hebrew and English lexicon of the Old Testament, by Francis Brown. With the co-operation of S. R. Driver and Charles A. Briggs. Oxford, 1906",
+    "version_lang": "en",
+    "should_autocomplete": true
+   },
+   "BDB Aramaic Dictionary": {
+    "name": "BDB Aramaic Dictionary",
+    "language": "ara.biblical",
+    "to_language": "eng",
+    "text_categories": [],
+    "source": "BDB Dictionary",
+    "attribution": "F. Brown, S. Driver & C. Briggs",
+    "index_title": "BDB Aramaic",
+    "version_title": "A Hebrew and English lexicon of the Old Testament, by Francis Brown. With the co-operation of S. R. Driver and Charles A. Briggs. Oxford, 1906",
+    "version_lang": "en",
+    "should_autocomplete": true
+   }
+  }
+ },
+ "versions": {
+  "from": "https://www.sefaria.org/api/texts/versions/<title>",
+  "BDB": [
+   {
+    "status": "locked",
+    "priority": "",
+    "license": "Public Domain",
+    "versionNotes": "",
+    "formatAsPoetry": "",
+    "digitizedBySefaria": "",
+    "method": "",
+    "heversionSource": "",
+    "versionUrl": "",
+    "versionTitleInHebrew": "",
+    "versionNotesInHebrew": "",
+    "shortVersionTitle": "BDB Dictionary",
+    "shortVersionTitleInHebrew": "",
+    "extendedNotes": "",
+    "extendedNotesHebrew": "",
+    "purchaseInformationImage": "",
+    "purchaseInformationURL": "",
+    "hasManuallyWrappedRefs": "",
+    "language": "en",
+    "title": "BDB",
+    "versionSource": "https://www.nli.org.il/he/books/NNL_ALEPH990019502310205171/NLI",
+    "versionTitle": "A Hebrew and English lexicon of the Old Testament, by Francis Brown. With the co-operation of S. R. Driver and Charles A. Briggs. Oxford, 1906",
+    "actualLanguage": "en",
+    "languageFamilyName": "english",
+    "isSource": true,
+    "isPrimary": true,
+    "direction": "ltr",
+    "firstSectionRef": "BDB, א"
+   }
+  ],
+  "BDB Aramaic": [
+   {
+    "status": "locked",
+    "priority": "",
+    "license": "Public Domain",
+    "versionNotes": "",
+    "formatAsPoetry": "",
+    "digitizedBySefaria": "",
+    "method": "",
+    "heversionSource": "",
+    "versionUrl": "",
+    "versionTitleInHebrew": "",
+    "versionNotesInHebrew": "",
+    "shortVersionTitle": "BDB Dictionary",
+    "shortVersionTitleInHebrew": "",
+    "extendedNotes": "",
+    "extendedNotesHebrew": "",
+    "purchaseInformationImage": "",
+    "purchaseInformationURL": "",
+    "hasManuallyWrappedRefs": "",
+    "language": "en",
+    "title": "BDB Aramaic",
+    "versionSource": "https://www.nli.org.il/he/books/NNL_ALEPH990019502310205171/NLI",
+    "versionTitle": "A Hebrew and English lexicon of the Old Testament, by Francis Brown. With the co-operation of S. R. Driver and Charles A. Briggs. Oxford, 1906",
+    "actualLanguage": "en",
+    "languageFamilyName": "english",
+    "isSource": true,
+    "isPrimary": true,
+    "direction": "ltr",
+    "firstSectionRef": "BDB Aramaic, אָב"
+   }
+  ]
+ }
+}
