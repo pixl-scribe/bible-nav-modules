@@ -1,0 +1,31 @@
+{
+  "type": "bible-nav module manifest",
+  "manifestVersion": 1,
+  "module": {
+    "id": "eng_middle_liddell",
+    "version": "1.0.0",
+    "moduleType": "lexicon",
+    "formatVersion": 1,
+    "name": "An Intermediate Greek-English Lexicon (Liddell and Scott)",
+    "abbreviation": "LS",
+    "languageCode": "eng"
+  },
+  "file": {
+    "name": "eng_middle_liddell-1.0.0.db",
+    "size": 25546752,
+    "sha256": "cf6d24e4e40dd92c1d6806ff448f39794ad459c4e49cd0ea2bcecaa91180073f"
+  },
+  "entries": {
+    "treeVersion": 1,
+    "edition": "Liddell and Scott, An Intermediate Greek-English Lexicon (Oxford, 1889), Perseus Digital Library text 1999.04.0058 as corrected by Benjamin Linskey, with Bible Nav's corrections checked against the 1889 printing",
+    "source": "github.com/blinskey/middle-liddell, Perseus_text_1999.04.0058.xml at commit 5db8d88a20066e182ca3fc6ee758c9f61ac60603 (SHA-256 1b0e2ed672ac23399fbdb031b06119e7736ccefc78c229f6c9302b7c6348c811), converted to TEI by tools/import-middle-liddell.py with assets/eng_middle_liddell/corrections.yaml; see assets/eng_middle_liddell/PROVENANCE.md",
+    "lookups": [
+      "lemma:grc",
+      "strong:G"
+    ],
+    "count": 36489,
+    "keysRoot": "eb9a6922ef2b39be395f06019e6026e05a90f9f5ca5ffab7b90dbd7c0d498228",
+    "contentRoot": "290cbc365802495492d88b4df38c2c5d7747963074424f0150004ff60dc57c8c"
+  },
+  "createdAt": "2026-11-21"
+}
