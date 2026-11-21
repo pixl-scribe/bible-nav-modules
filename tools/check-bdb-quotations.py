@@ -46,6 +46,22 @@ letter of a word, or "vegomer", and so on) are set aside, not compared.
 Marks are removed only to compare: the Hebrew is never changed or
 normalised in any file.
 
+The verse looked up is the one BDB printed: Sefaria's links (data-ref)
+give the book, but their chapter and verse follow Sefaria's own numbering,
+which differs from the printed (and the WLC's) in places such as the Ten
+Commandments (Ex 20, Dt 5) and Ne 7; so the chapter and verse are taken
+from the printed reference ("Ex 20:23", "20:23", or "23" alone, the
+chapter then being the link's). Where the two differ, both verses are
+tried: if the printed one fits, Sefaria renumbered the link; if only the
+link's fits, the printed number is wrong (an OCR slip such as "Ju 8:57" for
+9:57), and the quotation is reported as "misprinted ref".
+
+"nearby verse" needs a quotation of two words or more, or of one word of
+four consonants or more (a short word is too likely to be found nearby by
+chance); shifts repeated three times or more in one chapter are reported as
+"versification" instead (BDB's 1906 numbering differs from the WLC's in a
+few chapters, such as Dt 5 and 1 Ch 12).
+
 The report lists every quotation that isn't exact, with the verse.
 """
 import importlib.util
@@ -156,6 +172,18 @@ def texts(node):
 
 QUOTE = re.compile(r'<span dir="rtl">([^<]*)</span>\s*<a [^>]*data-ref="([^"]+)"[^>]*>([^<]*)</a>')
 SINGLE = re.compile(r'(.+) (\d+):(\d+)')
+# A printed reference: "Ex 20:23", "20:23", or the verse alone, "23",
+# with letters after a verse ("23a") or a trailing stop allowed.
+PRINTED = re.compile(r'(?:.*?\b(\d+):)?(\d+)[a-z]?\.?')
+
+
+def printed_place(printed, chapter):
+    """The chapter and verse BDB printed, or None if the printed text
+    isn't a single verse."""
+    m = PRINTED.fullmatch(printed.strip())
+    if not m:
+        return None
+    return (int(m.group(1)) if m.group(1) else chapter), int(m.group(2))
 
 
 def run(seq, inside, prefixed=False):
@@ -272,6 +300,7 @@ def main():
     entries = json.loads(BDB.read_text(encoding='utf-8'))
     counts = Counter()
     report = []
+    shifts = []
     for entry in entries:
         for text in texts(entry['content']):
             for m in QUOTE.finditer(text):
@@ -280,20 +309,42 @@ def main():
                 if not single:
                     continue  # a range or a whole chapter
                 book, chapter, verse = single.group(1), int(single.group(2)), int(single.group(3))
+                place = printed_place(m.group(3), chapter)
+                if place is None:
+                    counts['printed reference not a single verse'] += 1
+                    continue
                 code = BOOKS.get(book)
+                link_place = (chapter, verse)
+                misprinted = False
+                if place != link_place:
+                    counts['renumbered by Sefaria'] += 1
+                    good = ('exact', 'prefixed', 'pointing', 'scattered')
+                    at_print = verses.get((code, *place))
+                    at_link = verses.get((code, *link_place))
+                    if (code and at_link and check(quote, at_link)[0] in good
+                            and not (at_print and check(quote, at_print)[0] in good)):
+                        misprinted = True
+                    else:
+                        chapter, verse = place
                 if code is None:
                     result, detail = 'not checkable', None
                 elif (code, chapter, verse) not in verses:
                     result, detail = 'no verse', None
                 else:
                     result, detail = check(quote, verses[(code, chapter, verse)])
-                    if result in ('look-alike', 'one letter', 'spelling', 'other form', 'ketiv', 'unexplained'):
+                    if misprinted:
+                        result, detail = 'misprinted ref', f'printed {m.group(3).strip()}, the verse is {ref}'
+                    long_enough = (len([w for w in words(quote) if not any(g in w for g in GERESH)]) >= 2
+                                   or any(len(consonants(w)) >= 4 for w in words(quote)))
+                    if long_enough and result in ('look-alike', 'one letter', 'spelling', 'other form', 'ketiv', 'unexplained'):
                         # Is the whole quotation in a verse nearby?
                         for shift in (-1, 1, -2, 2, -3, 3):
                             near = verses.get((code, chapter, verse + shift))
                             if near and check(quote, near)[0] in ('exact', 'prefixed', 'pointing'):
                                 result, detail = 'nearby verse', f'{book} {chapter}:{verse + shift}'
                                 break
+                if result == 'nearby verse':
+                    shifts.append((book, chapter, int(detail.rsplit(':', 1)[1]) - verse, len(report)))
                 counts[result] += 1
                 if result not in ('exact', 'prefixed', 'not checkable'):
                     report.append({
@@ -301,9 +352,21 @@ def main():
                         'result': result, 'quote': quote, 'detail': detail,
                         'verse': ' '.join(verses.get((code, chapter, verse), [])),
                     })
+    # The same shift three times or more in a chapter: versification.
+    repeated = Counter((b, c, d) for b, c, d, _ in shifts)
+    for b, c, d, i in shifts:
+        if repeated[(b, c, d)] >= 3:
+            report[i]['result'] = 'versification'
+            counts['nearby verse'] -= 1
+            counts['versification'] += 1
+    renumbered = counts.pop('renumbered by Sefaria', 0)
+    unprinted = counts.pop('printed reference not a single verse', 0)
     total = sum(counts.values())
+    print(f'Sefaria\'s link differs from the printed reference: {renumbered}; '
+          f'printed reference not a single verse (left out): {unprinted}')
     print(f'{total} quotations of one verse checked against the WLC:')
-    for name in ('exact', 'prefixed', 'pointing', 'scattered', 'nearby verse', 'look-alike', 'one letter', 'spelling',
+    for name in ('exact', 'prefixed', 'pointing', 'scattered', 'misprinted ref', 'versification', 'nearby verse',
+                 'look-alike', 'one letter', 'spelling',
                  'other form', 'ketiv', 'unexplained', 'no verse', 'not checkable'):
         print(f'  {name:14} {counts[name]:6}  {100 * counts[name] / total:5.1f}%')
     if len(sys.argv) > 1:
