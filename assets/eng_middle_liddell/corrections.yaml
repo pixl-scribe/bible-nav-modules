@@ -492,3 +492,66 @@
   source: <form opt="n"><orth extent="full" lang="greek" opt="n">a)ne/molon</orth></form> <sense level="0" n="0" id="n2709.0" opt="n"><trans opt="n"><tr opt="n">to go through</tr></trans>, c. acc., <usg opt="n">Eur.</usg></sense>
   form_of: n2355.1
   evidence: '1889 printing (Internet Archive intermediategree00lidd): the print has no entry an-emolon (page 66, viewer 71, runs anemoeis, anemos); the word is named only in ana-molein (page 58, viewer 63): "inf. of an-emolon, aor. 2 of anablosko, to go through, c. acc., Eur."; checked by the maintainer on 2026-11-21.'
+
+# aizeos: one printed entry, with its lengthened form aizeios.
+
+- entry: n752
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">ai)zho/s</orth></form> <sense level="0" n="0" id="n752.0" opt="n"><trans opt="n"><tr opt="n">strong, lusty, vigorous</tr></trans>, <usg opt="n">Hom.</usg> </sense> <etym opt="n">Deriv. uncertain.</etym>
+  replace: <note type="alt" lang="greek">ai)zho/s,</note> <note type="infl">lengthd. <foreign lang="greek">ai)zh/i+os, o(,</foreign></note> <sense level="0" n="0" id="n752.0" opt="n"><trans opt="n"><tr opt="n">strong, lusty, vigorous</tr></trans>, <usg opt="n">Hom.</usg> </sense> <etym opt="n">Deriv. uncertain.</etym>
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 20 (viewer page 25 of 919): \"aizeos, lengthd. aize\xEFos, ho, strong, lusty, vigorous, Hom. (Deriv. uncertain.)\", one entry; checked by the maintainer on 2026-11-21. Perseus lost the headword line."
+- entry: n751
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">ai)zh/ios</orth></form> <sense level="0" n="0" id="n751.0" opt="n"><trans opt="n"><tr opt="n">strong, lusty, vigorous</tr></trans>, <usg opt="n">Hom.</usg> </sense> <etym opt="n">Deriv. uncertain.</etym>
+  form_of: n752
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 20 (viewer page 25 of 919): \"aizeos, lengthd. aize\xEFos, ho, strong, lusty, vigorous, Hom. (Deriv. uncertain.)\", one entry; checked by the maintainer on 2026-11-21. Perseus made the lengthened form an entry of its own, with the same text."
+
+# aneleos and anileos: two printed entries with one meaning; headword lines
+# restored.
+
+- entry: n2695
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">a)ne/leos</orth></form> <sense level="0" n="0" id="n2695.0" opt="n"><trans opt="n"><tr opt="n">unmerciful</tr></trans>, <usg opt="n">NTest.</usg></sense>
+  replace: <note type="alt" lang="greek">a)n-e/leos, on,</note> <sense level="0" n="0" id="n2695.0" opt="n"><trans opt="n"><tr opt="n">unmerciful</tr></trans>, <usg opt="n">NTest.</usg></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 66 (viewer page 71 of 919): "an-eleos, on, unmerciful, N.T."; checked by the maintainer on 2026-11-21. Perseus lost the headword line; the two entries share a meaning in print too.'
+- entry: n2929
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">a)ni/lews</orth></form> <sense level="0" n="0" id="n2929.0" opt="n"><trans opt="n"><tr opt="n">unmerciful</tr></trans>, <usg opt="n">NTest.</usg></sense>
+  replace: <note type="alt" lang="greek">a)n-i/lews [i^], wn,</note> <sense level="0" n="0" id="n2929.0" opt="n"><trans opt="n"><tr opt="n">unmerciful</tr></trans>, <usg opt="n">NTest.</usg></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 72 (viewer page 77 of 919): "an-ileos [i short], on, unmerciful, N.T."; checked by the maintainer on 2026-11-21. Perseus lost the headword line; the two entries share a meaning in print too.'
+
+# beresch-ethos and blito-mammas: two printed entries with one meaning;
+# rewritten as printed.
+
+- entry: n6261
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">bere/sxeqos</orth></form> <etym opt="n">deriv. uncertain</etym> <sense level="0" n="0" id="n6261.0" opt="n"><trans opt="n"><tr opt="n">a booby</tr></trans>, <usg opt="n">Ar.</usg></sense>
+  replace: <note type="alt" lang="greek">bere/sxeqos, o(,</note> <sense level="0" n="0" id="n6261.0" opt="n"><trans opt="n"><tr opt="n">a booby</tr></trans>, <usg opt="n">Ar.</usg></sense> <etym>Deriv. unknown.</etym>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 150 (viewer page 155 of 919): "beresch-ethos, ho, a booby, Ar. (Deriv. unknown.)"; checked by the maintainer on 2026-11-21. Perseus lost the headword line and has "deriv. uncertain" before the meaning; both entries share a meaning in print too.'
+- entry: n6357
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">blitoma/mmas</orth></form> <etym opt="n">deriv. uncertain</etym> <sense level="0" n="0" id="n6357.0" opt="n"><trans opt="n"><tr opt="n">a booby</tr></trans>, <usg opt="n">Ar.</usg></sense>
+  replace: <note type="alt" lang="greek">bli^to-ma/mmas, ou, o(,</note> <sense level="0" n="0" id="n6357.0" opt="n"><trans opt="n"><tr opt="n">a booby</tr></trans>, <usg opt="n">Ar.</usg></sense> <etym>Deriv. unknown.</etym>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 152 (viewer page 157 of 919): "blito-mammas, ou, ho, a booby, Ar. (Deriv. unknown.)"; checked by the maintainer on 2026-11-21. Perseus lost the headword line and has "deriv. uncertain" before the meaning; both entries share a meaning in print too.'
+
+# boidarion and boïdion: two printed entries; headword lines restored, and
+# boïdion's diaeresis.
+
+- entry: n6393
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">boida/rion</orth></form> <etym opt="n">Dim. of <foreign lang="greek">bou=s</foreign>, <usg opt="n">Ar.</usg></etym>
+  replace: <note type="alt" lang="greek">boida/rion, to/,</note> <etym opt="n">Dim. of <foreign lang="greek">bou=s</foreign>, <usg opt="n">Ar.</usg></etym>
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 152 (viewer page 157 of 919): \"boidarion, to, Dim. of bous, Ar.\" and \"bo\xEFdion, to, Dim. of bous, Ar.\", two entries; checked by the maintainer on 2026-11-21. Perseus lost the headword line."
+- entry: n6394
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">boi/dion</orth></form> <etym opt="n">Dim. of <foreign lang="greek">bou=s</foreign>, <usg opt="n">Ar.</usg></etym>
+  replace: <note type="alt" lang="greek">boi+/dion, to/,</note> <etym opt="n">Dim. of <foreign lang="greek">bou=s</foreign>, <usg opt="n">Ar.</usg></etym>
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 152 (viewer page 157 of 919): \"boidarion, to, Dim. of bous, Ar.\" and \"bo\xEFdion, to, Dim. of bous, Ar.\", two entries; checked by the maintainer on 2026-11-21. Perseus lost the headword line."
+- entry: n6394
+  source: boi/dion
+  corr: boi+/dion
+  evidence: "1889 printing (Internet Archive intermediategree00lidd), page 152 (viewer page 157 of 919): \"boidarion, to, Dim. of bous, Ar.\" and \"bo\xEFdion, to, Dim. of bous, Ar.\", two entries; checked by the maintainer on 2026-11-21. The headword has a diaeresis on the iota."
+
+# kata-choneuo and syg-choneuo: two printed entries with one meaning;
+# headword lines restored.
+
+- entry: n17436
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">kataxwneu/w</orth></form> <note anchored="yes" type="infl" place="unspecified">fut. <foreign lang="greek">sw</foreign></note> <sense level="0" n="0" id="n17436.0" opt="n"><trans opt="n"><tr opt="n">to melt down</tr></trans>, <usg opt="n">Dem.</usg></sense>
+  replace: <note type="alt" lang="greek">kata-xwneu/w,</note> <note anchored="yes" type="infl" place="unspecified">fut. <foreign lang="greek">sw</foreign></note> <sense level="0" n="0" id="n17436.0" opt="n"><trans opt="n"><tr opt="n">to melt down</tr></trans>, <usg opt="n">Dem.</usg></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 419 (viewer page 423 of 919): "kata-choneuo, f. so, to melt down, Dem."; checked by the maintainer on 2026-11-21. Perseus lost the headword line; the two entries share a meaning in print too.'
+- entry: n30696
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">sugxwneu/w</orth></form> <note anchored="yes" type="infl" place="unspecified">fut. <foreign lang="greek">sw</foreign></note> <sense level="0" n="0" id="n30696.0" opt="n"><trans opt="n"><tr opt="n">to melt down</tr></trans>, <usg opt="n">Dem.</usg></sense>
+  replace: <note type="alt" lang="greek">sug-xwneu/w,</note> <note anchored="yes" type="infl" place="unspecified">fut. <foreign lang="greek">sw</foreign></note> <sense level="0" n="0" id="n30696.0" opt="n"><trans opt="n"><tr opt="n">to melt down</tr></trans>, <usg opt="n">Dem.</usg></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 756 (viewer page 761 of 919): "syg-choneuo, f. so, to melt down, Dem."; checked by the maintainer on 2026-11-21. Perseus lost the headword line; the two entries share a meaning in print too.'
