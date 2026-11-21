@@ -247,10 +247,21 @@ function readEntry(node: XmlNode): LexiconEntry {
   /** The body's parts, in the order the TEI file gives them. */
   const parts: BodyElement[] = [];
   let haveForm = false;
+  /** Other forms of the headword, for lookups only. */
+  const inflected: string[] = [];
 
   for (const child of elements(node, where)) {
     const name = nameOf(child);
-    if (name === 'form') {
+    if (name === 'form' && attrsOf(child).type === 'inflected') {
+      // Another form of the headword (an aorist, say): a lookup, not text.
+      expectAttrs(child, ['type'], where);
+      const orths = elements(child, where);
+      if (orths.length !== 1 || nameOf(orths[0]) !== 'orth') {
+        throw new Error(`${where}: <form type="inflected"> holds one <orth>`);
+      }
+      expectAttrs(orths[0], ['xml:lang'], where);
+      inflected.push(plainText(orths[0], where));
+    } else if (name === 'form') {
       if (haveForm || attrsOf(child).type !== 'lemma') {
         throw new Error(`${where}: one <form type="lemma"> expected`);
       }
@@ -324,12 +335,16 @@ function readEntry(node: XmlNode): LexiconEntry {
     throw new Error(`${where}: no headword`);
   }
   entry.body = parts;
+  INFLECTED.set(entry, inflected);
   STRONG_ATTRS.set(
     entry,
     (attrs['bn:strong'] ?? '').split(/\s+/).filter(Boolean)
   );
   return entry;
 }
+
+/** Other forms of each entry's headword, kept for lookupsFor. */
+const INFLECTED = new WeakMap<LexiconEntry, string[]>();
 
 /** Strong's own bn:strong numbers, kept for lookupsFor. */
 const STRONG_ATTRS = new WeakMap<LexiconEntry, string[]>();
@@ -362,8 +377,9 @@ export function lemmaForm(word: string): string {
 
 /**
  * An entry's lookups: its key, if that is a Strong's number (Strong's own
- * dictionaries); otherwise its headword, as a lemma, and the Strong's
- * numbers the TEI file gives it (bn:strong, in Liddell and Scott).
+ * dictionaries); otherwise its headword and any inflected forms, as
+ * lemmas, and the Strong's numbers the TEI file gives it (bn:strong, in
+ * Liddell and Scott).
  * Strong's dictionaries get no lemma lookups, so their published keys
  * roots stay as they are.
  */
@@ -375,6 +391,12 @@ function lookupsFor(entry: LexiconEntry): Lookup[] {
   const lookups: Lookup[] = [
     { kind: 'lemma', value: lemmaForm(entry.headword), entryKey: entry.key },
   ];
+  for (const form of INFLECTED.get(entry) ?? []) {
+    const value = lemmaForm(form);
+    if (!lookups.some((l) => l.value === value)) {
+      lookups.push({ kind: 'lemma', value, entryKey: entry.key });
+    }
+  }
   for (const number of STRONG_ATTRS.get(entry) ?? []) {
     const normal = normalizeStrong(number);
     if (normal !== number) {

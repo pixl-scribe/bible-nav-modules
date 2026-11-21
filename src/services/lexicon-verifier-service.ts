@@ -32,6 +32,7 @@ interface ScannedEntry {
   titles: string[];
   langs: string[];
   strong: string[];
+  inflected: string[];
 }
 
 /** Top-level parts of an entry, in order: [TEI pattern, module style]. */
@@ -158,6 +159,11 @@ function scanTei(xml: string): ScannedEntry[] {
       titles,
       langs,
       strong: attrIn(entryAttrs, 'bn:strong').split(/\s+/).filter(Boolean),
+      inflected: [
+        ...body.matchAll(
+          /<form type="inflected"><orth xml:lang="[^"]+">([^<]*)<\/orth><\/form>/g
+        ),
+      ].map((m) => unescape(m[1])),
     });
   }
   return entries;
@@ -303,6 +309,9 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
         continue;
       }
       wanted.add(`lemma ${lemmaOf(tei.headword)} ${tei.key}`);
+      for (const form of tei.inflected) {
+        wanted.add(`lemma ${lemmaOf(form)} ${tei.key}`);
+      }
       for (const n of tei.strong) wanted.add(`strong ${n} ${tei.key}`);
     }
     for (const w of wanted) {

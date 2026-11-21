@@ -24,7 +24,7 @@
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
-      <p>Each of the 36491 entries keeps its Perseus id as its xml:id (an entry the print has and Perseus lost is added with the id of the entry it follows plus ".1"); n is the homograph number where Perseus gives one, and bn:strong the Strong's Greek numbers whose headword is the same word. The note of type forms is the headword line (endings, article, principal parts); etym is the etymology (Perseus writes Liddell and Scott's "Hence" at the end of an entry as "from ..." on the next), and each sense a numbered sense, with its level in bn:level. gloss is a translation, usg an author or usage label (bn:title gives the author an "Id." refers to), and foreign a Greek, Latin or English word. A ref of type entry links to one entry; a ref of type lemma links to every entry with the headword in bn:lemma. Greek is converted from Perseus's Beta Code to Unicode (NFC).</p>
+      <p>Each of the 36490 entries keeps its Perseus id as its xml:id (an entry the print has and Perseus lost is added with the id of the entry it follows plus ".1"); n is the homograph number where Perseus gives one, and bn:strong the Strong's Greek numbers whose headword is the same word. The note of type forms is the headword line (endings, article, principal parts); etym is the etymology (Perseus writes Liddell and Scott's "Hence" at the end of an entry as "from ..." on the next), and each sense a numbered sense, with its level in bn:level. gloss is a translation, usg an author or usage label (bn:title gives the author an "Id." refers to), and foreign a Greek, Latin or English word. A form of type inflected is another form of the headword that the entry names (such as an aorist), kept for lookups where Perseus had made it an entry of its own. A ref of type entry links to one entry; a ref of type lemma links to every entry with the headword in bn:lemma. Greek is converted from Perseus's Beta Code to Unicode (NFC).</p>
       <p>A headword beginning with * is one Liddell and Scott print with an asterisk, a form not found in use, such as their roots (11 entries; Perseus writes the asterisk after the word). It is looked up without the asterisk.</p>
       <p>Liddell and Scott print two abbreviations for a repeated citation: "Id." (idem, the same author) and "Ib." (ibidem, the same passage). Perseus writes both as "id=" with the author, so the source can't tell them apart, and every one is given here as "Id.". By a count of the scan's text, about one in five should read "Ib.".</p>
       <p>English words Perseus left in the bare text of its Greek headword-line notes (such as "fut." and "or") are kept as English.</p>
@@ -57,98 +57,101 @@
       <change target="#n8417">n8417: rewritten from the printed page, where the source had lost text. The source had: "&lt;form opt="n"&gt;&lt;orth extent="full" lang="greek" opt="n"&gt;dikaiosu/nh&lt;/orth&gt;&lt;/form&gt; &lt;note anchored="yes" type="alt" lang="greek" place="unspecified"&gt;di^kaiosu/nh, h(,&lt;/note&gt; &lt;gramGrp opt="n"&gt;&lt;pos opt="n"&gt;n&lt;/pos&gt;&lt;note anchored="yes" place="unspecified"&gt;di^kaiosun h_hs stem_acc fem&lt;/note&gt;&lt;/gramGrp&gt; &lt;gramGrp opt="n"&gt;&lt;pos opt="n"&gt;n&lt;/pos&gt;&lt;note anchored="yes" place="unspecified"&gt;di^kaioth s_tos fem &lt;bibl default="NO"&gt;Xen.&lt;/bibl&gt; &lt;bibl default="NO"&gt;Plat.&lt;/bibl&gt;&lt;/note&gt;&lt;/gramGrp&gt; &lt;etym opt="n"&gt;from &lt;ref targOrder="U" lang="greek"&gt;di/kaios&lt;/ref&gt;&lt;/etym&gt; &lt;sense level="0" n="0" id="n8417.0" opt="n"&gt;&lt;trans opt="n"&gt;&lt;tr opt="n"&gt;righteousness, justice&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Theogn.&lt;/usg&gt;, &lt;usg opt="n"&gt;Hdt.&lt;/usg&gt;, &lt;usg opt="n"&gt;Xen.&lt;/usg&gt;, &lt;usg opt="n"&gt;Plat.&lt;/usg&gt; etc.&lt;/sense&gt;"; the rewrite, in the source's markup: "&lt;note anchored="yes" type="alt" lang="greek" place="unspecified"&gt;di^kaiosu/nh, h(,&lt;/note&gt; &lt;gramGrp opt="n"&gt;&lt;pos opt="n"&gt;n&lt;/pos&gt;&lt;note anchored="yes" place="unspecified"&gt;di^kaiosun h_hs stem_acc fem&lt;/note&gt;&lt;/gramGrp&gt; &lt;gramGrp opt="n"&gt;&lt;pos opt="n"&gt;n&lt;/pos&gt;&lt;note anchored="yes" place="unspecified"&gt;di^kaioth s_tos fem &lt;bibl default="NO"&gt;Xen.&lt;/bibl&gt; &lt;bibl default="NO"&gt;Plat.&lt;/bibl&gt;&lt;/note&gt;&lt;/gramGrp&gt; &lt;etym opt="n"&gt;from &lt;ref targOrder="U" lang="greek"&gt;di/kaios&lt;/ref&gt;&lt;/etym&gt; &lt;sense level="0" n="0" id="n8417.0" opt="n"&gt;&lt;trans opt="n"&gt;&lt;tr opt="n"&gt;righteousness, justice&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Theogn.&lt;/usg&gt;, &lt;usg opt="n"&gt;Hdt.&lt;/usg&gt;, etc.; and&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 202 (viewer page 207 of 919) and the top of the next column: "dikaiosyne, he, righteousness, justice, Theogn., Hdt., etc.; and" followed by the entry dikaiotes; checked by the maintainer on 2026-11-21. Perseus gave dikaiosyne dikaiotes's authors (Xen., Plat.) and lost dikaiotes, except in its machine analysis.</change>
       <change target="#n8538">n8538: rewritten from the printed page, where the source had lost text. The source had: "&lt;form opt="n"&gt;&lt;orth extent="full" lang="greek" opt="n"&gt;di=os&lt;/orth&gt;&lt;/form&gt; &lt;gramGrp opt="n"&gt;&lt;pos opt="n"&gt;adj&lt;/pos&gt;&lt;note anchored="yes" place="unspecified"&gt;di_ os_h_on&lt;/note&gt;&lt;/gramGrp&gt; &lt;gramGrp opt="n"&gt;&lt;note anchored="yes" place="unspecified"&gt;di=a&lt;/note&gt;&lt;pos opt="n"&gt;os_h_on&lt;/pos&gt;&lt;note anchored="yes" place="unspecified" /&gt;&lt;/gramGrp&gt; &lt;gramGrp opt="n"&gt;&lt;pos opt="n"&gt;adj&lt;/pos&gt;&lt;note anchored="yes" place="unspecified"&gt;di_ os_on &lt;bibl default="NO"&gt;Eur.&lt;/bibl&gt;&lt;/note&gt;&lt;/gramGrp&gt; &lt;etym n="note" opt="n"&gt;&lt;foreign lang="greek"&gt;di/a&lt;/foreign&gt; with short iota in &lt;usg opt="n"&gt;Eur.&lt;/usg&gt;&lt;/etym&gt; &lt;etym opt="n"&gt;fem. &lt;foreign lang="greek"&gt;di=os&lt;/foreign&gt; contr. for &lt;foreign lang="greek"&gt;di/i+os&lt;/foreign&gt;&lt;/etym&gt; &lt;etym opt="n"&gt;&lt;foreign lang="greek"&gt;*dio/s&lt;/foreign&gt;, gen. of &lt;foreign lang="greek"&gt;*di/s&lt;/foreign&gt;&lt;/etym&gt; &lt;sense level="2" n="I" id="n8538.0" opt="n"&gt;&lt;trans opt="n"&gt;&lt;tr opt="n"&gt;god-like, divine&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Il.&lt;/usg&gt;; &lt;foreign lang="greek"&gt;di=a gunaikw=n&lt;/foreign&gt; &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;noblest&lt;/tr&gt;&lt;/trans&gt; of women, &lt;usg opt="n"&gt;Od.&lt;/usg&gt;:—also &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;worthy, trusty&lt;/tr&gt;&lt;/trans&gt;, the swineherd, &lt;usg opt="n"&gt;id=Od.&lt;/usg&gt;; of whole nations or cities, &lt;usg opt="n"&gt;Hom.&lt;/usg&gt;; of a &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;noble&lt;/tr&gt;&lt;/trans&gt; horse, &lt;usg opt="n"&gt;Il.&lt;/usg&gt;&lt;/sense&gt; &lt;sense level="3" n="2" id="n8538.1" opt="n"&gt;of things, like &lt;foreign lang="greek"&gt;qei=os, qespe/sios, i(ero/s&lt;/foreign&gt;, &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;divine, wondrous&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Hom.&lt;/usg&gt;&lt;/sense&gt; &lt;sense level="2" n="II" id="n8538.2" opt="n"&gt;in literal sense, &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;of&lt;/tr&gt; or &lt;tr opt="n"&gt;from Zeus&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Aesch.&lt;/usg&gt;&lt;/sense&gt;"; the rewrite, in the source's markup: "&lt;note type="alt" lang="greek"&gt;di=os, di=a, di=on&lt;/note&gt; &lt;note type="infl"&gt;(fem. &lt;foreign lang="greek"&gt;di=os&lt;/foreign&gt; and &lt;foreign lang="greek"&gt;di/a&lt;/foreign&gt; in &lt;usg&gt;Eur.&lt;/usg&gt;), contr. for &lt;foreign lang="greek"&gt;di/i+os&lt;/foreign&gt;:&lt;/note&gt; &lt;etym&gt;&lt;foreign lang="greek"&gt;*dio/s&lt;/foreign&gt;, gen. of &lt;foreign lang="greek"&gt;*di/s&lt;/foreign&gt;&lt;/etym&gt; &lt;sense level="2" n="I" id="n8538.0" opt="n"&gt;&lt;trans opt="n"&gt;&lt;tr opt="n"&gt;god-like, divine&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Il.&lt;/usg&gt;; &lt;foreign lang="greek"&gt;di=a gunaikw=n&lt;/foreign&gt; &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;noblest&lt;/tr&gt;&lt;/trans&gt; of women, &lt;usg opt="n"&gt;Od.&lt;/usg&gt;:—also &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;worthy, trusty&lt;/tr&gt;&lt;/trans&gt;, the swineherd, &lt;usg opt="n"&gt;Ib.&lt;/usg&gt;; of whole nations or cities, &lt;usg opt="n"&gt;Hom.&lt;/usg&gt;; of a &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;noble&lt;/tr&gt;&lt;/trans&gt; horse, &lt;usg opt="n"&gt;Il.&lt;/usg&gt;&lt;/sense&gt; &lt;sense level="3" n="2" id="n8538.1" opt="n"&gt;of things, like &lt;foreign lang="greek"&gt;qei=os, qespe/sios, i(ero/s&lt;/foreign&gt;, &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;divine, wondrous&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Hom.&lt;/usg&gt;&lt;/sense&gt; &lt;sense level="2" n="II" id="n8538.2" opt="n"&gt;in literal sense, &lt;trans opt="n"&gt;&lt;tr opt="n"&gt;of&lt;/tr&gt; or &lt;tr opt="n"&gt;from Zeus&lt;/tr&gt;&lt;/trans&gt;, &lt;usg opt="n"&gt;Aesch.&lt;/usg&gt;&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 204 (viewer page 209 of 919): "dios, dia, dion (fem. dios and dia in Eur.), contr. for diios: (Dios, gen. of Dis):—god-like, divine, Il.; ... worthy, trusty, the swineherd, Ib."; checked by the maintainer on 2026-11-21. Perseus lost the headword line into its machine analysis and three etymologies, and has "id=Od." for "Ib.".</change>
       <change target="#n13105">n13106: removed, a duplicate of n13105 (the same text after the headword), printed once. The source had: "&lt;form opt="n"&gt;&lt;orth extent="full" lang="greek" opt="n"&gt;e)/rgw2&lt;/orth&gt;&lt;/form&gt; &lt;sense level="0" n="0" id="n13106.0" opt="n"&gt;&lt;trans opt="n"&gt;&lt;tr opt="n"&gt;to do work&lt;/tr&gt;&lt;/trans&gt;, obsol. Root, for which &lt;foreign lang="greek"&gt;e)/rdw, r(e/zw, e)rga/zomai&lt;/foreign&gt; are used in the pres.: for the fut., aor1 and perf., v. &lt;ref targOrder="U" lang="greek"&gt;e)/rdw.&lt;/ref&gt;&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 312 (viewer page 317 of 919): one entry "*ergo, to do work, obsol. Root", after ERGO (to shut in); checked by the maintainer on 2026-11-19.</change>
+      <change target="#n2355.1">n2119: removed: an entry Perseus made for another form of n2355.1's headword, which the print doesn't have; its headword is kept there as an inflected form, for lookups. The source had: "&lt;form opt="n"&gt;&lt;orth extent="full" lang="greek" opt="n"&gt;a)nablw/skw&lt;/orth&gt;&lt;/form&gt; &lt;sense level="0" n="0" id="n2119.0" opt="n"&gt;&lt;trans opt="n"&gt;&lt;tr opt="n"&gt;to go through&lt;/tr&gt;&lt;/trans&gt;, c. acc., &lt;usg opt="n"&gt;Eur.&lt;/usg&gt;&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd): the print has no entry anablosko (page 57, viewer 57, runs ana-blyzo, ana-boama); the word is named only in ana-molein (page 58, viewer 63): "inf. of an-emolon, aor. 2 of anablosko, to go through, c. acc., Eur."; checked by the maintainer on 2026-11-21.</change>
+      <change target="#n2355.1">n2709: removed: an entry Perseus made for another form of n2355.1's headword, which the print doesn't have; its headword is kept there as an inflected form, for lookups. The source had: "&lt;form opt="n"&gt;&lt;orth extent="full" lang="greek" opt="n"&gt;a)ne/molon&lt;/orth&gt;&lt;/form&gt; &lt;sense level="0" n="0" id="n2709.0" opt="n"&gt;&lt;trans opt="n"&gt;&lt;tr opt="n"&gt;to go through&lt;/tr&gt;&lt;/trans&gt;, c. acc., &lt;usg opt="n"&gt;Eur.&lt;/usg&gt;&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd): the print has no entry an-emolon (page 66, viewer 71, runs anemoeis, anemos); the word is named only in ana-molein (page 58, viewer 63): "inf. of an-emolon, aor. 2 of anablosko, to go through, c. acc., Eur."; checked by the maintainer on 2026-11-21.</change>
       <change target="#n8417.1">n8417.1: added from the printed page, where the source had lost the entry; in the source's markup: "&lt;form&gt;&lt;orth lang="greek"&gt;dikaio/ths&lt;/orth&gt;&lt;/form&gt; &lt;note type="alt" lang="greek"&gt;dikaio/ths, htos, h(,&lt;/note&gt; &lt;sense&gt;= &lt;ref lang="greek"&gt;dikaiosu/nh&lt;/ref&gt;, &lt;usg&gt;Xen.&lt;/usg&gt;, &lt;usg&gt;Plat.&lt;/usg&gt;, etc.&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 202 (viewer page 207 of 919) and the top of the next column: "dikaiotes, etos, he, = dikaiosyne, Xen., Plat., etc."; checked by the maintainer on 2026-11-21.</change>
       <change target="#n8466.1">n8466.1: added from the printed page, where the source had lost the entry; in the source's markup: "&lt;form&gt;&lt;orth lang="greek"&gt;di/moros&lt;/orth&gt;&lt;/form&gt; &lt;note type="alt" lang="greek"&gt;di/-moros, on,&lt;/note&gt; &lt;sense&gt;= foreg., &lt;usg&gt;Aesch.&lt;/usg&gt;&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 203 (viewer page 207 of 919): "di-moros, on, = foreg., Aesch.", after di-moiros; checked by the maintainer on 2026-11-21. Perseus lost the entry, except in di-moiros's machine analysis.</change>
-      <change target="#corr29">n2013: "oi( a)mfi\ *je/rcea" corrected to "oi( a)mfi\ *ce/rcea". Evidence: 1889 printing (Internet Archive intermediategree00lidd), entry amphi, C. c. acc. I.3: "hoi amphi Xerxea his army, Hdt."; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr30">n4421: "a)p. *je/rcea strateu/esqai" corrected to "a)p. *ce/rcea strateu/esqai". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 106 (viewer page 111 of 919), entry apo-speudo: "ap. Xerxea strateuesthai Id."; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr31">n13445: "a)poteix/izw" corrected to "a)poteixi/zw". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 322 (viewer page 327 of 919), entry eu-apoteichistos: "(apoteichizo) easy to wall off", the accent on the iota; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr32">n15807: "i). *b|akxou" corrected to "i). *ba/kxou". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 378 (viewer page 383 of 919), entry IKMAS: "i. Bakchou, i.e. wine", the accent on the alpha; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr33">n16221: "kaqareute/os" corrected to "kaqareute/on". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 388 (viewer page 393 of 919): the headword is printed "kathareuteon"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr34">n17963: "**k*i*/k*w," corrected to "*ki/kw,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 432 (viewer page 437 of 919): "*KIKO, a verb only found in Dor. aor. 1 ekixa, = enegka, Anth."; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr35">n18679: "[\h\ \v\ \h\]" corrected to "[–⏑–]". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 450 (viewer page 455 of 919), entry Kretikos, 2: "a Cretic, a metrical foot [long short long], e.g. Antiphon"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr36">n20306: "margw=n\" corrected to "margw=n". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 486 (viewer page 491 of 919), entry margao: "only used in part. margon, raging, Aesch."; no grave accent after the nu (Beta Code's "\" there); checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr37">n21164: "mhny/w," corrected to "mhnu/w,". Evidence: Perseus's key "mhnu/w"; 1889 printing (Internet Archive intermediategree00lidd), page 511 (viewer page 516 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
-      <change target="#corr38">n21433: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr39">n21481: "moly/nw," corrected to "molu/nw,". Evidence: Perseus's key "molu/nw"; 1889 printing, page 519 (viewer page 524 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
-      <change target="#corr40">n21698: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr41">n21826: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr42">n21965: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr43">n22277: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr44">n22285: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr45">n22442: "e)n nukti/, e)n th=| v." corrected to "e)n nukti/, e)n th=| n.". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 537 (the right-hand page at viewer page 541 of 919), entry NYX, I.2: "en nykti, en te n. Aesch.", nu (n), not digamma (v); checked by the maintainer on 2026-11-20.</change>
-      <change target="#corr46">n22543: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr47">n22578: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr48">n22587: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr49">n22742: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr50">n22754: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr51">n22849: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr52">n22895: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr53">n23199: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr54">n23288: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr55">n23475: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr56">n23481: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr57">n23599: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr58">n23637: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr59">n24068: "pa^q/h, h(," corrected to "pa^/qh, h(,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 582 (viewer page 587 of 919): "pathe [a short], he, (pathein) a passive state", the accent on the alpha; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr60">n25242: "**patrokleu/s" corrected to "*Πατροκλεύς". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 612 (viewer page 617 of 919): "the obl. cases as if from *Patrokleus, gen. Patrokleos"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr61">n25271: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr62">n25352: "peirhtz/)w," corrected to "peirhti/zw,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 616 (viewer page 621 of 919): "peiretizo, Ep. form of peirao"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr63">n25363: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr64">n25444: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr65">n25506: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr66">n26248: "o( *je/rcew strato\s au)to\s u(p' e(wutou= e)/pese" corrected to "o( *ce/rcew strato\s au)to\s u(p' e(wutou= e)/pese". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 640 (viewer page 645 of 919), entry pipto, B. II.2: "ho Xerxeo stratos autos hyp' heoutou epese, Lat. mole sua corruit"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr67">n26293: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr68">n26477: "ploy=tos, o(," corrected to "plou=tos, o(,". Evidence: Perseus's key "plou=tos1"; 1889 printing, page 649 (viewer page 654 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
-      <change target="#corr69">n26490: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr70">n26514: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr71">n26528: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr72">n27189: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr73">n27191: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr74">n27211: "po/tnia bel/ewn" corrected to "po/tnia be/lewn". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 664 (viewer page 669 of 919), entry potnia, 1: "potnia beleon Pind.", the accent on the first epsilon; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr75">n27232: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr76">n27254: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr77">n27297: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr78">n27310: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr79">n27410: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr80">n27788: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr81">n28799: "py/lh, h(," corrected to "pu/lh, h(,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 710 (viewer page 715 of 919): "PYLE [y], he, one wing of a pair of double gates"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr82">n28813: "py/ma^tos, h, on" corrected to "pu/ma^tos, h, on". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 710 (viewer page 715 of 919): "PYMATOS [y], e, on, hindmost, last"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr83">n28893: "pu_ro-lg/os, on," corrected to "pu_ro-lo/gos, on,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 712 (viewer page 717 of 919): "pyro-logos, on, (pyros, lego) reaping wheat, Anth."; checked by the maintainer on 2026-11-19. The long upsilon is kept, as in Perseus's other compounds of pyros, wheat.</change>
-      <change target="#corr84">n29053: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr85">n29080: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr86">n29091: "ku=/distos" corrected to "ku/distos". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 718 (viewer page 723 of 919), entry rhigistos: "(as kydistos from kydos)", with an acute, not a circumflex; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr87">n29219: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr88">n29360: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr89">n29514: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr90">n29673: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr91">n29860: "sky/zomai," corrected to "sku/zomai,". Evidence: Perseus's key "sku/zomai"; 1889 printing, page 736 (viewer page 741 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
-      <change target="#corr92">n30054: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr93">n30146: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr94">n31089: "sunai/=gdhn" corrected to "sunai+/gdhn". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 766 (viewer page 771 of 919): "syn-aigden [long alpha, diaeresis and acute on the iota], (aisso) Adv. pressing violently together, Hes."; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr95">n31642: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr96">n31781: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr97">n31932: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr98">n32048: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr99">n32562: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr100">n32663: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr101">n32695: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr102">n32944: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr103">n33048: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr104">n33162: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr105">n33195: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr106">n33310: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr107">n33486: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr108">n34012: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr109">n34735: "fil/anqrwpos" corrected to "fil-a/nqrwpos". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 860 (viewer page 865 of 919): "philanthropeo ... and philanthropia ... From phil-anthropos"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr110">n34736: "fil/anqrwpos" corrected to "fil-a/nqrwpos". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 860 (viewer page 865 of 919): "philanthropeo ... and philanthropia ... From phil-anthropos"; checked by the maintainer on 2026-11-19.</change>
-      <change target="#corr111">n35313: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr112">n35356: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr113">n35417: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr114">n35702: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr115">n35703: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr116">n35779: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr117">n36298: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
-      <change target="#corr118">n36313: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#n2355.1">n2355.1: added from the printed page, where the source had lost the entry; in the source's markup: "&lt;form&gt;&lt;orth lang="greek"&gt;a)namolei=n&lt;/orth&gt;&lt;/form&gt; &lt;note type="alt" lang="greek"&gt;a)na-molei=n,&lt;/note&gt; &lt;sense&gt;inf. of &lt;foreign lang="greek"&gt;a)n-e/molon&lt;/foreign&gt;, aor. 2 of &lt;ref lang="greek"&gt;a)nablw/skw&lt;/ref&gt;, &lt;trans&gt;&lt;tr&gt;to go through&lt;/tr&gt;&lt;/trans&gt;, c. acc., &lt;usg&gt;Eur.&lt;/usg&gt;&lt;/sense&gt;". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 58 (viewer page 63 of 919): "ana-molein, inf. of an-emolon, aor. 2 of anablosko, to go through, c. acc., Eur.", after anamnestos; checked by the maintainer on 2026-11-21. Perseus dropped this entry and made two of its own instead, anemolon (n2709) and anablosko (n2119), with its meaning.</change>
+      <change target="#corr32">n2013: "oi( a)mfi\ *je/rcea" corrected to "oi( a)mfi\ *ce/rcea". Evidence: 1889 printing (Internet Archive intermediategree00lidd), entry amphi, C. c. acc. I.3: "hoi amphi Xerxea his army, Hdt."; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr33">n4421: "a)p. *je/rcea strateu/esqai" corrected to "a)p. *ce/rcea strateu/esqai". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 106 (viewer page 111 of 919), entry apo-speudo: "ap. Xerxea strateuesthai Id."; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr34">n13445: "a)poteix/izw" corrected to "a)poteixi/zw". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 322 (viewer page 327 of 919), entry eu-apoteichistos: "(apoteichizo) easy to wall off", the accent on the iota; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr35">n15807: "i). *b|akxou" corrected to "i). *ba/kxou". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 378 (viewer page 383 of 919), entry IKMAS: "i. Bakchou, i.e. wine", the accent on the alpha; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr36">n16221: "kaqareute/os" corrected to "kaqareute/on". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 388 (viewer page 393 of 919): the headword is printed "kathareuteon"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr37">n17963: "**k*i*/k*w," corrected to "*ki/kw,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 432 (viewer page 437 of 919): "*KIKO, a verb only found in Dor. aor. 1 ekixa, = enegka, Anth."; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr38">n18679: "[\h\ \v\ \h\]" corrected to "[–⏑–]". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 450 (viewer page 455 of 919), entry Kretikos, 2: "a Cretic, a metrical foot [long short long], e.g. Antiphon"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr39">n20306: "margw=n\" corrected to "margw=n". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 486 (viewer page 491 of 919), entry margao: "only used in part. margon, raging, Aesch."; no grave accent after the nu (Beta Code's "\" there); checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr40">n21164: "mhny/w," corrected to "mhnu/w,". Evidence: Perseus's key "mhnu/w"; 1889 printing (Internet Archive intermediategree00lidd), page 511 (viewer page 516 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
+      <change target="#corr41">n21433: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr42">n21481: "moly/nw," corrected to "molu/nw,". Evidence: Perseus's key "molu/nw"; 1889 printing, page 519 (viewer page 524 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
+      <change target="#corr43">n21698: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr44">n21826: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr45">n21965: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr46">n22277: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr47">n22285: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr48">n22442: "e)n nukti/, e)n th=| v." corrected to "e)n nukti/, e)n th=| n.". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 537 (the right-hand page at viewer page 541 of 919), entry NYX, I.2: "en nykti, en te n. Aesch.", nu (n), not digamma (v); checked by the maintainer on 2026-11-20.</change>
+      <change target="#corr49">n22543: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr50">n22578: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr51">n22587: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr52">n22742: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr53">n22754: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr54">n22849: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr55">n22895: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr56">n23199: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr57">n23288: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr58">n23475: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr59">n23481: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr60">n23599: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr61">n23637: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr62">n24068: "pa^q/h, h(," corrected to "pa^/qh, h(,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 582 (viewer page 587 of 919): "pathe [a short], he, (pathein) a passive state", the accent on the alpha; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr63">n25242: "**patrokleu/s" corrected to "*Πατροκλεύς". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 612 (viewer page 617 of 919): "the obl. cases as if from *Patrokleus, gen. Patrokleos"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr64">n25271: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr65">n25352: "peirhtz/)w," corrected to "peirhti/zw,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 616 (viewer page 621 of 919): "peiretizo, Ep. form of peirao"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr66">n25363: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr67">n25444: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr68">n25506: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr69">n26248: "o( *je/rcew strato\s au)to\s u(p' e(wutou= e)/pese" corrected to "o( *ce/rcew strato\s au)to\s u(p' e(wutou= e)/pese". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 640 (viewer page 645 of 919), entry pipto, B. II.2: "ho Xerxeo stratos autos hyp' heoutou epese, Lat. mole sua corruit"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr70">n26293: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr71">n26477: "ploy=tos, o(," corrected to "plou=tos, o(,". Evidence: Perseus's key "plou=tos1"; 1889 printing, page 649 (viewer page 654 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
+      <change target="#corr72">n26490: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr73">n26514: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr74">n26528: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr75">n27189: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr76">n27191: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr77">n27211: "po/tnia bel/ewn" corrected to "po/tnia be/lewn". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 664 (viewer page 669 of 919), entry potnia, 1: "potnia beleon Pind.", the accent on the first epsilon; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr78">n27232: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr79">n27254: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr80">n27297: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr81">n27310: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr82">n27410: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr83">n27788: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr84">n28799: "py/lh, h(," corrected to "pu/lh, h(,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 710 (viewer page 715 of 919): "PYLE [y], he, one wing of a pair of double gates"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr85">n28813: "py/ma^tos, h, on" corrected to "pu/ma^tos, h, on". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 710 (viewer page 715 of 919): "PYMATOS [y], e, on, hindmost, last"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr86">n28893: "pu_ro-lg/os, on," corrected to "pu_ro-lo/gos, on,". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 712 (viewer page 717 of 919): "pyro-logos, on, (pyros, lego) reaping wheat, Anth."; checked by the maintainer on 2026-11-19. The long upsilon is kept, as in Perseus's other compounds of pyros, wheat.</change>
+      <change target="#corr87">n29053: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr88">n29080: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr89">n29091: "ku=/distos" corrected to "ku/distos". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 718 (viewer page 723 of 919), entry rhigistos: "(as kydistos from kydos)", with an acute, not a circumflex; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr90">n29219: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr91">n29360: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr92">n29514: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr93">n29673: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr94">n29860: "sky/zomai," corrected to "sku/zomai,". Evidence: Perseus's key "sku/zomai"; 1889 printing, page 736 (viewer page 741 of 919), not checked separately: the same slip as pyle and pymatos (page 710).</change>
+      <change target="#corr95">n30054: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr96">n30146: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr97">n31089: "sunai/=gdhn" corrected to "sunai+/gdhn". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 766 (viewer page 771 of 919): "syn-aigden [long alpha, diaeresis and acute on the iota], (aisso) Adv. pressing violently together, Hes."; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr98">n31642: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr99">n31781: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr100">n31932: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr101">n32048: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr102">n32562: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr103">n32663: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr104">n32695: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr105">n32944: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr106">n33048: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr107">n33162: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr108">n33195: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr109">n33310: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr110">n33486: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr111">n34012: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr112">n34735: "fil/anqrwpos" corrected to "fil-a/nqrwpos". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 860 (viewer page 865 of 919): "philanthropeo ... and philanthropia ... From phil-anthropos"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr113">n34736: "fil/anqrwpos" corrected to "fil-a/nqrwpos". Evidence: 1889 printing (Internet Archive intermediategree00lidd), page 860 (viewer page 865 of 919): "philanthropeo ... and philanthropia ... From phil-anthropos"; checked by the maintainer on 2026-11-19.</change>
+      <change target="#corr114">n35313: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr115">n35356: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr116">n35417: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr117">n35702: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr118">n35703: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr119">n35779: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr120">n36298: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
+      <change target="#corr121">n36313: a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).</change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -9397,7 +9400,7 @@
       <entry xml:id="n1743" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀμεταστρεπτί</orth></form>
         <etym>from <ref type="entry" target="#n1744" xml:lang="grc">ἀμετάστρεπτος</ref></etym>
-        <sense>adv. <ref type="entry" target="#n1743" xml:lang="grc">ἀμεταστρεπτῑ́</ref> , or <foreign xml:lang="grc">ἀμεταστρεπτεί</foreign>, <gloss>without turning, straight forward</gloss>, <foreign xml:lang="grc">ἰέναι, φεύγειν</foreign> <usg>Plat.</usg></sense>
+        <sense>adv. <foreign xml:lang="grc">ἀμεταστρεπτῑ́</foreign> , or <foreign xml:lang="grc">ἀμεταστρεπτεί</foreign>, <gloss>without turning, straight forward</gloss>, <foreign xml:lang="grc">ἰέναι, φεύγειν</foreign> <usg>Plat.</usg></sense>
       </entry>
       <entry xml:id="n1744" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀμετάστρεπτος</orth></form>
@@ -10775,7 +10778,7 @@
         <sense n="C" bn:level="1">C. ACC.:</sense>
         <sense n="I" bn:level="2">of Place, <gloss>about, around</gloss>, mostly with a sense of motion, <foreign xml:lang="grc">ἀμφί μιν φᾶρος βάλον</foreign> <usg>Il.</usg></sense>
         <sense n="2" bn:level="3"><gloss>about, near</gloss>, <foreign xml:lang="grc">ἀμφὶ ῥέεθρα</foreign> <gloss>somewhere by</gloss> the banks, ib.</sense>
-        <sense n="3" bn:level="3">of persons who are <gloss>about</gloss> one, <foreign xml:lang="grc">οἱ ἀμφὶ Πρίαμον</foreign> Priam and his train, <usg bn:title="Il.">Id.</usg>; <foreign xml:lang="grc"><choice xml:id="corr29"><sic><seg type="betacode">oi( a)mfi\ *je/rcea</seg></sic><corr>οἱ ἀμφὶ Ξέρξεα</corr></choice></foreign> his army, <usg>Hdt.</usg>; in attic, <foreign xml:lang="grc">οἱ ἀμφὶ Πρωταγόραν</foreign> the school of Protagoras or Protagoras himself, <usg>Plat.</usg></sense>
+        <sense n="3" bn:level="3">of persons who are <gloss>about</gloss> one, <foreign xml:lang="grc">οἱ ἀμφὶ Πρίαμον</foreign> Priam and his train, <usg bn:title="Il.">Id.</usg>; <foreign xml:lang="grc"><choice xml:id="corr32"><sic><seg type="betacode">oi( a)mfi\ *je/rcea</seg></sic><corr>οἱ ἀμφὶ Ξέρξεα</corr></choice></foreign> his army, <usg>Hdt.</usg>; in attic, <foreign xml:lang="grc">οἱ ἀμφὶ Πρωταγόραν</foreign> the school of Protagoras or Protagoras himself, <usg>Plat.</usg></sense>
         <sense n="4" bn:level="3"><foreign xml:lang="grc">κλαίειν ἀμφί τινα</foreign> to weep <gloss>about</gloss> or <gloss>for</gloss> one, <usg>Il.</usg></sense>
         <sense n="5" bn:level="3"><foreign xml:lang="grc">εἶναι, διατρίβειν ἀμφί τι</foreign> to be engaged <gloss>about</gloss> it, <usg>Xen.</usg></sense>
         <sense n="II" bn:level="2">as a loose definition of Time, <gloss>about</gloss>, <usg>Pind.</usg>; <foreign xml:lang="grc">ἀμφὶ Πλειάδων δύσιν</foreign> <usg>Aesch.</usg>:—so of Number, Lat. <foreign xml:lang="la">circiter</foreign>, <foreign xml:lang="grc">ἀμφὶ τὰς δώδεκα μυριάδας</foreign> <gloss>about</gloss> 120, 000, <usg>Xen.</usg></sense>
@@ -11338,10 +11341,6 @@
         <form type="lemma"><orth xml:lang="grc">ἀναβλύζω</orth></form>
         <sense n="1" bn:level="3"><gloss>to spout up</gloss>, c. acc., <usg>Anth.</usg></sense>
         <sense n="2" bn:level="3">intr. <gloss>to gush forth</gloss>, <usg>Theocr.</usg></sense>
-      </entry>
-      <entry xml:id="n2119" xml:lang="en">
-        <form type="lemma"><orth xml:lang="grc">ἀναβλώσκω</orth></form>
-        <sense><gloss>to go through</gloss>, c. acc., <usg>Eur.</usg></sense>
       </entry>
       <entry xml:id="n2120" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀναβόαμα</orth></form>
@@ -12589,6 +12588,13 @@
         <form type="lemma"><orth xml:lang="grc">ἀναμνηστός</orth></form>
         <etym><ref type="entry" target="#n2350" xml:lang="grc">ἀναμιμνήσκω</ref></etym>
         <sense><gloss>that which one can recollect</gloss>, <usg>Plat.</usg></sense>
+      </entry>
+      <entry xml:id="n2355.1" xml:lang="en">
+        <form type="lemma"><orth xml:lang="grc">ἀναμολεῖν</orth></form>
+        <form type="inflected"><orth xml:lang="grc">ἀναβλώσκω</orth></form>
+        <form type="inflected"><orth xml:lang="grc">ἀνέμολον</orth></form>
+        <note type="forms">ἀνα-μολεῖν,</note>
+        <sense>inf. of <foreign xml:lang="grc">ἀν-έμολον</foreign>, aor. 2 of <foreign xml:lang="grc">ἀναβλώσκω</foreign>, <gloss>to go through</gloss>, c. acc., <usg>Eur.</usg></sense>
       </entry>
       <entry xml:id="n2356" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀναμορμύρω</orth></form>
@@ -14449,10 +14455,6 @@
       <entry xml:id="n2708" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀνεμόδρομος</orth></form>
         <sense><gloss>running with the wind</gloss>, <usg>Luc.</usg></sense>
-      </entry>
-      <entry xml:id="n2709" xml:lang="en">
-        <form type="lemma"><orth xml:lang="grc">ἀνέμολον</orth></form>
-        <sense><gloss>to go through</gloss>, c. acc., <usg>Eur.</usg></sense>
       </entry>
       <entry xml:id="n2710" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀνεμοσκεπής</orth></form>
@@ -22967,7 +22969,7 @@
       </entry>
       <entry xml:id="n4421" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀποσπεύδω</orth></form>
-        <sense><gloss>to be zealous in preventing</gloss> a thing, <usg>Hdt.</usg>; c. acc. et inf., <foreign xml:lang="grc"><choice xml:id="corr30"><sic><seg type="betacode">a)p. *je/rcea strateu/esqai</seg></sic><corr>ἀπ. Ξέρξεα στρατεύεσθαι</corr></choice></foreign> <usg bn:title="Hdt.">Id.</usg></sense>
+        <sense><gloss>to be zealous in preventing</gloss> a thing, <usg>Hdt.</usg>; c. acc. et inf., <foreign xml:lang="grc"><choice xml:id="corr33"><sic><seg type="betacode">a)p. *je/rcea strateu/esqai</seg></sic><corr>ἀπ. Ξέρξεα στρατεύεσθαι</corr></choice></foreign> <usg bn:title="Hdt.">Id.</usg></sense>
       </entry>
       <entry xml:id="n4422" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἀποσποδέω</orth></form>
@@ -28188,7 +28190,7 @@
       </entry>
       <entry xml:id="n5429" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">Ἀτλαντικός</orth></form>
-        <etym><ref type="entry" target="#n5429" xml:lang="grc">Ἀτλαντικός</ref></etym>
+        <etym><foreign xml:lang="grc">Ἀτλαντικός</foreign></etym>
         <sense><gloss>of Atlas, Atlantic</gloss>, <foreign xml:lang="grc">τέρμονες Ἀτλ.</foreign> the pillars of Hercules, <usg>Eur.</usg></sense>
       </entry>
       <entry xml:id="n5430" xml:lang="en">
@@ -42582,7 +42584,7 @@
       <entry xml:id="n8149" xml:lang="en" bn:strong="G1294">
         <form type="lemma"><orth xml:lang="grc">διαστρέφω</orth></form>
         <note type="forms">fut. <foreign xml:lang="grc">ψω</foreign></note>
-        <etym>from <ref type="entry" target="#n8149" xml:lang="grc">διαστρέφω</ref></etym>
+        <etym>from <foreign xml:lang="grc">διαστρέφω</foreign></etym>
         <sense n="1" bn:level="3"><gloss>to turn different ways, to twist about, distort</gloss>, <usg>Xen.</usg>:—Pass. <gloss>to be distorted</gloss>, <usg>Plat.</usg>: of persons, <gloss>to have one's eyes distorted, to get a squint</gloss>, <usg>Ar.</usg></sense>
         <sense n="2" bn:level="3">metaph. <gloss>to distort, pervert</gloss>, <usg>Dem.</usg></sense>
       </entry>
@@ -47893,7 +47895,7 @@
         <form type="lemma"><orth xml:lang="grc">δυσθυμέω</orth></form>
         <note type="forms">δυσθῡμέω, fut. <foreign xml:lang="grc">-ήσω</foreign></note>
         <etym>from <ref type="entry" target="#n9056" xml:lang="grc">δύσθῡμος</ref></etym>
-        <etym>= <ref type="entry" target="#n9054" xml:lang="grc">δυσθῡμέω</ref> <usg>Hdt.</usg>, <usg>Plut.</usg></etym>
+        <etym>= <foreign xml:lang="grc">δυσθῡμέω</foreign> <usg>Hdt.</usg>, <usg>Plut.</usg></etym>
         <sense>Mid. <gloss>to be melancholy, angry</gloss>, <usg>Eur.</usg></sense>
       </entry>
       <entry xml:id="n9055" xml:lang="en">
@@ -56180,7 +56182,7 @@
       <entry xml:id="n10502" xml:lang="en" bn:strong="G1645">
         <form type="lemma"><orth xml:lang="grc">ἐλαφρός</orth></form>
         <note type="forms">ἐλαφρός, ή, όν</note>
-        <etym><ref type="entry" target="#n10502" xml:lang="grc">ἐλαφρός</ref></etym>
+        <etym><foreign xml:lang="grc">ἐλαφρός</foreign></etym>
         <sense n="I" bn:level="2">= Lat. <foreign xml:lang="la">lev-is light in weight</foreign>, <usg>Il.</usg>, <usg>Hdt.</usg>, attic:— adv. <gloss>lightly, buoyantly</gloss>, <usg>Od.</usg></sense>
         <sense n="2" bn:level="3"><gloss>light to bear, not burdensome, easy</gloss>, <usg>Il.</usg>; <foreign xml:lang="grc">ἐλαφρόν [ἐστι]</foreign> 'tis <gloss>light, easy</gloss>, <usg>Aesch.</usg>, etc.; <foreign xml:lang="grc">ἐν ἐλαφρῷ ποιεῖσθαί τι</foreign> to make <gloss>light</gloss> of a thing, <usg>Hdt.</usg></sense>
         <sense n="II" bn:level="2"><gloss>light in moving, nimble</gloss>, Lat. <foreign xml:lang="la">agilis</foreign>, <usg>Hom.</usg>, <usg>Aesch.</usg>; <foreign xml:lang="grc">ἐλαφρὰ ἡλικία</foreign> the age of <gloss>active</gloss> youth, <usg>Xen.</usg>; <foreign xml:lang="grc">οἱ ἐλαφροί</foreign> <gloss>light troops</gloss>, Lat. <foreign xml:lang="la">levis armatura</foreign>, <usg bn:title="Xen.">Id.</usg></sense>
@@ -56471,7 +56473,7 @@
         <form type="lemma"><orth xml:lang="grc">ἐλευθέρωσις</orth></form>
         <note type="forms">ἐλευθέρωσις, εως</note>
         <sense><gloss>a setting free</gloss>, <usg>Hdt.</usg>, <usg>Thuc.</usg></sense>
-        <etym>from <ref type="entry" target="#n10551" xml:lang="grc">ἐλευθέρωσις</ref></etym>
+        <etym>from <foreign xml:lang="grc">ἐλευθέρωσις</foreign></etym>
       </entry>
       <entry xml:id="n10552" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἐλευθερωτής</orth></form>
@@ -68575,7 +68577,7 @@
         <note type="forms">fut. <foreign xml:lang="grc">ψω</foreign></note>
         <sense><gloss>to cast at</gloss> another, c. dat., <usg>Od.</usg>; <foreign xml:lang="grc">χεῖρα ἐπ.</foreign> <gloss>to lay</gloss> hand <gloss>upon</gloss>, <usg>Anth.</usg>:—metaph. <gloss>to throw upon</gloss> one, <foreign xml:lang="grc">τί τινι</foreign> <usg>Aesch.</usg></sense>
         <sense n="B" bn:level="1"><foreign xml:lang="grc">ἐπιρριπτέω</foreign></sense>
-        <sense n="1" bn:level="3">= <ref type="entry" target="#n12630" xml:lang="grc">ἐπιρ-ρίπτω</ref>, only in pres. and imperf., <usg>Xen.</usg></sense>
+        <sense n="1" bn:level="3">= <foreign xml:lang="grc">ἐπιρ-ρίπτω</foreign>, only in pres. and imperf., <usg>Xen.</usg></sense>
         <sense n="2" bn:level="3">intr. <gloss>to throw oneself upon</gloss> the track, <usg>Xen.</usg></sense>
       </entry>
       <entry xml:id="n12631" xml:lang="en">
@@ -69606,7 +69608,7 @@
       <entry xml:id="n12804" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἐπιτεχνάομαι</orth></form>
         <note type="forms">fut. <foreign xml:lang="grc">-ήσομαι</foreign></note>
-        <etym>from <ref type="entry" target="#n12804" xml:lang="grc">ἐπιτεχνάομαι</ref></etym>
+        <etym>from <foreign xml:lang="grc">ἐπιτεχνάομαι</foreign></etym>
         <sense>Dep.</sense>
         <sense n="1" bn:level="3"><gloss>to contrive for</gloss> a purpose or <gloss>to meet</gloss> an emergency, <gloss>to invent</gloss>, <usg>Hdt.</usg></sense>
         <sense n="2" bn:level="3"><gloss>to contrive against</gloss>, <foreign xml:lang="grc">τί τινι</foreign> <usg>Luc.</usg></sense>
@@ -73414,7 +73416,7 @@
       </entry>
       <entry xml:id="n13445" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">εὐαποτείχιστος</orth></form>
-        <etym><ref type="entry" target="#n4481" xml:lang="grc"><choice xml:id="corr31"><sic><seg type="betacode">a)poteix/izw</seg></sic><corr>ἀποτειχίζω</corr></choice></ref></etym>
+        <etym><ref type="entry" target="#n4481" xml:lang="grc"><choice xml:id="corr34"><sic><seg type="betacode">a)poteix/izw</seg></sic><corr>ἀποτειχίζω</corr></choice></ref></etym>
         <sense><gloss>easy to wall off, easy to blockade by circumvallation</gloss>, <usg>Thuc.</usg>, <usg>Xen.</usg></sense>
       </entry>
       <entry xml:id="n13446" xml:lang="en">
@@ -81821,7 +81823,7 @@
       <entry xml:id="n14876" xml:lang="en" bn:strong="G2273">
         <form type="lemma"><orth xml:lang="grc">ἤτοι</orth></form>
         <sense n="I" bn:level="2">= <foreign xml:lang="grc">ἦ τοι</foreign>, <gloss>now surely, truly, verily</gloss>, <usg>Il.</usg>; after <foreign xml:lang="grc">ἀλλ’ εἰ . .</foreign> , <gloss>nevertheless</gloss>, <usg bn:title="Il.">Id.</usg></sense>
-        <sense n="II" bn:level="2">= <ref type="entry" target="#n14876" xml:lang="grc">ἤτοι</ref>, <gloss>either in truth</gloss>, followed by <foreign xml:lang="grc">ἤ</foreign>, <gloss>or</gloss>, <usg>Hdt.</usg>, etc.</sense>
+        <sense n="II" bn:level="2">= <foreign xml:lang="grc">ἤτοι</foreign>, <gloss>either in truth</gloss>, followed by <foreign xml:lang="grc">ἤ</foreign>, <gloss>or</gloss>, <usg>Hdt.</usg>, etc.</sense>
       </entry>
       <entry xml:id="n14877" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἦτορ</orth></form>
@@ -87254,7 +87256,7 @@
       <entry xml:id="n15792" xml:lang="en" bn:strong="G2427">
         <form type="lemma"><orth xml:lang="grc">ἱκανόω</orth></form>
         <note type="forms">ἱκᾰνόω, fut. <foreign xml:lang="grc">-ώσω</foreign></note>
-        <etym>from <ref type="entry" target="#n15792" xml:lang="grc">ἱκανόω</ref></etym>
+        <etym>from <foreign xml:lang="grc">ἱκανόω</foreign></etym>
         <sense><gloss>to make sufficient, qualify</gloss>, <usg>NTest.</usg></sense>
       </entry>
       <entry xml:id="n15793" xml:lang="en">
@@ -87345,7 +87347,7 @@
       <entry xml:id="n15807" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἰκμάς</orth></form>
         <note type="forms">ἰκμάς, άδος,</note>
-        <sense><gloss>moisture, juice</gloss>, <usg>Il.</usg>, <usg>Hdt.</usg>:—comic metaph., <foreign xml:lang="grc">τὴν ἰκμάδα τῆς φροντίδος</foreign> <usg>Ar.</usg>; <foreign xml:lang="grc"><choice xml:id="corr32"><sic><seg type="betacode">i). *b|akxou</seg></sic><corr>ἰ. Βάκχου</corr></choice></foreign>, i. e. wine, <usg>Anth.</usg>; <foreign xml:lang="grc">ἰ. δρυός</foreign>, i. e. gum, <usg bn:title="Anth.">Id.</usg></sense>
+        <sense><gloss>moisture, juice</gloss>, <usg>Il.</usg>, <usg>Hdt.</usg>:—comic metaph., <foreign xml:lang="grc">τὴν ἰκμάδα τῆς φροντίδος</foreign> <usg>Ar.</usg>; <foreign xml:lang="grc"><choice xml:id="corr35"><sic><seg type="betacode">i). *b|akxou</seg></sic><corr>ἰ. Βάκχου</corr></choice></foreign>, i. e. wine, <usg>Anth.</usg>; <foreign xml:lang="grc">ἰ. δρυός</foreign>, i. e. gum, <usg bn:title="Anth.">Id.</usg></sense>
       </entry>
       <entry xml:id="n15808" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ἴκμενος</orth></form>
@@ -89796,7 +89798,7 @@
         <sense>of persons, <gloss>cleanly, neat, nice, tidy</gloss>, Lat. <foreign xml:lang="la">mundus</foreign>, <usg>Arist.</usg>:—adv. <foreign xml:lang="grc">-είως</foreign> or <foreign xml:lang="grc">-ίως</foreign>, <usg>Xen.</usg>, etc.</sense>
       </entry>
       <entry xml:id="n16221" xml:lang="en">
-        <form type="lemma"><orth xml:lang="grc"><choice xml:id="corr33"><sic><seg type="betacode">kaqareute/os</seg></sic><corr>καθαρευτέον</corr></choice></orth></form>
+        <form type="lemma"><orth xml:lang="grc"><choice xml:id="corr36"><sic><seg type="betacode">kaqareute/os</seg></sic><corr>καθαρευτέον</corr></choice></orth></form>
         <sense><gloss>one must keep oneself clean</gloss>, <usg>Luc.</usg></sense>
       </entry>
       <entry xml:id="n16222" xml:lang="en">
@@ -99376,7 +99378,7 @@
       </entry>
       <entry xml:id="n17868" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">κήδω</orth></form>
-        <etym><foreign xml:lang="grc">κεκαδήσομαι</foreign> from <ref type="entry" target="#n17868" xml:lang="grc">κήδω</ref>, for <foreign xml:lang="grc">κεκαδήσω, κέκαδον</foreign>, v. <ref type="entry" target="#n35423" xml:lang="grc">χάζω</ref> II</etym>
+        <etym><foreign xml:lang="grc">κεκαδήσομαι</foreign> from <foreign xml:lang="grc">κήδω</foreign>, for <foreign xml:lang="grc">κεκαδήσω, κέκαδον</foreign>, v. <ref type="entry" target="#n35423" xml:lang="grc">χάζω</ref> II</etym>
         <sense n="I" bn:level="2">Act. <gloss>to trouble, distress, vex</gloss>, <usg>Hom.</usg></sense>
         <sense n="II" bn:level="2">Mid. and Pass. <gloss>to be troubled</gloss> or <gloss>distressed for</gloss> others, c. gen. pers., <usg>Il.</usg>, etc.: also c. gen. rei, <foreign xml:lang="grc">τῶν ἀλφίτων</foreign> <usg>Ar.</usg>:—absol. in part. <foreign xml:lang="grc">κηδόμενος, η, ον</foreign>, <gloss>caring for</gloss> a person, <gloss>anxious</gloss>, <usg>Il.</usg></sense>
       </entry>
@@ -99917,7 +99919,7 @@
       </entry>
       <entry xml:id="n17963" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">*κίκω</orth></form>
-        <note type="forms"><choice xml:id="corr34"><sic><seg type="betacode">**k*i*/k*w,</seg></sic><corr>Κίκω,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr37"><sic><seg type="betacode">**k*i*/k*w,</seg></sic><corr>Κίκω,</corr></choice></note>
         <etym>a verb only found in doric aor1 <foreign xml:lang="grc">ἔκιξα</foreign></etym>
         <sense>= <foreign xml:lang="grc">ἤνεγκα</foreign> <usg>Anth.</usg>:—in <usg>Ar.</usg> we have <foreign xml:lang="grc">ἀπ-έκιξαν</foreign>, <gloss>sent away, shook off.</gloss></sense>
       </entry>
@@ -104182,7 +104184,7 @@
         <note type="forms">Κρητικός, ή, όν</note>
         <sense n="I" bn:level="2"><gloss>of</gloss> or <gloss>from the island of Crete, Cretan</gloss>, <usg>Aesch.</usg>, <usg>Thuc.</usg></sense>
         <sense n="II" bn:level="2"><foreign xml:lang="grc">Κρητικόν</foreign> (sc. <foreign xml:lang="grc">ἱμάτιον</foreign>), <gloss>a short garment</gloss>, used at sacred rites, <usg>Ar.</usg></sense>
-        <sense n="2" bn:level="3"><foreign xml:lang="grc">Κρητικός</foreign> (sc. <foreign xml:lang="grc">ποῦς</foreign>), <gloss>a Cretic</gloss>, a metrical foot <foreign xml:lang="grc"><choice xml:id="corr35"><sic><seg type="betacode">[\h\ \v\ \h\]</seg></sic><corr>[–⏑–]</corr></choice></foreign>, e. g. <foreign xml:lang="grc">Ἀντιφῶν</foreign>, called also <gloss>amphimacer</gloss> (<foreign xml:lang="grc">ἀμφίμακρος</foreign>).</sense>
+        <sense n="2" bn:level="3"><foreign xml:lang="grc">Κρητικός</foreign> (sc. <foreign xml:lang="grc">ποῦς</foreign>), <gloss>a Cretic</gloss>, a metrical foot <foreign xml:lang="grc"><choice xml:id="corr38"><sic><seg type="betacode">[\h\ \v\ \h\]</seg></sic><corr>[–⏑–]</corr></choice></foreign>, e. g. <foreign xml:lang="grc">Ἀντιφῶν</foreign>, called also <gloss>amphimacer</gloss> (<foreign xml:lang="grc">ἀμφίμακρος</foreign>).</sense>
       </entry>
       <entry xml:id="n18680" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">Κρητισμός</orth></form>
@@ -113906,7 +113908,7 @@
         <note type="forms">μαργάω,</note>
         <etym><ref type="entry" target="#n20309" xml:lang="grc">μάργος</ref></etym>
         <sense><gloss>raging</gloss>, <usg>Aesch.</usg>; c. inf., <foreign xml:lang="grc">μαργῶν ἱέναι</foreign> <gloss>madly eager</gloss> to go, <usg>Eur.</usg></sense>
-        <etym>only used in part. <foreign xml:lang="grc"><choice xml:id="corr36"><sic><seg type="betacode">margw=n\</seg></sic><corr>μαργῶν</corr></choice></foreign></etym>
+        <etym>only used in part. <foreign xml:lang="grc"><choice xml:id="corr39"><sic><seg type="betacode">margw=n\</seg></sic><corr>μαργῶν</corr></choice></foreign></etym>
       </entry>
       <entry xml:id="n20307" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">Μαργίτης</orth></form>
@@ -119007,7 +119009,7 @@
       </entry>
       <entry xml:id="n21164" xml:lang="en" bn:strong="G3377">
         <form type="lemma"><orth xml:lang="grc">μηνύω</orth></form>
-        <note type="forms"><choice xml:id="corr37"><sic><seg type="betacode">mhny/w,</seg></sic><corr>μηνύω,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr40"><sic><seg type="betacode">mhny/w,</seg></sic><corr>μηνύω,</corr></choice></note>
         <sense n="I" bn:level="2"><gloss>to disclose what is secret, reveal, betray</gloss>, generally, <gloss>to make known, declare, indicate</gloss>, <usg>Hhymn.</usg>, <usg>Hdt.</usg>, attic:—with acc. and part., <foreign xml:lang="grc">μ. τινὰ ἔχοντα</foreign> <gloss>to shew</gloss> that he has, <usg>Hdt.</usg>; the part. is sometimes omitted, <foreign xml:lang="grc">τόδ’ ἔργον σε μηνύει κακόν</foreign> (sc. <foreign xml:lang="grc">ὄντα</foreign>) <usg>Eur.</usg></sense>
         <sense n="II" bn:level="2">at Athens <gloss>to inform, lay public information against</gloss> another, <foreign xml:lang="grc">κατά τινος</foreign> <usg>Oratt.</usg>:—impers. in Pass., <foreign xml:lang="grc">μηνύεται</foreign> <gloss>information is laid</gloss>, <foreign xml:lang="grc">μεμήνυται</foreign> <gloss>it has been</gloss> laid, <usg>Thuc.</usg></sense>
         <sense n="2" bn:level="3">in Pass. also of persons, <gloss>to be informed against, to be denounced</gloss>, <usg>Xen.</usg>:—also of things, <foreign xml:lang="grc">μηνυθέντος τοῦ ἐπιβουλεύματος</foreign> <usg>Thuc.</usg></sense>
@@ -120609,7 +120611,7 @@
       </entry>
       <entry xml:id="n21433" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">μνηστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr38"><sic><seg type="betacode">mnhsth/r, doric mnasthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>μνηστήρ, <foreign xml:lang="en">doric</foreign> <foreign xml:lang="grc">μναστήρ, ῆρος, ὁ,</foreign></corr></choice></note>
+        <note type="forms"><choice xml:id="corr41"><sic><seg type="betacode">mnhsth/r, doric mnasthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>μνηστήρ, <foreign xml:lang="en">doric</foreign> <foreign xml:lang="grc">μναστήρ, ῆρος, ὁ,</foreign></corr></choice></note>
         <etym><ref type="entry" target="#n21408" xml:lang="grc">μνάομαι</ref></etym>
         <sense n="I" bn:level="2"><gloss>a wooer, suitor</gloss>, <usg>Od.</usg>; c. gen., <foreign xml:lang="grc">παιδὸς ἐμῆς μν.</foreign> <usg>Hdt.</usg>; <foreign xml:lang="grc">γάμων μν.</foreign> <usg>Aesch.</usg></sense>
         <sense n="II" bn:level="2"><gloss>calling to mind, mindful of</gloss>, c. gen., <usg>Pind.</usg></sense>
@@ -120896,7 +120898,7 @@
       </entry>
       <entry xml:id="n21481" xml:lang="en" bn:strong="G3435">
         <form type="lemma"><orth xml:lang="grc">μολύνω</orth></form>
-        <note type="forms"><choice xml:id="corr39"><sic><seg type="betacode">moly/nw,</seg></sic><corr>μολύνω,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr42"><sic><seg type="betacode">moly/nw,</seg></sic><corr>μολύνω,</corr></choice></note>
         <sense><gloss>to stain, sully, defile</gloss>, <usg>Ar.</usg>; <foreign xml:lang="grc">μ. τινά</foreign> <gloss>to make a beast of</gloss> him, <usg bn:title="Ar.">Id.</usg>; also <gloss>to defile</gloss> a woman, <usg>Theocr.</usg>:—Pass. <gloss>to become vile</gloss>, <foreign xml:lang="grc">ἐν ἀμαθίᾳ μολύνεσθαι</foreign> <gloss>to wallow in</gloss> ignorance, <usg>Plat.</usg></sense>
       </entry>
       <entry xml:id="n21482" xml:lang="en" bn:strong="G3437">
@@ -122146,7 +122148,7 @@
       </entry>
       <entry xml:id="n21698" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">μυκτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr40"><sic><seg type="betacode">mukthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>μυκτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr43"><sic><seg type="betacode">mukthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>μυκτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">μύσσομαι</foreign></etym>
         <sense n="1" bn:level="3"><gloss>the nose, snout</gloss>, <usg>Ar.</usg>: in pl. <gloss>the nostrils</gloss>, <usg>Hdt.</usg>, <usg>Ar.</usg></sense>
         <sense n="2" bn:level="3">from the use of the nose to express ridicule, <gloss>a sneerer</gloss>, <usg>Anth.</usg></sense>
@@ -122884,7 +122886,7 @@
       </entry>
       <entry xml:id="n21826" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ναετήρ</orth></form>
-        <note type="forms"><choice xml:id="corr41"><sic><seg type="betacode">naethfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ναετήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr44"><sic><seg type="betacode">naethfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ναετήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>= <ref type="entry" target="#n21827" xml:lang="grc">ναέτης</ref>, <usg>Anth.</usg></etym>
       </entry>
       <entry xml:id="n21827" xml:lang="en">
@@ -123702,7 +123704,7 @@
       </entry>
       <entry xml:id="n21965" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">νεικεστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr42"><sic><seg type="betacode">neikesthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>νεικεστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr45"><sic><seg type="betacode">neikesthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>νεικεστήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>one who wrangles with</gloss> another, c. gen., <usg>Hes.</usg></sense>
         <etym>from <ref type="entry" target="#n21966" xml:lang="grc">νεικέω</ref></etym>
       </entry>
@@ -125518,7 +125520,7 @@
       </entry>
       <entry xml:id="n22277" xml:lang="en" bn:strong="G3537">
         <form type="lemma"><orth xml:lang="grc">νιπτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr43"><sic><seg type="betacode">nipthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>νιπτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr46"><sic><seg type="betacode">nipthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>νιπτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n22262" xml:lang="grc">νίζω</ref></etym>
         <sense><gloss>a washing vessel, basin</gloss>, <usg>NTest.</usg></sense>
       </entry>
@@ -125564,7 +125566,7 @@
       </entry>
       <entry xml:id="n22285" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">νιφοβλής</orth></form>
-        <note type="forms"><choice xml:id="corr44"><sic><seg type="betacode">ni^fo-blhfailing on lembuf [] | /s, h=tos, o(, h(,</seg></sic><corr>νῐφο-βλής, ῆτος, ὁ, ἡ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr47"><sic><seg type="betacode">ni^fo-blhfailing on lembuf [] | /s, h=tos, o(, h(,</seg></sic><corr>νῐφο-βλής, ῆτος, ὁ, ἡ,</corr></choice></note>
         <etym>= <foreign xml:lang="grc">νιφόβολος, Ἄλπεις</foreign> <usg>Anth.</usg></etym>
       </entry>
       <entry xml:id="n22286" xml:lang="en">
@@ -126543,7 +126545,7 @@
         <form type="lemma"><orth xml:lang="grc">νύξ</orth></form>
         <note type="forms">νύξ, νυκτός,</note>
         <sense n="I" bn:level="2">Lat. <foreign xml:lang="la">nox, night</foreign>, i. e. either <gloss>the night-season</gloss> or <gloss>a night</gloss>, <usg>Hom.</usg>, <usg>Hes.</usg>, etc.; <foreign xml:lang="grc">νυκτός</foreign> <gloss>by night</gloss>, Lat. <foreign xml:lang="la">noctu</foreign>, <usg>Od.</usg>, attic; <foreign xml:lang="grc">νυκτὸς ἔτι</foreign> <gloss>while it was</gloss> still <gloss>night</gloss>, <usg>Hdt.</usg>; <foreign xml:lang="grc">ν. τῆσδε</foreign> <usg>Soph.</usg>; <foreign xml:lang="grc">ἄκρας ν.</foreign> at deadof <gloss>night</gloss>, <usg bn:title="Soph.">Id.</usg>; also, <foreign xml:lang="grc">νυκτί</foreign> <usg>Hdt.</usg>, <usg>Soph.</usg>;— <foreign xml:lang="grc">νύκτα</foreign> <gloss>the night</gloss> long, <gloss>the livelong night</gloss>, <usg>Hom.</usg>; <foreign xml:lang="grc">νύκτας</foreign> <gloss>by nights</gloss>, <usg bn:title="Hom.">Id.</usg>;— <foreign xml:lang="grc">μέσαι νύκτες</foreign> <gloss>midnight</gloss>, <usg>Plat.</usg></sense>
-        <sense n="2" bn:level="3">with Preps., <foreign xml:lang="grc">ἀνὰ νύκτα</foreign> by <gloss>night</gloss>, <usg>Il.</usg>; <foreign xml:lang="grc">διὰ νύκτα</foreign> <usg>Od.</usg>; <foreign xml:lang="grc">εἰς νύκτα, εἰς τὴν ν.</foreign> <gloss>towards</gloss> night, <usg>Xen.</usg>; <foreign xml:lang="grc">ὑπὸ νύκτα</foreign> just at <gloss>night-fall</gloss>, <usg>Thuc.</usg>, <usg>Xen.</usg>; <foreign xml:lang="grc">διὰ νυκτός</foreign> in the course of <gloss>the night</gloss>, <usg>Plat.</usg>; <foreign xml:lang="grc">ἐκ νυκτός</foreign> just after <gloss>night-fall</gloss>, <usg>Xen.</usg>; <foreign xml:lang="grc">πόρρω τῶν νυκτῶν</foreign> far into <gloss>the night</gloss>, <usg bn:title="Xen.">Id.</usg>:— <foreign xml:lang="grc">ἐπὶ νυκτί</foreign> by <gloss>night</gloss>, <usg>Il.</usg>; <foreign xml:lang="grc"><choice xml:id="corr45"><sic><seg type="betacode">e)n nukti/, e)n th=| v.</seg></sic><corr>ἐν νυκτί, ἐν τῇ ν.</corr></choice></foreign> <usg>Aesch.</usg>, etc.</sense>
+        <sense n="2" bn:level="3">with Preps., <foreign xml:lang="grc">ἀνὰ νύκτα</foreign> by <gloss>night</gloss>, <usg>Il.</usg>; <foreign xml:lang="grc">διὰ νύκτα</foreign> <usg>Od.</usg>; <foreign xml:lang="grc">εἰς νύκτα, εἰς τὴν ν.</foreign> <gloss>towards</gloss> night, <usg>Xen.</usg>; <foreign xml:lang="grc">ὑπὸ νύκτα</foreign> just at <gloss>night-fall</gloss>, <usg>Thuc.</usg>, <usg>Xen.</usg>; <foreign xml:lang="grc">διὰ νυκτός</foreign> in the course of <gloss>the night</gloss>, <usg>Plat.</usg>; <foreign xml:lang="grc">ἐκ νυκτός</foreign> just after <gloss>night-fall</gloss>, <usg>Xen.</usg>; <foreign xml:lang="grc">πόρρω τῶν νυκτῶν</foreign> far into <gloss>the night</gloss>, <usg bn:title="Xen.">Id.</usg>:— <foreign xml:lang="grc">ἐπὶ νυκτί</foreign> by <gloss>night</gloss>, <usg>Il.</usg>; <foreign xml:lang="grc"><choice xml:id="corr48"><sic><seg type="betacode">e)n nukti/, e)n th=| v.</seg></sic><corr>ἐν νυκτί, ἐν τῇ ν.</corr></choice></foreign> <usg>Aesch.</usg>, etc.</sense>
         <sense n="3" bn:level="3">in pl., also, <gloss>the watches</gloss> of the night, <usg>Pind.</usg>, <usg>Plat.</usg>:—the Greeks divided the night into three watches, <usg>Hom.</usg>, etc.</sense>
         <sense n="II" bn:level="2"><gloss>the dark of night</gloss>, <usg>Hom.</usg></sense>
         <sense n="2" bn:level="3"><gloss>the night of death</gloss>, <usg bn:title="Hom.">Id.</usg>; <foreign xml:lang="grc">ν. Ἄιδης τε</foreign> <usg>Soph.</usg></sense>
@@ -127171,7 +127173,7 @@
       </entry>
       <entry xml:id="n22543" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ξιφιστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr46"><sic><seg type="betacode">ci^fisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ξῐφιστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr49"><sic><seg type="betacode">ci^fisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ξῐφιστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n22546" xml:lang="grc">ξίφος</ref></etym>
         <sense><gloss>a sword-belt</gloss>, <usg>Plut.</usg></sense>
       </entry>
@@ -127380,7 +127382,7 @@
       </entry>
       <entry xml:id="n22578" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ξυνοδοτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr47"><sic><seg type="betacode">cu_no-dothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ξῡνο-δοτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr50"><sic><seg type="betacode">cu_no-dothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ξῡνο-δοτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>the free, bounteous giver</gloss>, <usg>Anth.</usg></sense>
       </entry>
       <entry xml:id="n22579" xml:lang="en">
@@ -127432,7 +127434,7 @@
       </entry>
       <entry xml:id="n22587" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ξυστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr48"><sic><seg type="betacode">custhfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ξυστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr51"><sic><seg type="betacode">custhfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ξυστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n22594" xml:lang="grc">ξύω</ref></etym>
         <sense><gloss>a graving tool</gloss>, Lat. <foreign xml:lang="la">scalprum</foreign>, <usg>Anth.</usg></sense>
       </entry>
@@ -128381,7 +128383,7 @@
       </entry>
       <entry xml:id="n22742" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">οἰκητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr49"><sic><seg type="betacode">oi)khthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>οἰκητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr52"><sic><seg type="betacode">oi)khthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>οἰκητήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>poetic for <foreign xml:lang="grc">οἰκητής</foreign>, <usg>Soph.</usg></etym>
       </entry>
       <entry xml:id="n22743" xml:lang="en">
@@ -128451,7 +128453,7 @@
       </entry>
       <entry xml:id="n22754" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">οἰκιστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr50"><sic><seg type="betacode">oi)kisthfailing on lembuf [] | /r, h=ros,</seg></sic><corr>οἰκιστήρ, ῆρος,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr53"><sic><seg type="betacode">oi)kisthfailing on lembuf [] | /r, h=ros,</seg></sic><corr>οἰκιστήρ, ῆρος,</corr></choice></note>
         <etym>poetic for <foreign xml:lang="grc">οἰκιστής</foreign>, <usg>Pind.</usg>, Orac. ap. <usg>Hdt.</usg></etym>
       </entry>
       <entry xml:id="n22755" xml:lang="en">
@@ -129013,7 +129015,7 @@
       </entry>
       <entry xml:id="n22849" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">οἰνοποτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr51"><sic><seg type="betacode">oi)no-pothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>οἰνο-ποτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr54"><sic><seg type="betacode">oi)no-pothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>οἰνο-ποτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">ποτόν</foreign></etym>
         <sense><gloss>a wine-drinker</gloss>, <usg>Od.</usg></sense>
       </entry>
@@ -129294,7 +129296,7 @@
       </entry>
       <entry xml:id="n22895" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὀιστευτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr52"><sic><seg type="betacode">o)i+steuthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀϊστευτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr55"><sic><seg type="betacode">o)i+steuthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀϊστευτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>an archer</gloss>, <usg>Anth.</usg></sense>
         <etym>from <ref type="entry" target="#n22896" xml:lang="grc">ὀιστεύω</ref></etym>
       </entry>
@@ -131117,7 +131119,7 @@
       </entry>
       <entry xml:id="n23199" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὁμοκλητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr53"><sic><seg type="betacode">o(moklhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὁμοκλητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr56"><sic><seg type="betacode">o(moklhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὁμοκλητήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n23196" xml:lang="grc">ὁμοκλέω</ref></etym>
         <sense><gloss>one who calls out to, an upbraider, threatener</gloss>, <usg>Il.</usg></sense>
       </entry>
@@ -131662,7 +131664,7 @@
       </entry>
       <entry xml:id="n23288" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὀνειδιστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr54"><sic><seg type="betacode">o)neidisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀνειδιστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr57"><sic><seg type="betacode">o)neidisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀνειδιστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>from <ref type="entry" target="#n23286" xml:lang="grc">ὀνειδίζω</ref></etym>
         <etym>= <ref type="entry" target="#n23289" xml:lang="grc">ὀνειδιστής</ref></etym>
         <sense><gloss>full of reproach</gloss>, <usg>Eur.</usg></sense>
@@ -132835,7 +132837,7 @@
       </entry>
       <entry xml:id="n23475" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὀπτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr55"><sic><seg type="betacode">o)pthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀπτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr58"><sic><seg type="betacode">o)pthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀπτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n24025" xml:lang="grc">ὄψ</ref></etym>
         <sense n="I" bn:level="2"><gloss>one who looks</gloss> or <gloss>spies, a spy, scout</gloss>, Lat. <foreign xml:lang="la">speculator</foreign>, <usg>Od.</usg>, <usg>Soph.</usg></sense>
         <sense n="II" bn:level="2">in Prose, <gloss>an eyewitness</gloss>, <usg>Xen.</usg></sense>
@@ -132872,7 +132874,7 @@
       </entry>
       <entry xml:id="n23481" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὀπωπητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr56"><sic><seg type="betacode">o)pwphthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀπωπητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr59"><sic><seg type="betacode">o)pwphthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀπωπητήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>= <ref type="entry" target="#n23475" xml:lang="grc">ὀπτήρ</ref>, <usg>Hhymn.</usg></etym>
       </entry>
       <entry xml:id="n23482" xml:lang="en" bn:strong="G3703">
@@ -133606,7 +133608,7 @@
       </entry>
       <entry xml:id="n23599" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὀρθωτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr57"><sic><seg type="betacode">o)rqwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀρθωτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr60"><sic><seg type="betacode">o)rqwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὀρθωτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>one who sets upright, a restorer</gloss>, <usg>Pind.</usg></sense>
       </entry>
       <entry xml:id="n23600" xml:lang="en">
@@ -133868,7 +133870,7 @@
       </entry>
       <entry xml:id="n23637" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὁρμοδοτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr58"><sic><seg type="betacode">o(rmo-dothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὁρμο-δοτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr61"><sic><seg type="betacode">o(rmo-dothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὁρμο-δοτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>harbour-giver</gloss>, of a god, <usg>Anth.</usg></sense>
       </entry>
       <entry xml:id="n23638" xml:lang="en">
@@ -135561,7 +135563,7 @@
       </entry>
       <entry xml:id="n23926" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">οὐτάω</orth></form>
-        <etym>forms generated as if both from <ref type="entry" target="#n23926" xml:lang="grc">οὐτάω</ref> and from <foreign xml:lang="grc">οὔτημι</foreign>.</etym>
+        <etym>forms generated as if both from <foreign xml:lang="grc">οὐτάω</foreign> and from <foreign xml:lang="grc">οὔτημι</foreign>.</etym>
         <etym>part <foreign xml:lang="grc">οὐτάμενος</foreign> in passive sense.</etym>
         <sense n="1" bn:level="3"><gloss>to wound, hurt, hit</gloss> with any kind of weapon, <foreign xml:lang="grc">οὖτα δὲ δουρί, οὐτ. ἔγχεϊ, χαλκῶι</foreign>, etc., <usg>Il.</usg>; properly opp. to <foreign xml:lang="grc">βάλλω</foreign>, <gloss>to wound by striking</gloss> or <gloss>thrusting</gloss>, <usg bn:title="Il.">Id.</usg>; cf. <foreign xml:lang="grc">οὐτάζω; κατ’ οὐταμένην ὠτειλήν</foreign> by the wound <gloss>inflicted</gloss>, <usg bn:title="Il.">Id.</usg>; <foreign xml:lang="grc">τὸ ξίφος διανταίαν [πληγήν] οὐτᾶι</foreign> <usg>Aesch.</usg></sense>
         <sense n="2" bn:level="3">sometimes, generally, <gloss>to wound</gloss>, like <foreign xml:lang="grc">βάλλω</foreign>, <usg>Eur.</usg></sense>
@@ -136438,7 +136440,7 @@
       </entry>
       <entry xml:id="n24068" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πάθη</orth></form>
-        <note type="forms"><choice xml:id="corr59"><sic><seg type="betacode">pa^q/h, h(,</seg></sic><corr>πᾰ́θη, ἡ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr62"><sic><seg type="betacode">pa^q/h, h(,</seg></sic><corr>πᾰ́θη, ἡ,</corr></choice></note>
         <etym><foreign xml:lang="grc">παθεῖν</foreign></etym>
         <sense n="1" bn:level="3"><gloss>a passive state</gloss>, <usg>Plat.</usg>; <foreign xml:lang="grc">τὰς ἐκεῖ πάθας</foreign> <gloss>what happened</gloss> there, <usg>Soph.</usg>; <foreign xml:lang="grc">πᾶσαν τὴν ἑωυτοῦ π.</foreign> all <gloss>that had happened</gloss> to him, <usg>Hdt.</usg></sense>
         <sense n="2" bn:level="3">= <ref type="entry" target="#n24067" xml:lang="grc">πάθημα</ref>, <usg>Pind.</usg>, <usg>Soph.</usg>; <foreign xml:lang="grc">ἡ π. τῶν ὀφθαλμῶν</foreign> blindness, <usg>Hdt.</usg></sense>
@@ -143347,7 +143349,7 @@
         <form type="lemma"><orth xml:lang="grc">Πάτροκλος</orth></form>
         <note type="forms">Πάτροκλος, ον,</note>
         <sense><gloss>Patroclus</gloss> the friend of Achilles</sense>
-        <etym>the obl. cases as if from <foreign xml:lang="grc"><choice xml:id="corr60"><sic><seg type="betacode">**patrokleu/s</seg></sic><corr>*Πατροκλεύς</corr></choice></foreign>, gen. <foreign xml:lang="grc">Πατροκλῆος</foreign>, acc. <foreign xml:lang="grc">Πατροκλῆα</foreign>, voc. <foreign xml:lang="grc">Πατρόκλεις</foreign>, <usg>Il.</usg>; nom. pl. <foreign xml:lang="grc">Πάτροκλοι</foreign>, <usg>Ar.</usg>;—a nom. <foreign xml:lang="grc">Πατροκλῆς</foreign>, <usg>Theocr.</usg></etym>
+        <etym>the obl. cases as if from <foreign xml:lang="grc"><choice xml:id="corr63"><sic><seg type="betacode">**patrokleu/s</seg></sic><corr>*Πατροκλεύς</corr></choice></foreign>, gen. <foreign xml:lang="grc">Πατροκλῆος</foreign>, acc. <foreign xml:lang="grc">Πατροκλῆα</foreign>, voc. <foreign xml:lang="grc">Πατρόκλεις</foreign>, <usg>Il.</usg>; nom. pl. <foreign xml:lang="grc">Πάτροκλοι</foreign>, <usg>Ar.</usg>;—a nom. <foreign xml:lang="grc">Πατροκλῆς</foreign>, <usg>Theocr.</usg></etym>
       </entry>
       <entry xml:id="n25243" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πατροκτονέω</orth></form>
@@ -143507,7 +143509,7 @@
       </entry>
       <entry xml:id="n25271" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">παυστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr61"><sic><seg type="betacode">pausthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>παυστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr64"><sic><seg type="betacode">pausthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>παυστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n25273" xml:lang="grc">παύω</ref></etym>
         <sense><gloss>one who stops, calms, a reliever</gloss>, <foreign xml:lang="grc">νόσου</foreign> <usg>Soph.</usg></sense>
       </entry>
@@ -144024,7 +144026,7 @@
       </entry>
       <entry xml:id="n25352" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πειρητίζω</orth></form>
-        <note type="forms"><choice xml:id="corr62"><sic><seg type="betacode">peirhtz/)w,</seg></sic><corr>πειρητίζω,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr65"><sic><seg type="betacode">peirhtz/)w,</seg></sic><corr>πειρητίζω,</corr></choice></note>
         <etym>epic form of <foreign xml:lang="grc">πειράω</foreign></etym>
         <etym>only in pres. and imperf.</etym>
         <sense n="I" bn:level="2"><gloss>to attempt, try, prove</gloss>, c. inf., or absol., <usg>Hom.</usg></sense>
@@ -144087,7 +144089,7 @@
       </entry>
       <entry xml:id="n25363" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πειστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr63"><sic><seg type="betacode">peisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πειστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr66"><sic><seg type="betacode">peisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πειστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>= <ref type="entry" target="#n25358" xml:lang="grc">πεῖσμα</ref></etym>
         <sense><gloss>a rope</gloss>, <usg>Theocr.</usg></sense>
       </entry>
@@ -144568,7 +144570,7 @@
       </entry>
       <entry xml:id="n25444" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πενθητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr64"><sic><seg type="betacode">penqhthfailing on lembuf [] | /r, h=ros, o(, h(,</seg></sic><corr>πενθητήρ, ῆρος, ὁ, ἡ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr67"><sic><seg type="betacode">penqhthfailing on lembuf [] | /r, h=ros, o(, h(,</seg></sic><corr>πενθητήρ, ῆρος, ὁ, ἡ,</corr></choice></note>
         <etym><ref type="entry" target="#n25437" xml:lang="grc">πενθέω</ref></etym>
         <sense><gloss>a mourner</gloss>, <usg>Aesch.</usg>:— fem., <foreign xml:lang="grc">κακῶν</foreign> <foreign xml:lang="grc">πενθήτριᾰ</foreign>, <gloss>she who mourns for</gloss> evils, <usg>Eur.</usg></sense>
       </entry>
@@ -144909,7 +144911,7 @@
       </entry>
       <entry xml:id="n25506" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πεντηκοντήρ</orth></form>
-        <note type="forms"><choice xml:id="corr65"><sic><seg type="betacode">penthkonthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πεντηκοντήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr68"><sic><seg type="betacode">penthkonthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πεντηκοντήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>the commander of fifty men</gloss>, an officer in the <gloss>Spartan</gloss> army, <usg>Thuc.</usg>, <usg>Xen.</usg></sense>
       </entry>
       <entry xml:id="n25507" xml:lang="en">
@@ -149288,7 +149290,7 @@
         <sense n="I" bn:level="2"><foreign xml:lang="grc">πίπτειν ἔν τισι</foreign> <gloss>to fall violently upon, attack</gloss>, <foreign xml:lang="grc">ἐνὶ νήεσσι πέσωμεν</foreign> <usg>Il.</usg>; <foreign xml:lang="grc">πρὸς μῆλα καὶ ποίμνας</foreign> <usg>Soph.</usg></sense>
         <sense n="2" bn:level="3"><gloss>to throw oneself down, fall down</gloss>, <foreign xml:lang="grc">πρὸς βρέτη θεῶν</foreign> <usg>Aesch.</usg>; <foreign xml:lang="grc">ἀμφὶ γόνυ τινός</foreign> <usg>Eur.</usg></sense>
         <sense n="II" bn:level="2"><gloss>to fall</gloss> in battle, <foreign xml:lang="grc">πίπτε δὲ λαός</foreign> <usg>Il.</usg>, etc.; <foreign xml:lang="grc">οἱ πεπτωκότες</foreign> <gloss>the fallen</gloss>, <usg>Xen.</usg>; <foreign xml:lang="grc">π. δορί</foreign> by the spear, <usg>Eur.</usg>; —<foreign xml:lang="grc">π. ὑπό τινος</foreign> <gloss>to fall by</gloss> another's hand, <usg>Hdt.</usg></sense>
-        <sense n="2" bn:level="3"><gloss>to fall, be ruined</gloss>, <foreign xml:lang="grc"><choice xml:id="corr66"><sic><seg type="betacode">o( *je/rcew strato\s au)to\s u(p' e(wutou= e)/pese</seg></sic><corr>ὁ Ξέρξεω στρατὸς αὐτὸς ὑπ’ ἑωυτοῦ ἔπεσε</corr></choice></foreign>, Lat. <foreign xml:lang="la">mole sua corruit</foreign>, <usg bn:title="Hdt.">Id.</usg></sense>
+        <sense n="2" bn:level="3"><gloss>to fall, be ruined</gloss>, <foreign xml:lang="grc"><choice xml:id="corr69"><sic><seg type="betacode">o( *je/rcew strato\s au)to\s u(p' e(wutou= e)/pese</seg></sic><corr>ὁ Ξέρξεω στρατὸς αὐτὸς ὑπ’ ἑωυτοῦ ἔπεσε</corr></choice></foreign>, Lat. <foreign xml:lang="la">mole sua corruit</foreign>, <usg bn:title="Hdt.">Id.</usg></sense>
         <sense n="3" bn:level="3"><gloss>to fall, sink</gloss>, <foreign xml:lang="grc">ἄνεμος πέσε</foreign> the wind <gloss>fell</gloss> (so Virg. <gloss>cadunt austri)</gloss>, <usg>Od.</usg></sense>
         <sense n="4" bn:level="3"><gloss>to fall short, fail</gloss>, <usg>Plat.</usg>; of a play, <gloss>to fail</gloss>, <usg>Ar.</usg></sense>
         <sense n="III" bn:level="2"><foreign xml:lang="grc">ἐκ θυμοῦ πίπτειν τινί</foreign> <gloss>to fall out of</gloss> his favour, <usg>Il.</usg>; so, <foreign xml:lang="grc">π. ἐξ ἐλπίδων</foreign> <usg>Eur.</usg>: —reversely, <foreign xml:lang="grc">π. ἐς κακότητα</foreign> <usg>Theogn.</usg>; <foreign xml:lang="grc">εἰς νόσον</foreign> <usg>Aesch.</usg>; <foreign xml:lang="grc">φόβον, ἀνάγκας</foreign> <usg>Eur.</usg>, <usg>Thuc.</usg>, etc.; also, <foreign xml:lang="grc">π. ἐν φόβωι</foreign> <usg>Eur.</usg>; <foreign xml:lang="grc">π. δυσπραξίαις</foreign> <usg>Soph.</usg></sense>
@@ -149574,7 +149576,7 @@
       </entry>
       <entry xml:id="n26293" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πλαγκτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr67"><sic><seg type="betacode">plagkthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πλαγκτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr70"><sic><seg type="betacode">plagkthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πλαγκτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n26298" xml:lang="grc">πλάζω</ref></etym>
         <sense><gloss>the beguiler</gloss>, (or pass.) <gloss>the roamer</gloss>, of Bacchus, <usg>Anth.</usg></sense>
       </entry>
@@ -150754,7 +150756,7 @@
       </entry>
       <entry xml:id="n26477" xml:lang="en" n="1" bn:strong="G4149">
         <form type="lemma"><orth xml:lang="grc">πλοῦτος</orth></form>
-        <note type="forms"><choice xml:id="corr68"><sic><seg type="betacode">ploy=tos, o(,</seg></sic><corr>πλοῦτος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr71"><sic><seg type="betacode">ploy=tos, o(,</seg></sic><corr>πλοῦτος, ὁ,</corr></choice></note>
         <etym>perh. from <ref type="entry" target="#n26220" xml:lang="grc">πίμπλημι</ref></etym>
         <sense n="I" bn:level="2"><gloss>wealth, riches</gloss>, <usg>Hom.</usg>, etc.; <foreign xml:lang="grc">πλοῦτος χρυσοῦ, ἀργύρου</foreign> <gloss>treasure</gloss> of gold, silver, <usg>Hdt.</usg>:—metaph., <foreign xml:lang="grc">γᾶς πλ. ἄβυσσος</foreign>, of the whole earth, <usg>Aesch.</usg>; <foreign xml:lang="grc">πλοῦτος εἵματος</foreign> <usg bn:title="Aesch.">Id.</usg></sense>
         <sense n="II" bn:level="2">as prop. n. <gloss>Plutus</gloss>, god of riches, <usg>Hes.</usg></sense>
@@ -150831,7 +150833,7 @@
       </entry>
       <entry xml:id="n26490" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πλωτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr69"><sic><seg type="betacode">plwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πλωτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr72"><sic><seg type="betacode">plwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πλωτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">πλώω</foreign></etym>
         <sense><gloss>a sailor, seaman</gloss>, <usg>Ar.</usg>, <usg>Plat.</usg>; including rowers and navigators, <usg>Arist.</usg></sense>
       </entry>
@@ -150982,7 +150984,7 @@
       </entry>
       <entry xml:id="n26514" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ποδανιπτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr70"><sic><seg type="betacode">poda^-vipthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ποδᾰ-ϝιπτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr73"><sic><seg type="betacode">poda^-vipthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ποδᾰ-ϝιπτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n22262" xml:lang="grc">νίζω</ref></etym>
         <sense><gloss>a vessel for washing the feet in, a footpan</gloss>, <usg>Hdt.</usg></sense>
       </entry>
@@ -151065,7 +151067,7 @@
       </entry>
       <entry xml:id="n26528" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ποδιστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr71"><sic><seg type="betacode">podisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ποδιστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr74"><sic><seg type="betacode">podisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ποδιστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n26526" xml:lang="grc">ποδίζω</ref></etym>
         <sense><gloss>foot-entangling</gloss>, of a long robe, <usg>Aesch.</usg></sense>
       </entry>
@@ -155014,7 +155016,7 @@
       </entry>
       <entry xml:id="n27189" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ποτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr72"><sic><seg type="betacode">pothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ποτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr75"><sic><seg type="betacode">pothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ποτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">ΠΟ</foreign>, Root of some tenses of <foreign xml:lang="grc">πίνω</foreign></etym>
         <sense><gloss>a drinking-cup, wine-cup</gloss>, <usg>Eur.</usg></sense>
       </entry>
@@ -155026,7 +155028,7 @@
       </entry>
       <entry xml:id="n27191" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ποτής</orth></form>
-        <note type="forms"><choice xml:id="corr73"><sic><seg type="betacode">pothfailing on lembuf [] | /s, h=tos, h(,</seg></sic><corr>ποτής, ῆτος, ἡ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr76"><sic><seg type="betacode">pothfailing on lembuf [] | /s, h=tos, h(,</seg></sic><corr>ποτής, ῆτος, ἡ,</corr></choice></note>
         <etym><foreign xml:lang="grc">ΠΟ</foreign>, Root of some tenses of <foreign xml:lang="grc">πίνω</foreign></etym>
         <sense><gloss>a drinking, drink</gloss>, <usg>Hom.</usg></sense>
       </entry>
@@ -155139,7 +155141,7 @@
         <note type="forms">πότνια, ης, ἡ,</note>
         <etym>from same Root as <foreign xml:lang="grc">πόσις, δεσπότης</foreign></etym>
         <sense>a poet. title of honour, used chiefly in addressing goddesses or ladies:</sense>
-        <sense n="1" bn:level="3">= <ref type="entry" target="#n7516" xml:lang="grc">δέσποινα</ref>, <gloss>mistress, queen</gloss>, c. gen., <foreign xml:lang="grc">πότνια θηρῶν</foreign> (nom.) <gloss>queen</gloss> of wild beasts, Lat. <foreign xml:lang="la">potens ferarum</foreign>, <usg>Il.</usg>; <foreign xml:lang="grc"><choice xml:id="corr74"><sic><seg type="betacode">po/tnia bel/ewn</seg></sic><corr>πότνια βέλεων</corr></choice></foreign> <usg>Pind.</usg>: absol., <foreign xml:lang="grc">πότνι’ Ἐρινύς</foreign> <usg>Aesch.</usg>; often in voc., <foreign xml:lang="grc">ὦ πότνι’ Ἥρα</foreign> <usg bn:title="Aesch.">Id.</usg>; <foreign xml:lang="grc">ὦ πότνια</foreign> (sc. <foreign xml:lang="grc">Ἀθηναία</foreign>) <usg>Ar.</usg>:—in pl. of the Eumenides, <usg>Hdt.</usg>, <usg>Soph.</usg>; also of Demeter and Proserpine, <usg>Soph.</usg>, etc.</sense>
+        <sense n="1" bn:level="3">= <ref type="entry" target="#n7516" xml:lang="grc">δέσποινα</ref>, <gloss>mistress, queen</gloss>, c. gen., <foreign xml:lang="grc">πότνια θηρῶν</foreign> (nom.) <gloss>queen</gloss> of wild beasts, Lat. <foreign xml:lang="la">potens ferarum</foreign>, <usg>Il.</usg>; <foreign xml:lang="grc"><choice xml:id="corr77"><sic><seg type="betacode">po/tnia bel/ewn</seg></sic><corr>πότνια βέλεων</corr></choice></foreign> <usg>Pind.</usg>: absol., <foreign xml:lang="grc">πότνι’ Ἐρινύς</foreign> <usg>Aesch.</usg>; often in voc., <foreign xml:lang="grc">ὦ πότνι’ Ἥρα</foreign> <usg bn:title="Aesch.">Id.</usg>; <foreign xml:lang="grc">ὦ πότνια</foreign> (sc. <foreign xml:lang="grc">Ἀθηναία</foreign>) <usg>Ar.</usg>:—in pl. of the Eumenides, <usg>Hdt.</usg>, <usg>Soph.</usg>; also of Demeter and Proserpine, <usg>Soph.</usg>, etc.</sense>
         <sense n="2" bn:level="3">as adj. <gloss>revered, august</gloss>, <usg>Hom.</usg></sense>
       </entry>
       <entry xml:id="n27212" xml:lang="en">
@@ -155291,7 +155293,7 @@
       </entry>
       <entry xml:id="n27232" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πρακτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr75"><sic><seg type="betacode">prakth/r, ionic prhkthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πρακτήρ, <foreign xml:lang="en">ionic</foreign> <foreign xml:lang="grc">πρηκτήρ, ῆρος, ὁ,</foreign></corr></choice></note>
+        <note type="forms"><choice xml:id="corr78"><sic><seg type="betacode">prakth/r, ionic prhkthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πρακτήρ, <foreign xml:lang="en">ionic</foreign> <foreign xml:lang="grc">πρηκτήρ, ῆρος, ὁ,</foreign></corr></choice></note>
         <etym><ref type="entry" target="#n27251" xml:lang="grc">πράσσω</ref></etym>
         <sense n="I" bn:level="2"><gloss>one that does, a doer</gloss>, <usg>Il.</usg></sense>
         <sense n="II" bn:level="2"><gloss>a trader</gloss>, Lat. <foreign xml:lang="la">negotiator</foreign>, <usg>Od.</usg></sense>
@@ -155358,11 +155360,11 @@
       <entry xml:id="n27241" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πρᾶος</orth></form>
         <note type="forms">πρᾶος, ον,</note>
-        <etym>the declension varies between the two forms <foreign xml:lang="grc">πρᾶος</foreign> and <foreign xml:lang="grc">πρᾱύς</foreign>—the attic sg. is from <ref type="entry" target="#n27241" xml:lang="grc">πρᾶος</ref>, except that the fem. is <foreign xml:lang="grc">πραεῖα</foreign>: poet. sg. from <foreign xml:lang="grc">πραΰς</foreign></etym>
+        <etym>the declension varies between the two forms <foreign xml:lang="grc">πρᾶος</foreign> and <foreign xml:lang="grc">πρᾱύς</foreign>—the attic sg. is from <foreign xml:lang="grc">πρᾶος</foreign>, except that the fem. is <foreign xml:lang="grc">πραεῖα</foreign>: poet. sg. from <foreign xml:lang="grc">πραΰς</foreign></etym>
         <sense n="I" bn:level="2"><gloss>Mild, soft, gentle, meek</gloss>, <usg>Hhymn.</usg>, <usg>Pind.</usg>, <usg>Plat.</usg>:—of a horse, <gloss>gentle</gloss>, <usg>Xen.</usg>; of other animals, <gloss>tame</gloss>, <usg bn:title="Xen.">Id.</usg></sense>
         <sense n="2" bn:level="3">of actions, feelings, <gloss>mild</gloss>, <usg>Plat.</usg></sense>
         <sense n="II" bn:level="2"><gloss>making mild, taming</gloss>, <usg>Pind.</usg></sense>
-        <sense n="III" bn:level="2">adv. <foreign xml:lang="grc">πράως</foreign>, ( from <ref type="entry" target="#n27241" xml:lang="grc">πρᾶος</ref>) <gloss>mildly, gently</gloss>, <usg>Plat.</usg>; <foreign xml:lang="grc">πράως ἔχειν πρός τι</foreign> <usg bn:title="Plat.">Id.</usg>; <foreign xml:lang="grc">πράως λέγειν τὸ πάθος</foreign> to speak <gloss>lightly</gloss> of it, <usg>Xen.</usg>; <foreign xml:lang="grc">πράως διακεῖσθαι</foreign>, opp. to <foreign xml:lang="grc">ὀργίζεσθαι</foreign>, <usg>Dem.</usg>;—comp., <usg>Plat.</usg>;—Sup., <foreign xml:lang="grc">πραότατα</foreign> <usg bn:title="Plat.">Id.</usg></sense>
+        <sense n="III" bn:level="2">adv. <foreign xml:lang="grc">πράως</foreign>, ( from <foreign xml:lang="grc">πρᾶος</foreign>) <gloss>mildly, gently</gloss>, <usg>Plat.</usg>; <foreign xml:lang="grc">πράως ἔχειν πρός τι</foreign> <usg bn:title="Plat.">Id.</usg>; <foreign xml:lang="grc">πράως λέγειν τὸ πάθος</foreign> to speak <gloss>lightly</gloss> of it, <usg>Xen.</usg>; <foreign xml:lang="grc">πράως διακεῖσθαι</foreign>, opp. to <foreign xml:lang="grc">ὀργίζεσθαι</foreign>, <usg>Dem.</usg>;—comp., <usg>Plat.</usg>;—Sup., <foreign xml:lang="grc">πραότατα</foreign> <usg bn:title="Plat.">Id.</usg></sense>
       </entry>
       <entry xml:id="n27242" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πραότης</orth></form>
@@ -155443,7 +155445,7 @@
       </entry>
       <entry xml:id="n27254" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πρατήρ</orth></form>
-        <note type="forms"><choice xml:id="corr76"><sic><seg type="betacode">pra_thfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πρᾱτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr79"><sic><seg type="betacode">pra_thfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πρᾱτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n26247" xml:lang="grc">πιπράσκω</ref></etym>
         <sense><gloss>a dealer</gloss>, <usg>Plat.</usg>, <usg>Dem.</usg></sense>
       </entry>
@@ -155707,7 +155709,7 @@
       </entry>
       <entry xml:id="n27297" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πρηστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr77"><sic><seg type="betacode">prhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πρηστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr80"><sic><seg type="betacode">prhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πρηστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n27293" xml:lang="grc">πρήθω</ref></etym>
         <sense><gloss>a hurricane</gloss>, <usg>Hes.</usg>, <usg>Hdt.</usg></sense>
       </entry>
@@ -155783,7 +155785,7 @@
       </entry>
       <entry xml:id="n27310" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πριστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr78"><sic><seg type="betacode">pristhfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πριστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr81"><sic><seg type="betacode">pristhfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>πριστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n27314" xml:lang="grc">πρίω</ref></etym>
         <sense><gloss>a saw</gloss>: <foreign xml:lang="grc">πριστῆρες ὀδόντες</foreign> <gloss>the incisors</gloss>, <usg>Anth.</usg></sense>
       </entry>
@@ -156355,7 +156357,7 @@
       </entry>
       <entry xml:id="n27410" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">προβλής</orth></form>
-        <note type="forms"><choice xml:id="corr79"><sic><seg type="betacode">problhfailing on lembuf [] | /s, h=tos, o(, h(,</seg></sic><corr>προβλής, ῆτος, ὁ, ἡ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr82"><sic><seg type="betacode">problhfailing on lembuf [] | /s, h=tos, o(, h(,</seg></sic><corr>προβλής, ῆτος, ὁ, ἡ,</corr></choice></note>
         <etym><ref type="entry" target="#n27391" xml:lang="grc">προβάλλω</ref></etym>
         <sense><gloss>forestretching, jutting</gloss>, <usg>Hom.</usg>: <foreign xml:lang="grc">προβλῆτες</foreign>, without Subst., <gloss>forelands, headlands</gloss>, <usg>Soph.</usg></sense>
       </entry>
@@ -158508,7 +158510,7 @@
       </entry>
       <entry xml:id="n27788" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">προορχηστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr80"><sic><seg type="betacode">pro-orxhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>προ-ορχηστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr83"><sic><seg type="betacode">pro-orxhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>προ-ορχηστήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>one who leads the dance</gloss>, <usg>Luc.</usg></sense>
       </entry>
       <entry xml:id="n27789" xml:lang="en">
@@ -161454,7 +161456,7 @@
         <sense n="5" bn:level="3"><gloss>in reference to, according to</gloss>, <foreign xml:lang="grc">πρὸς τὸ παρεὸν βουλεύεσθαι</foreign> <usg>Hdt.</usg>; <foreign xml:lang="grc">πρὸς τὴν δύναμιν</foreign> <gloss>according to</gloss> one's power, <usg>Dem.</usg>; <foreign xml:lang="grc">πρὸς τὰς τύχας</foreign> <gloss>agreeably to</gloss> one's fortunes, <usg>Eur.</usg></sense>
         <sense n="6" bn:level="3"><gloss>in accompaniment to</gloss> musical instruments, <foreign xml:lang="grc">πρὸς κάλαμον</foreign> <usg>Pind.</usg>; <foreign xml:lang="grc">πρὸς αὐλόν</foreign> or <foreign xml:lang="grc">τὸν αὐλόν</foreign> <usg>Eur.</usg></sense>
         <sense n="7" bn:level="3">often merely periphr. for adv., as <foreign xml:lang="grc">πρὸς βίαν = βιαίως</foreign>, <gloss>by</gloss> force, forcibly, <usg>Aesch.</usg>; <foreign xml:lang="grc">πρὸς τὸ καρτερόν</foreign> <usg bn:title="Aesch.">Id.</usg>; <foreign xml:lang="grc">πρὸς ἰσχύος κράτος</foreign> <usg>Soph.</usg>:— <foreign xml:lang="grc">πρὸς ἡδονὴν λέγειν, δημηγορεῖν</foreign> <gloss>so as to</gloss> please, <usg>Thuc.</usg>; <foreign xml:lang="grc">πρὸς τὸ τερπνόν</foreign> <gloss>calculated to</gloss> delight, <usg bn:title="Thuc.">Id.</usg>; <foreign xml:lang="grc">πρὸς χάριν</foreign> <gloss>so as to</gloss> gratify, <usg>Dem.</usg>;—and c. gen. rei, <foreign xml:lang="grc">πρὸς χάριν τινός</foreign>, like <foreign xml:lang="grc">χάριν</foreign> alone, Lat. <foreign xml:lang="la">gratia, for the sake of</foreign>, <foreign xml:lang="grc">πρὸς χ. βορᾶς</foreign> <usg>Soph.</usg>; <foreign xml:lang="grc">πρὸς ἰσχύος χ.</foreign> <gloss>by means of</gloss>, <usg>Eur.</usg>; also, <foreign xml:lang="grc">πρὸς ὀργήν</foreign> <gloss>with</gloss> anger, angrily, <usg>Soph.</usg>, etc.; <foreign xml:lang="grc">πρὸς τὸ λιπαρές</foreign> importunately, <usg bn:title="Soph.">Id.</usg>; <foreign xml:lang="grc">πρὸς καιρόν</foreign> seasonably, <usg bn:title="Soph.">Id.</usg></sense>
-        <sense n="D" bn:level="1">ABSOL. AS ADV., = <ref type="entry" target="#n28303" xml:lang="grc">πρός</ref> B. II, <gloss>besides, over and above</gloss>, <foreign xml:lang="grc">πρὸς δέ</foreign> or <foreign xml:lang="grc">ποτὶ δέ</foreign> <usg>Il.</usg>, <usg>Hdt.</usg>, etc.; <foreign xml:lang="grc">πρὸς δὲ καί, πρὸς δὲ ἔτι, καὶ πρός</foreign> <usg>Hdt.</usg>, etc.; <foreign xml:lang="grc">καὶ πρός γε</foreign> <usg>Eur.</usg>; <foreign xml:lang="grc">καὶ δὴ πρός</foreign> <usg>Hdt.</usg></sense>
+        <sense n="D" bn:level="1">ABSOL. AS ADV., = <foreign xml:lang="grc">πρός</foreign> B. II, <gloss>besides, over and above</gloss>, <foreign xml:lang="grc">πρὸς δέ</foreign> or <foreign xml:lang="grc">ποτὶ δέ</foreign> <usg>Il.</usg>, <usg>Hdt.</usg>, etc.; <foreign xml:lang="grc">πρὸς δὲ καί, πρὸς δὲ ἔτι, καὶ πρός</foreign> <usg>Hdt.</usg>, etc.; <foreign xml:lang="grc">καὶ πρός γε</foreign> <usg>Eur.</usg>; <foreign xml:lang="grc">καὶ δὴ πρός</foreign> <usg>Hdt.</usg></sense>
         <sense n="E" bn:level="1">IN COMPOS., it expresses</sense>
         <sense n="I" bn:level="2">motion <gloss>towards</gloss>, <foreign xml:lang="grc">προσάγω, προσέρχομαι.</foreign></sense>
         <sense n="II" bn:level="2">addition, <gloss>besides</gloss>, <foreign xml:lang="grc">προσκτάομαι, προστίθημι.</foreign></sense>
@@ -164455,7 +164457,7 @@
       </entry>
       <entry xml:id="n28799" xml:lang="en" bn:strong="G4439">
         <form type="lemma"><orth xml:lang="grc">πύλη</orth></form>
-        <note type="forms"><choice xml:id="corr81"><sic><seg type="betacode">py/lh, h(,</seg></sic><corr>πύλη, ἡ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr84"><sic><seg type="betacode">py/lh, h(,</seg></sic><corr>πύλη, ἡ,</corr></choice></note>
         <sense n="I" bn:level="2"><gloss>one wing of a pair of double gates</gloss>, <usg>Hdt.</usg>: mostly in pl. <gloss>the gates of a town</gloss>, opp. to <foreign xml:lang="grc">θύρα</foreign> <gloss>(a house-door)</gloss>, <usg>Il.</usg>, attic</sense>
         <sense n="2" bn:level="3">in <usg>Trag.</usg>, sometimes, of the <gloss>house-door.</gloss></sense>
         <sense n="3" bn:level="3"><foreign xml:lang="grc">Ἀΐδαο πύλαι</foreign>, periphr. for <gloss>the nether world, hell</gloss>, <usg>Hom.</usg>, <usg>Aesch.</usg>, etc.</sense>
@@ -164535,7 +164537,7 @@
       </entry>
       <entry xml:id="n28813" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πύματος</orth></form>
-        <note type="forms"><choice xml:id="corr82"><sic><seg type="betacode">py/ma^tos, h, on</seg></sic><corr>πύμᾰτος, η, ον</corr></choice></note>
+        <note type="forms"><choice xml:id="corr85"><sic><seg type="betacode">py/ma^tos, h, on</seg></sic><corr>πύμᾰτος, η, ον</corr></choice></note>
         <sense n="1" bn:level="3"><gloss>hindmost, last</gloss>, <usg>Il.</usg>:— also <gloss>outermost</gloss>, <usg bn:title="Il.">Id.</usg>:— <gloss>nethermost</gloss>, <foreign xml:lang="grc">φάρος</foreign> <usg>Plat.</usg>; <foreign xml:lang="grc">π. Ταρτάρου βάθη</foreign> <usg>Luc.</usg></sense>
         <sense n="2" bn:level="3">of Time, <gloss>last</gloss>, <usg>Hom.</usg>:—neut. <foreign xml:lang="grc">πύματον</foreign> and <foreign xml:lang="grc">πύματα</foreign> as adv., <gloss>at the last, for the last time</gloss>, <usg>Hom.</usg></sense>
         <sense n="3" bn:level="3">of Degree, <foreign xml:lang="grc">ὅ τι πύματον</foreign> whatever is <gloss>the last, worst</gloss> fate, <usg>Soph.</usg></sense>
@@ -165001,7 +165003,7 @@
       </entry>
       <entry xml:id="n28893" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">πυρολόγος</orth></form>
-        <note type="forms"><choice xml:id="corr83"><sic><seg type="betacode">pu_ro-lg/os, on,</seg></sic><corr>πῡρο-λόγος, ον,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr86"><sic><seg type="betacode">pu_ro-lg/os, on,</seg></sic><corr>πῡρο-λόγος, ον,</corr></choice></note>
         <etym><foreign xml:lang="grc">πύρος, λέγω</foreign></etym>
         <sense><gloss>reaping wheat</gloss>, <usg>Anth.</usg></sense>
       </entry>
@@ -165980,7 +165982,7 @@
       </entry>
       <entry xml:id="n29053" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ῥεκτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr84"><sic><seg type="betacode">r(ekthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ῥεκτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr87"><sic><seg type="betacode">r(ekthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ῥεκτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n29049" xml:lang="grc">ῥέζω</ref></etym>
         <sense><gloss>a worker, doer</gloss>, <usg>Hes.</usg></sense>
       </entry>
@@ -166162,7 +166164,7 @@
       </entry>
       <entry xml:id="n29080" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ῥητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr85"><sic><seg type="betacode">r(hthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ῥητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr88"><sic><seg type="betacode">r(hthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ῥητήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">Ῥέω, ἐρῶ</foreign></etym>
         <sense><gloss>a speaker</gloss>, <usg>Il.</usg></sense>
       </entry>
@@ -166237,7 +166239,7 @@
       <entry xml:id="n29091" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ῥίγιστος</orth></form>
         <note type="forms">ῥίγιστος, η, ον</note>
-        <etym>Sup. adj. formed from <ref type="entry" target="#n29093" xml:lang="grc">ῥῖγος</ref> (as <foreign xml:lang="grc"><choice xml:id="corr86"><sic><seg type="betacode">ku=/distos</seg></sic><corr>κύδιστος</corr></choice></foreign> from <ref type="entry" target="#n18892" xml:lang="grc">κῦδος</ref>）</etym>
+        <etym>Sup. adj. formed from <ref type="entry" target="#n29093" xml:lang="grc">ῥῖγος</ref> (as <foreign xml:lang="grc"><choice xml:id="corr89"><sic><seg type="betacode">ku=/distos</seg></sic><corr>κύδιστος</corr></choice></foreign> from <ref type="entry" target="#n18892" xml:lang="grc">κῦδος</ref>）</etym>
         <sense><gloss>coldest: most horrible</gloss>, <usg>Il.</usg></sense>
       </entry>
       <entry xml:id="n29092" xml:lang="en">
@@ -167007,7 +167009,7 @@
       </entry>
       <entry xml:id="n29219" xml:lang="en" n="2">
         <form type="lemma"><orth xml:lang="grc">ῥυτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr87"><sic><seg type="betacode">r(u_thfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ῥῡτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr90"><sic><seg type="betacode">r(u_thfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ῥῡτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>*<foreign xml:lang="grc">ῥύω, ἐρύω</foreign></etym>
         <sense n="I" bn:level="2"><gloss>one who draws</gloss> or <gloss>stretches</gloss>, <foreign xml:lang="grc">ῥ. βιοῦ, ὀϊστῶν</foreign> <gloss>drawer</gloss> of the bow, of arrows, <usg>Od.</usg></sense>
         <sense n="2" bn:level="3">like <foreign xml:lang="grc">ἱμάς</foreign>, the strap <gloss>by which a horse draws, a trace</gloss>, <usg>Il.</usg>:—also <gloss>a rein</gloss>, <usg bn:title="Il.">Id.</usg>; <foreign xml:lang="grc">ἀπὸ ῥυτῆρος</foreign> <gloss>with loose rein</gloss>, Lat. <foreign xml:lang="la">immissis habenis, at full galop</foreign>:—used as <gloss>a strap</gloss> to flog with, <usg>Dem.</usg>, <usg>Aeschin.</usg></sense>
@@ -167838,7 +167840,7 @@
       </entry>
       <entry xml:id="n29360" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">σαυρωτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr88"><sic><seg type="betacode">saurwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σαυρωτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr91"><sic><seg type="betacode">saurwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σαυρωτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>a spike at the butt-end</gloss> of a spear, by which it was stuck into the ground, <usg>Il.</usg>, <usg>Hdt.</usg></sense>
         <etym>deriv. uncertain</etym>
       </entry>
@@ -168765,7 +168767,7 @@
       </entry>
       <entry xml:id="n29514" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">σιδηροκμής</orth></form>
-        <note type="forms"><choice xml:id="corr89"><sic><seg type="betacode">si^dhro-kmhfailing on lembuf [] | /s, h=tos, o(, h(,</seg></sic><corr>σῐδηρο-κμής, ῆτος, ὁ, ἡ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr92"><sic><seg type="betacode">si^dhro-kmhfailing on lembuf [] | /s, h=tos, o(, h(,</seg></sic><corr>σῐδηρο-κμής, ῆτος, ὁ, ἡ,</corr></choice></note>
         <etym><ref type="entry" target="#n16619" xml:lang="grc">κάμνω</ref></etym>
         <sense><gloss>slain by iron</gloss>, i. e. <gloss>by the sword</gloss>, used with the neut. dat. <foreign xml:lang="grc">βοτοῖς</foreign>, <usg>Soph.</usg></sense>
       </entry>
@@ -169664,7 +169666,7 @@
       </entry>
       <entry xml:id="n29673" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">σκαπτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr90"><sic><seg type="betacode">skapthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σκαπτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr93"><sic><seg type="betacode">skapthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σκαπτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>a digger, delver</gloss>, <usg>Hom.</usg> ap. <usg>Arist.</usg></sense>
       </entry>
       <entry xml:id="n29674" xml:lang="en">
@@ -170807,7 +170809,7 @@
       </entry>
       <entry xml:id="n29860" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">σκύζομαι</orth></form>
-        <note type="forms"><choice xml:id="corr91"><sic><seg type="betacode">sky/zomai,</seg></sic><corr>σκύζομαι,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr94"><sic><seg type="betacode">sky/zomai,</seg></sic><corr>σκύζομαι,</corr></choice></note>
         <sense><gloss>to be angry</gloss> or <gloss>wroth with</gloss> one, <foreign xml:lang="grc">τινί</foreign> <usg>Hom.</usg>: absol. <gloss>to be wroth</gloss>, <usg>Il.</usg></sense>
       </entry>
       <entry xml:id="n29861" xml:lang="en" bn:strong="G4658">
@@ -171948,7 +171950,7 @@
       </entry>
       <entry xml:id="n30054" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">σπινθήρ</orth></form>
-        <note type="forms"><choice xml:id="corr92"><sic><seg type="betacode">spinqhfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σπινθήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr95"><sic><seg type="betacode">spinqhfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σπινθήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>a spark</gloss>, Lat. <foreign xml:lang="la">scintilla</foreign>, <usg>Il.</usg>, <usg>Ar.</usg></sense>
       </entry>
       <entry xml:id="n30055" xml:lang="en">
@@ -172523,7 +172525,7 @@
       </entry>
       <entry xml:id="n30146" xml:lang="en" bn:strong="G4715">
         <form type="lemma"><orth xml:lang="grc">στατήρ</orth></form>
-        <note type="forms"><choice xml:id="corr93"><sic><seg type="betacode">sta^thfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>στᾰτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr96"><sic><seg type="betacode">sta^thfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>στᾰτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">στῆναι</foreign></etym>
         <sense>a weight, = <ref type="entry" target="#n19828" xml:lang="grc">λίτρα</ref>: then a coin of various values:</sense>
         <sense n="1" bn:level="3">the <gloss>gold stater</gloss> best known at Athens was the Persian, called <foreign xml:lang="grc">στατὴρ Δαρεικός</foreign> or simply <foreign xml:lang="grc">Δαρεικός</foreign>, <gloss>Daric</gloss>, from Darius Hystaspes, worth about 1 <gloss>l.</gloss> 2<gloss>s.</gloss>, <usg>Hdt.</usg>, <usg>Thuc.</usg></sense>
@@ -178041,7 +178043,7 @@
         <sense><gloss>to play with</gloss>, <foreign xml:lang="grc">τινί</foreign> <usg>Mosch.</usg></sense>
       </entry>
       <entry xml:id="n31089" xml:lang="en">
-        <form type="lemma"><orth xml:lang="grc"><choice xml:id="corr94"><sic><seg type="betacode">sunai/=gdhn</seg></sic><corr>συναΐγδην</corr></choice></orth></form>
+        <form type="lemma"><orth xml:lang="grc"><choice xml:id="corr97"><sic><seg type="betacode">sunai/=gdhn</seg></sic><corr>συναΐγδην</corr></choice></orth></form>
         <note type="forms">συν-ᾱΐγδην,</note>
         <etym><foreign xml:lang="grc">ἀΐσσω</foreign></etym>
         <sense>Adv. <gloss>pressing violently together</gloss>, <usg>Hes.</usg></sense>
@@ -181089,7 +181091,7 @@
       </entry>
       <entry xml:id="n31642" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">συνοικιστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr95"><sic><seg type="betacode">sunoikisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>συνοικιστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr98"><sic><seg type="betacode">sunoikisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>συνοικιστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>from <ref type="entry" target="#n31638" xml:lang="grc">συνοικίζω</ref></etym>
         <sense><gloss>a fellow-colonist</gloss>, <usg>Pind.</usg></sense>
       </entry>
@@ -181922,7 +181924,7 @@
       </entry>
       <entry xml:id="n31781" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">συρικτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr96"><sic><seg type="betacode">su_rikthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σῡρικτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr99"><sic><seg type="betacode">su_rikthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σῡρικτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>= <ref type="entry" target="#n31785" xml:lang="grc">συριστής</ref>, <usg>Anth.</usg></etym>
       </entry>
       <entry xml:id="n31782" xml:lang="en">
@@ -182785,7 +182787,7 @@
       </entry>
       <entry xml:id="n31932" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">σφιγκτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr97"><sic><seg type="betacode">sfigkthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σφιγκτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr100"><sic><seg type="betacode">sfigkthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σφιγκτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>from <ref type="entry" target="#n31931" xml:lang="grc">σφίγγω</ref></etym>
         <sense><gloss>a band, lace</gloss>, <usg>Anth.</usg></sense>
       </entry>
@@ -183535,7 +183537,7 @@
       </entry>
       <entry xml:id="n32048" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">σωφρονιστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr98"><sic><seg type="betacode">swfronisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σωφρονιστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr101"><sic><seg type="betacode">swfronisthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>σωφρονιστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>= <ref type="entry" target="#n32049" xml:lang="grc">σωφρονιστής</ref>, <usg>Plat.</usg></etym>
       </entry>
       <entry xml:id="n32049" xml:lang="en">
@@ -184471,7 +184473,7 @@
       </entry>
       <entry xml:id="n32202" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ταρφύς</orth></form>
-        <sense><gloss>thick, close</gloss>, <usg>Aesch.</usg>; pl. masc. and neut., like Lat. <foreign xml:lang="la">frequentes</foreign>, <foreign xml:lang="grc">ταρφέες ἰοί</foreign> <gloss>thick-flying</gloss> arrows, <usg>Il.</usg>; <foreign xml:lang="grc">ταρφέα δράγματα</foreign> <usg bn:title="Il.">Id.</usg>:— neut. pl. <foreign xml:lang="grc">ταρφέα</foreign> as adv. <gloss>ofttimes, often</gloss>, <usg>Hom.</usg>:— <foreign xml:lang="grc">ταρφειαί</foreign> in <usg>Il.</usg> must belong to a nom. <foreign xml:lang="grc">ταρφειός</foreign>, unless we write <foreign xml:lang="grc">ταρφεῖαι</foreign>, from <ref type="entry" target="#n32202" xml:lang="grc">ταρφύς</ref>.</sense>
+        <sense><gloss>thick, close</gloss>, <usg>Aesch.</usg>; pl. masc. and neut., like Lat. <foreign xml:lang="la">frequentes</foreign>, <foreign xml:lang="grc">ταρφέες ἰοί</foreign> <gloss>thick-flying</gloss> arrows, <usg>Il.</usg>; <foreign xml:lang="grc">ταρφέα δράγματα</foreign> <usg bn:title="Il.">Id.</usg>:— neut. pl. <foreign xml:lang="grc">ταρφέα</foreign> as adv. <gloss>ofttimes, often</gloss>, <usg>Hom.</usg>:— <foreign xml:lang="grc">ταρφειαί</foreign> in <usg>Il.</usg> must belong to a nom. <foreign xml:lang="grc">ταρφειός</foreign>, unless we write <foreign xml:lang="grc">ταρφεῖαι</foreign>, from <foreign xml:lang="grc">ταρφύς</foreign>.</sense>
       </entry>
       <entry xml:id="n32203" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ταρχύω</orth></form>
@@ -186626,7 +186628,7 @@
       </entry>
       <entry xml:id="n32562" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τευχηστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr99"><sic><seg type="betacode">teuxhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τευχηστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr102"><sic><seg type="betacode">teuxhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τευχηστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n32563" xml:lang="grc">τεῦχος</ref></etym>
         <sense><gloss>an armed man, warrior</gloss>, <usg>Aesch.</usg></sense>
       </entry>
@@ -187255,7 +187257,7 @@
       </entry>
       <entry xml:id="n32663" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τιθηνητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr100"><sic><seg type="betacode">ti^qhnhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τῐθηνητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr103"><sic><seg type="betacode">ti^qhnhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τῐθηνητήρ, ῆρος, ὁ,</corr></choice></note>
         <sense>= <ref type="entry" target="#n32664" xml:lang="grc">τιθηνός</ref>, <usg>Anth.</usg>:—fem. <foreign xml:lang="grc">-τειρα, = τιθήνη</foreign>, <usg bn:title="Anth.">Id.</usg></sense>
       </entry>
       <entry xml:id="n32664" xml:lang="en">
@@ -187474,7 +187476,7 @@
       </entry>
       <entry xml:id="n32695" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τιμωρητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr101"><sic><seg type="betacode">ti_mwrhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τῑμωρητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr104"><sic><seg type="betacode">ti_mwrhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τῑμωρητήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>from <ref type="entry" target="#n32692" xml:lang="grc">τιμωρέω</ref></etym>
         <sense><gloss>an avenger</gloss>, <usg>Hdt.</usg></sense>
       </entry>
@@ -188997,7 +188999,7 @@
       </entry>
       <entry xml:id="n32944" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τριακτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr102"><sic><seg type="betacode">triakthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τριακτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr105"><sic><seg type="betacode">triakthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τριακτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">τριάζω</foreign></etym>
         <sense><gloss>a victor</gloss>, <usg>Aesch.</usg></sense>
       </entry>
@@ -189600,7 +189602,7 @@
       </entry>
       <entry xml:id="n33048" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τριπτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr103"><sic><seg type="betacode">tripthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τριπτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr106"><sic><seg type="betacode">tripthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τριπτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n32958" xml:lang="grc">τρίβω</ref></etym>
         <etym>= <ref type="entry" target="#n33049" xml:lang="grc">τρίπτης</ref></etym>
         <sense><gloss>the vat into which the oil runs when pressed out</gloss>: metaph., <foreign xml:lang="grc">τρ. δικῶν</foreign> <gloss>a vat to receive the juice</gloss> of law-suits, <usg>Ar.</usg></sense>
@@ -190248,7 +190250,7 @@
       </entry>
       <entry xml:id="n33162" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τροπωτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr104"><sic><seg type="betacode">tropwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τροπωτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr107"><sic><seg type="betacode">tropwthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τροπωτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>from <ref type="entry" target="#n33161" xml:lang="grc">τροπόω</ref></etym>
         <etym>= <ref type="entry" target="#n33159" xml:lang="grc">τροπός</ref>, <usg>Ar.</usg>, <usg>Thuc.</usg></etym>
       </entry>
@@ -190458,7 +190460,7 @@
       </entry>
       <entry xml:id="n33195" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τρυγητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr105"><sic><seg type="betacode">tru^ghthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τρῠγητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr108"><sic><seg type="betacode">tru^ghthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τρῠγητήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>one who gathers grapes</gloss>, Lat. <foreign xml:lang="la">vindemiator</foreign>, <usg>Hes.</usg> [with <foreign xml:lang="grc">ῡ].</foreign></sense>
       </entry>
       <entry xml:id="n33196" xml:lang="en">
@@ -191159,7 +191161,7 @@
       </entry>
       <entry xml:id="n33310" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">τυρευτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr106"><sic><seg type="betacode">tu_reuthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τῡρευτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr109"><sic><seg type="betacode">tu_reuthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>τῡρευτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>one who makes cheese</gloss>, of Hermes as god of goatherds, <usg>Anth.</usg></sense>
         <etym>from <ref type="entry" target="#n33311" xml:lang="grc">τῡρεύω</ref></etym>
       </entry>
@@ -192244,7 +192246,7 @@
       </entry>
       <entry xml:id="n33486" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὑμνητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr107"><sic><seg type="betacode">u(mnhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὑμνητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr110"><sic><seg type="betacode">u(mnhthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὑμνητήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>= <ref type="entry" target="#n33487" xml:lang="grc">ὑμνητής</ref>, <usg>Anth.</usg></etym>
       </entry>
       <entry xml:id="n33487" xml:lang="en">
@@ -195174,7 +195176,7 @@
       </entry>
       <entry xml:id="n34012" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ὑποδρηστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr108"><sic><seg type="betacode">u(podrhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὑποδρηστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr111"><sic><seg type="betacode">u(podrhsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ὑποδρηστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">ὑποδράω</foreign></etym>
         <sense><gloss>an under-servant, attendant, assistant</gloss>, <usg>Od.</usg></sense>
       </entry>
@@ -199450,13 +199452,13 @@
       <entry xml:id="n34735" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">φιλανθρωπέω</orth></form>
         <note type="forms">φῐλανθρωπέω, fut. <foreign xml:lang="grc">-ήσω</foreign></note>
-        <etym>from <ref type="entry" target="#n34737" xml:lang="grc"><choice xml:id="corr109"><sic><seg type="betacode">fil/anqrwpos</seg></sic><corr>φιλ-άνθρωπος</corr></choice></ref></etym>
+        <etym>from <ref type="entry" target="#n34737" xml:lang="grc"><choice xml:id="corr112"><sic><seg type="betacode">fil/anqrwpos</seg></sic><corr>φιλ-άνθρωπος</corr></choice></ref></etym>
         <sense><gloss>to treat humanely</gloss>, <usg>Polyb.</usg></sense>
       </entry>
       <entry xml:id="n34736" xml:lang="en" bn:strong="G5363">
         <form type="lemma"><orth xml:lang="grc">φιλανθρωπία</orth></form>
         <note type="forms">φῐλανθρωπία, ἡ,</note>
-        <etym>from <ref type="entry" target="#n34737" xml:lang="grc"><choice xml:id="corr110"><sic><seg type="betacode">fil/anqrwpos</seg></sic><corr>φιλ-άνθρωπος</corr></choice></ref></etym>
+        <etym>from <ref type="entry" target="#n34737" xml:lang="grc"><choice xml:id="corr113"><sic><seg type="betacode">fil/anqrwpos</seg></sic><corr>φιλ-άνθρωπος</corr></choice></ref></etym>
         <sense n="I" bn:level="2"><gloss>humanity, benevolence, kindliness</gloss>, <usg>Plat.</usg>, <usg>Xen.</usg>, etc.:—in pl. <gloss>acts of kindness, kindnesses, courtesies</gloss>, <usg>Dem.</usg></sense>
         <sense n="2" bn:level="3">of God, <gloss>love to man</gloss>, <usg>NTest.</usg></sense>
         <sense n="II" bn:level="2">of things, <foreign xml:lang="grc">ἡ τοῦ ὀνόματος φιλ.</foreign> its <gloss>humanity, kindliness, mildness</gloss>, <usg>Dem.</usg>; <foreign xml:lang="grc">ἡ φ. τῆς τέχνης</foreign>, speaking of agriculture, <usg>Xen.</usg></sense>
@@ -202863,7 +202865,7 @@
       </entry>
       <entry xml:id="n35313" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">φυλακτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr111"><sic><seg type="betacode">fu^lakthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>φῠλακτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr114"><sic><seg type="betacode">fu^lakthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>φῠλακτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym>poetic for <foreign xml:lang="grc">φύλαξ</foreign>, <usg>Il.</usg></etym>
       </entry>
       <entry xml:id="n35314" xml:lang="en">
@@ -203143,7 +203145,7 @@
       </entry>
       <entry xml:id="n35356" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">φυσητήρ</orth></form>
-        <note type="forms"><choice xml:id="corr112"><sic><seg type="betacode">fu_shthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>φῡσητήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr115"><sic><seg type="betacode">fu_shthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>φῡσητήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n35354" xml:lang="grc">φυσάω</ref></etym>
         <sense><gloss>an instrument for blowing, blowpipe</gloss> or <gloss>tube</gloss>, <usg>Hdt.</usg></sense>
       </entry>
@@ -203539,7 +203541,7 @@
       </entry>
       <entry xml:id="n35417" xml:lang="en" bn:strong="G5458">
         <form type="lemma"><orth xml:lang="grc">φωστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr113"><sic><seg type="betacode">fwsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>φωστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr116"><sic><seg type="betacode">fwsthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>φωστήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><foreign xml:lang="grc">φῶς</foreign></etym>
         <sense><gloss>that which gives light, an illuminator</gloss>, <usg>Anth.</usg>:— <foreign xml:lang="grc">οἱ φωστῆρες</foreign> <gloss>the lights of heaven, stars</gloss>, <usg bn:title="Anth.">Id.</usg>, <usg>NTest.</usg></sense>
       </entry>
@@ -205304,12 +205306,12 @@
       </entry>
       <entry xml:id="n35702" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">χερμαστήρ</orth></form>
-        <note type="forms"><choice xml:id="corr114"><sic><seg type="betacode">xermasthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>χερμαστήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr117"><sic><seg type="betacode">xermasthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>χερμαστήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>a slinger</gloss>, <foreign xml:lang="grc">χ. ῥινός</foreign> the leather <gloss>of a sling</gloss>, out of which the stone was thrown, <usg>Anth.</usg></sense>
       </entry>
       <entry xml:id="n35703" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">χερνής</orth></form>
-        <note type="forms"><choice xml:id="corr115"><sic><seg type="betacode">xernhfailing on lembuf [] | /s, h=tos,</seg></sic><corr>χερνής, ῆτος,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr118"><sic><seg type="betacode">xernhfailing on lembuf [] | /s, h=tos,</seg></sic><corr>χερνής, ῆτος,</corr></choice></note>
         <sense n="1" bn:level="3">doric <foreign xml:lang="grc">χερνάς, ᾶτος</foreign>, <gloss>one who lives by his hands, a day-labourer, a poor man</gloss>, <usg>Anth.</usg></sense>
         <sense n="2" bn:level="3">as adj. <gloss>poor, needy</gloss>, <foreign xml:lang="grc">ἐν δόμοις χερνῆσι</foreign> <usg>Eur.</usg></sense>
         <etym>deriv. uncertain</etym>
@@ -205526,7 +205528,7 @@
         <form type="lemma"><orth xml:lang="grc">χήρα</orth></form>
         <note type="forms">χήρα, <foreign xml:lang="en">ionic</foreign> <foreign xml:lang="grc">χήρη, ἡ</foreign>,</note>
         <sense n="I" bn:level="2"><gloss>bereft of a husband, a widow</gloss>, Lat. <foreign xml:lang="la">vidua</foreign>, c. gen., <foreign xml:lang="grc">χήρη σευ ἔσομαι</foreign>, says Andromache to Hector, <usg>Il.</usg>; <foreign xml:lang="grc">χῆραι γυναῖκες</foreign> <gloss>widow</gloss> women, <usg bn:title="Il.">Id.</usg>; so <usg>Eur.</usg>, etc.</sense>
-        <sense n="2" bn:level="3">from <ref type="entry" target="#n35738" xml:lang="grc">χήρα</ref> was formed the masc. <foreign xml:lang="grc">χῆρος</foreign> (as <gloss>widower</gloss> from <gloss>widow)</gloss>, <usg>Anth.</usg></sense>
+        <sense n="2" bn:level="3">from <foreign xml:lang="grc">χήρα</foreign> was formed the masc. <foreign xml:lang="grc">χῆρος</foreign> (as <gloss>widower</gloss> from <gloss>widow)</gloss>, <usg>Anth.</usg></sense>
         <sense n="II" bn:level="2"><foreign xml:lang="grc">χῆρος, α, ον</foreign>, as adj., in metaph. sense, <gloss>widowed, bereaved</gloss>, <foreign xml:lang="grc">χῆρα μέλαθρα</foreign> <usg>Eur.</usg>; c. gen., <foreign xml:lang="grc">φάρσος στελεοῦ χῆρον</foreign> a piece <gloss>torn from</gloss> the stem, <usg>Anth.</usg></sense>
         <etym>deriv. uncertain</etym>
       </entry>
@@ -205764,7 +205766,7 @@
       </entry>
       <entry xml:id="n35779" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">χιμαροσφακτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr116"><sic><seg type="betacode">xi^ma^ro-sfakthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>χῐμᾰρο-σφακτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr119"><sic><seg type="betacode">xi^ma^ro-sfakthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>χῐμᾰρο-σφακτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n31887" xml:lang="grc">σφάζω</ref></etym>
         <sense><gloss>a goat-slayer</gloss>, <usg>Anth.</usg></sense>
       </entry>
@@ -208952,7 +208954,7 @@
       </entry>
       <entry xml:id="n36298" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ψυκτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr117"><sic><seg type="betacode">yukthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ψυκτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr120"><sic><seg type="betacode">yukthfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ψυκτήρ, ῆρος, ὁ,</corr></choice></note>
         <etym><ref type="entry" target="#n36332" xml:lang="grc">ψύχω</ref></etym>
         <sense><gloss>a wine-cooler</gloss>, a vessel holding from 2 to 6 <foreign xml:lang="grc">μετρηταί</foreign>, <usg>Plat.</usg></sense>
       </entry>
@@ -209044,7 +209046,7 @@
       </entry>
       <entry xml:id="n36313" xml:lang="en">
         <form type="lemma"><orth xml:lang="grc">ψυχοδοτήρ</orth></form>
-        <note type="forms"><choice xml:id="corr118"><sic><seg type="betacode">yu_xo-dothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ψῡχο-δοτήρ, ῆρος, ὁ,</corr></choice></note>
+        <note type="forms"><choice xml:id="corr121"><sic><seg type="betacode">yu_xo-dothfailing on lembuf [] | /r, h=ros, o(,</seg></sic><corr>ψῡχο-δοτήρ, ῆρος, ὁ,</corr></choice></note>
         <sense><gloss>giver of the soul</gloss> or <gloss>life</gloss>, <usg>Anth.</usg></sense>
       </entry>
       <entry xml:id="n36314" xml:lang="en">

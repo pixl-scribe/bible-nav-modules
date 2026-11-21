@@ -216,6 +216,21 @@ describe('TEI lexicon reader', () => {
     );
   });
 
+  test('inflected forms are lookups, not text', () => {
+    const ls = `      <entry xml:id="n1.1" xml:lang="en">
+        <form type="lemma"><orth xml:lang="grc">am</orth></form>
+        <form type="inflected"><orth xml:lang="grc">ab</orth></form>
+        <sense>x</sense>
+      </entry>`;
+    const lexicon = readTeiLexicon(tei(ls));
+    assert.equal(lexicon.entries[0].headword, 'am');
+    assert.deepEqual(
+      lexicon.lookups.map((l) => `${l.kind} ${l.value} ${l.entryKey}`),
+      ['lemma am n1.1', 'lemma ab n1.1']
+    );
+    assert.equal(JSON.stringify(lexicon.entries[0].body).includes('ab'), false);
+  });
+
   test('a link by headword must lead to an entry with that headword', () => {
     const ls = `      <entry xml:id="n1" xml:lang="en"><form type="lemma"><orth xml:lang="grc">a</orth></form>
         <etym><ref type="lemma" xml:lang="grc" bn:lemma="zz">zz</ref></etym></entry>`;

@@ -212,14 +212,24 @@ def with_additions(doc, additions):
     return out
 
 
-def read_source(corrections, replacements, removals, additions):
+def read_source(corrections, replacements, removals, additions, folds):
     src = Source(corrections)
     raw_text = SOURCE.read_text(encoding='utf-8')
     doc = minidom.parseString(raw_text)
     entries = {}
     order = []
+    inflected = {}
     for e in with_additions(doc, additions):
         entry = e.getAttribute('id')
+        if entry in folds:
+            # A made-up entry folded into a printed one: its content must
+            # be what the correction names, and its headword becomes a form.
+            found = re.search(r'<entry [^>]*id="' + entry + r'"[^>]*>([\s\S]*?)</entry>', raw_text)
+            if flat(found.group(1)) != flat(folds[entry]['source']):
+                raise SystemExit(f'{entry}: the fold was written for other content')
+            head = flat(''.join(t.data for t in walk_text(e.getElementsByTagName('orth')[0])))
+            inflected.setdefault(folds[entry]['form_of'], []).append(src.greek(head, entry))
+            continue
         if entry in removals:
             # A duplicate: same content after the headword as the entry it
             # duplicates, by this checker's own comparison.
@@ -266,11 +276,14 @@ def read_source(corrections, replacements, removals, additions):
         if head_raw.endswith('*') and len(head_raw) > 1 and head_raw[-2] != '*':
             head_raw, star = head_raw[:-1], '*'
         entries[entry] = {
+            'inflected': [],
             'headword': star + src.greek(head_raw, entry),
             'homograph': (re.search(r'(\d+)$', e.getAttribute('key')) or [None, ''])[1],
             'forms': src.forms(forms_parts, entry) if forms_parts else '',
             'parts': parts,
         }
+    for target, forms in inflected.items():
+        entries[target]['inflected'] = forms
     return order, entries, src
 
 
@@ -286,6 +299,8 @@ def read_tei():
         forms = [n for n in elements(e, 'note') if n.getAttribute('type') == 'forms']
         parts = [(c.tagName, flat(tei_plain(c))) for c in elements(e) if c.tagName in ('etym', 'sense')]
         entries[entry] = {
+            'inflected': [flat(tei_plain(elements(f, 'orth')[0])) for f in elements(e, 'form')
+                          if f.getAttribute('type') == 'inflected'],
             'headword': flat(tei_plain(elements(form, 'orth')[0])),
             'homograph': e.getAttribute('n'),
             'forms': flat(tei_plain(forms[0])) if forms else '',
@@ -305,10 +320,12 @@ def read_tei():
 
 
 def main():
-    corrections, replacements, removals, additions = {}, {}, {}, {}
+    corrections, replacements, removals, additions, folds = {}, {}, {}, {}, {}
     for c in yaml.safe_load((ASSETS / 'corrections.yaml').read_text(encoding='utf-8')) or []:
         if 'add' in c:
             additions[c['entry']] = c
+        elif 'form_of' in c:
+            folds[c['entry']] = c
         elif 'duplicate_of' in c:
             removals[c['entry']] = c
         elif 'replace' in c:
@@ -317,7 +334,7 @@ def main():
             corrections[(c['entry'], c['source'])] = ('text', c['text'])
         else:
             corrections[(c['entry'], c['source'])] = c['corr']
-    src_order, src, source = read_source(corrections, replacements, removals, additions)
+    src_order, src, source = read_source(corrections, replacements, removals, additions, folds)
     tei_order, tei, links = read_tei()
     problems = []
     if src_order != tei_order:
@@ -326,13 +343,17 @@ def main():
         s, t = src[entry], tei.get(entry)
         if t is None:
             continue
-        for field in ('headword', 'homograph', 'forms', 'parts'):
+        for field in ('headword', 'homograph', 'inflected', 'forms', 'parts'):
             if s[field] != t[field]:
                 problems.append(f'{entry} {field}: source {s[field]!r} != TEI {t[field]!r}')
     # Every link: one entry with that headword, or several by headword.
     heads = {}
+    headwords = {}  # printed headwords only: Strong's numbers match these
     for entry, t in tei.items():
         heads.setdefault(lookup_form(t['headword']), []).append(entry)
+        headwords.setdefault(lookup_form(t['headword']), []).append(entry)
+        for form in t['inflected']:
+            heads.setdefault(lookup_form(form), []).append(entry)
     for entry, kind, target, lemma, shown in links:
         if kind == 'entry':
             word = lookup_form(re.sub(r'[.,;:]+$', '', shown))
@@ -349,15 +370,15 @@ def main():
     greek = minidom.parse(str(GREEK_TEI))
     numbers = {}
     no_diaeresis = {}
-    for entry_word in heads:
+    for entry_word in headwords:
         no_diaeresis[unicodedata.normalize('NFC', unicodedata.normalize('NFD', entry_word).replace(DIAERESIS, ''))] = entry_word
     for e in greek.getElementsByTagName('entry'):
         orth = e.getElementsByTagName('orth')[0]
         word = lookup_form(tei_plain(orth))
-        if word not in heads:
+        if word not in headwords:
             word = no_diaeresis.get(unicodedata.normalize('NFC', unicodedata.normalize('NFD', word).replace(DIAERESIS, '')))
         if word:
-            for entry in heads[word]:
+            for entry in headwords[word]:
                 numbers.setdefault(entry, []).append(e.getAttribute('xml:id'))
     for entry, t in tei.items():
         if sorted(t['strong']) != sorted(numbers.get(entry, [])):

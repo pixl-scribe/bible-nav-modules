@@ -124,6 +124,9 @@ Tables:
     Unicode NFC, without breve or macron (editors' marks of vowel length),
     homograph digits, or the asterisk LS prints before a form not found in
     use (LS's root \*ERA, "earth", is shown with it and looked up without).
+    An entry's inflected forms (`<form type="inflected">` in its TEI source,
+    such as the aorist named in a headword's entry) are lemma lookups too,
+    so a word met in a text in that form finds the entry.
 
 There is no full-text search table (FTS5): an entry is only ever found by
 an exact value, through `lookups`' index on `(kind, value)` or the unique

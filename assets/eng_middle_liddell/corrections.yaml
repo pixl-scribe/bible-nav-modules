@@ -473,3 +473,22 @@
   after: n8466
   add: <form><orth lang="greek">di/moros</orth></form> <note type="alt" lang="greek">di/-moros, on,</note> <sense>= foreg., <usg>Aesch.</usg></sense>
   evidence: '1889 printing (Internet Archive intermediategree00lidd), page 203 (viewer page 207 of 919): "di-moros, on, = foreg., Aesch.", after di-moiros; checked by the maintainer on 2026-11-21. Perseus lost the entry, except in di-moiros''s machine analysis.'
+
+# anamolein: a printed entry Perseus dropped.
+
+- entry: n2355.1
+  after: n2355
+  add: <form><orth lang="greek">a)namolei=n</orth></form> <note type="alt" lang="greek">a)na-molei=n,</note> <sense>inf. of <foreign lang="greek">a)n-e/molon</foreign>, aor. 2 of <ref lang="greek">a)nablw/skw</ref>, <trans><tr>to go through</tr></trans>, c. acc., <usg>Eur.</usg></sense>
+  evidence: '1889 printing (Internet Archive intermediategree00lidd), page 58 (viewer page 63 of 919): "ana-molein, inf. of an-emolon, aor. 2 of anablosko, to go through, c. acc., Eur.", after anamnestos; checked by the maintainer on 2026-11-21. Perseus dropped this entry and made two of its own instead, anemolon (n2709) and anablosko (n2119), with its meaning.'
+
+# anablosko and anemolon: entries Perseus made (with ana-molein's meaning)
+# for words named in ana-molein; folded into it as inflected forms.
+
+- entry: n2119
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">a)nablw/skw</orth></form> <sense level="0" n="0" id="n2119.0" opt="n"><trans opt="n"><tr opt="n">to go through</tr></trans>, c. acc., <usg opt="n">Eur.</usg></sense>
+  form_of: n2355.1
+  evidence: '1889 printing (Internet Archive intermediategree00lidd): the print has no entry anablosko (page 57, viewer 57, runs ana-blyzo, ana-boama); the word is named only in ana-molein (page 58, viewer 63): "inf. of an-emolon, aor. 2 of anablosko, to go through, c. acc., Eur."; checked by the maintainer on 2026-11-21.'
+- entry: n2709
+  source: <form opt="n"><orth extent="full" lang="greek" opt="n">a)ne/molon</orth></form> <sense level="0" n="0" id="n2709.0" opt="n"><trans opt="n"><tr opt="n">to go through</tr></trans>, c. acc., <usg opt="n">Eur.</usg></sense>
+  form_of: n2355.1
+  evidence: '1889 printing (Internet Archive intermediategree00lidd): the print has no entry an-emolon (page 66, viewer 71, runs anemoeis, anemos); the word is named only in ana-molein (page 58, viewer 63): "inf. of an-emolon, aor. 2 of anablosko, to go through, c. acc., Eur."; checked by the maintainer on 2026-11-21.'
