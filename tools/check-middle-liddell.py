@@ -194,13 +194,31 @@ def tei_plain(node):
     return ''.join(out)
 
 
-def read_source(corrections, replacements, removals):
+def with_additions(doc, additions):
+    """The source's entries in order, each added entry placed straight
+    after the one it names."""
+    out = []
+    for e in doc.getElementsByTagName('entry'):
+        out.append(e)
+        for key in sorted(k for k, c in additions.items() if c['after'] == e.getAttribute('id')):
+            node = minidom.parseString(f'<entry id="{key}">' + additions[key]['add'] + '</entry>').documentElement
+            orth = node.getElementsByTagName('orth')[0]
+            node.setAttribute('key', ''.join(t.data for t in walk_text(orth)).strip())
+            out.append(node)
+    found = {e.getAttribute('id') for e in out}
+    for key, c in additions.items():
+        if key not in found:
+            raise SystemExit(f'added entry {key}: no entry {c["after"]} to follow')
+    return out
+
+
+def read_source(corrections, replacements, removals, additions):
     src = Source(corrections)
     raw_text = SOURCE.read_text(encoding='utf-8')
     doc = minidom.parseString(raw_text)
     entries = {}
     order = []
-    for e in doc.getElementsByTagName('entry'):
+    for e in with_additions(doc, additions):
         entry = e.getAttribute('id')
         if entry in removals:
             # A duplicate: same content after the headword as the entry it
@@ -287,9 +305,11 @@ def read_tei():
 
 
 def main():
-    corrections, replacements, removals = {}, {}, {}
+    corrections, replacements, removals, additions = {}, {}, {}, {}
     for c in yaml.safe_load((ASSETS / 'corrections.yaml').read_text(encoding='utf-8')) or []:
-        if 'duplicate_of' in c:
+        if 'add' in c:
+            additions[c['entry']] = c
+        elif 'duplicate_of' in c:
             removals[c['entry']] = c
         elif 'replace' in c:
             replacements[c['entry']] = c
@@ -297,7 +317,7 @@ def main():
             corrections[(c['entry'], c['source'])] = ('text', c['text'])
         else:
             corrections[(c['entry'], c['source'])] = c['corr']
-    src_order, src, source = read_source(corrections, replacements, removals)
+    src_order, src, source = read_source(corrections, replacements, removals, additions)
     tei_order, tei, links = read_tei()
     problems = []
     if src_order != tei_order:

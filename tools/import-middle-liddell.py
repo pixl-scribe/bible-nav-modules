@@ -448,6 +448,8 @@ def header(source_sha, conv, entries_count):
         f'      <change target="#{ident}">{entry}: '
         + ('a word split by the conversion tool, joined (rule; checked on five cases against the 1889 printing).'
            if fix.get('evidence') == 'join rule'
+           else f'added from the printed page, where the source had lost the entry; in the source\'s markup: "{esc(flat(fix["add"]))}". Evidence: {esc(flat(fix["evidence"]))}'
+           if 'add' in fix
            else f'removed, a duplicate of {fix["duplicate_of"]} (the same text after the headword), printed once. The source had: "{esc(flat(fix["source"]))}". Evidence: {esc(flat(fix["evidence"]))}'
            if 'duplicate_of' in fix
            else f'rewritten from the printed page, where the source had lost text. The source had: "{esc(flat(fix["source"]))}"; the rewrite, in the source\'s markup: "{esc(flat(fix["replace"]))}". Evidence: {esc(flat(fix["evidence"]))}'
@@ -482,7 +484,7 @@ def header(source_sha, conv, entries_count):
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
-      <p>Each of the {entries_count} entries keeps its Perseus id as its xml:id; n is the homograph number where Perseus gives one, and bn:strong the Strong's Greek numbers whose headword is the same word. The note of type forms is the headword line (endings, article, principal parts); etym is the etymology (Perseus writes Liddell and Scott's "Hence" at the end of an entry as "from ..." on the next), and each sense a numbered sense, with its level in bn:level. gloss is a translation, usg an author or usage label (bn:title gives the author an "Id." refers to), and foreign a Greek, Latin or English word. A ref of type entry links to one entry; a ref of type lemma links to every entry with the headword in bn:lemma. Greek is converted from Perseus's Beta Code to Unicode (NFC).</p>
+      <p>Each of the {entries_count} entries keeps its Perseus id as its xml:id (an entry the print has and Perseus lost is added with the id of the entry it follows plus ".1"); n is the homograph number where Perseus gives one, and bn:strong the Strong's Greek numbers whose headword is the same word. The note of type forms is the headword line (endings, article, principal parts); etym is the etymology (Perseus writes Liddell and Scott's "Hence" at the end of an entry as "from ..." on the next), and each sense a numbered sense, with its level in bn:level. gloss is a translation, usg an author or usage label (bn:title gives the author an "Id." refers to), and foreign a Greek, Latin or English word. A ref of type entry links to one entry; a ref of type lemma links to every entry with the headword in bn:lemma. Greek is converted from Perseus's Beta Code to Unicode (NFC).</p>
       <p>A headword beginning with * is one Liddell and Scott print with an asterisk, a form not found in use, such as their roots ({conv.counts.get("headwords marked * (a form not found in use)", 0)} entries; Perseus writes the asterisk after the word). It is looked up without the asterisk.</p>
       <p>English words Perseus left in the bare text of its Greek headword-line notes (such as "fut." and "or") are kept as English.</p>
       <p>Left out: Perseus's machine-made stem analysis ({conv.counts["machine stem analysis (gramGrp) left out"]} groups), the notes its linking tool left ("#skipped" and a word, {conv.counts.get('linking-tool notes ("#skipped") left out', 0)}), the alphabet headings, and {len(conv.dropped_length)} breves or macrons that no vowel can carry where they stand.</p>
@@ -517,7 +519,7 @@ def load_corrections():
     evidence; source is the entry's whole content in the source file, so
     the replacement applies only to the entry it was written for)."""
     items = yaml.safe_load(CORRECTIONS.read_text(encoding='utf-8')) or []
-    out, replacements, removals = {}, {}, {}
+    out, replacements, removals, additions = {}, {}, {}, {}
     sources = None
     for index, c in enumerate(items, start=1):
         if set(c) in ({'entry', 'source', 'corr', 'evidence'}, {'entry', 'source', 'text', 'evidence'}):
@@ -542,9 +544,31 @@ def load_corrections():
             if after(sources[c['entry']]) != after(sources.get(c['duplicate_of'], '')):
                 raise Stop(f'correction {index}: {c["entry"]} is not a duplicate of {c["duplicate_of"]}')
             removals[c['entry']] = c
+        elif set(c) == {'entry', 'after', 'add', 'evidence'}:
+            # An entry the print has and Perseus lost: its whole content,
+            # headword first, in Perseus's markup, placed after an entry,
+            # with a key made from that entry's id ("n8417.1").
+            if not re.fullmatch(re.escape(c['after']) + r'\.\d+', c['entry']):
+                raise Stop(f'correction {index}: an added entry\'s key is the entry it follows plus ".1", ".2" ...')
+            if c['entry'] in additions:
+                raise Stop(f'correction {index}: entry {c["entry"]} added twice')
+            additions[c['entry']] = c
         else:
-            raise Stop(f'correction {index} must have entry, source and evidence, and one of corr, text, replace or duplicate_of')
-    return out, replacements, removals
+            raise Stop(f'correction {index} must have entry and evidence, and source with corr, text, replace or duplicate_of, or after with add')
+    return out, replacements, removals, additions
+
+
+def added(c):
+    """An added entry, as a source element."""
+    try:
+        e = ET.fromstring(f'<entry id="{c["entry"]}">{c["add"]}</entry>')
+    except ET.ParseError as error:
+        raise Stop(f'the added entry {c["entry"]} is not well-formed: {error}') from None
+    orth = e.find('form/orth')
+    if orth is None:
+        raise Stop(f'the added entry {c["entry"]} has no <form><orth>')
+    e.set('key', (orth.text or '').strip())
+    return e
 
 
 def replaced(e, fix):
@@ -572,7 +596,19 @@ def main():
     source_sha = check_source()
     root = ET.parse(SOURCE).getroot()
     entries = list(root.iter('entry'))
-    corrections, replacements, removals = load_corrections()
+    corrections, replacements, removals, additions = load_corrections()
+    ids = {e.get('id') for e in entries}
+    for c in additions.values():
+        if c['entry'] in ids:
+            raise Stop(f'entry {c["entry"]} already exists; it can\'t be added')
+        if c['after'] not in ids:
+            raise Stop(f'entry {c["after"]}, which {c["entry"]} should follow, doesn\'t exist')
+    placed = []
+    for e in entries:
+        placed.append(e)
+        placed.extend(added(c) for c in sorted(additions.values(), key=lambda c: c['entry'])
+                      if c['after'] == e.get('id'))
+    entries = placed
     entries = [e for e in entries if e.get('id') not in removals]
     entries = [replaced(e, replacements[e.get('id')]) if e.get('id') in replacements else e for e in entries]
     conv = Converter(corrections, draft=draft)
@@ -580,6 +616,8 @@ def main():
         conv.applied.append((entry_id, entry_id, 'replace', fix))
     for entry_id, fix in removals.items():
         conv.applied.append((fix['duplicate_of'], entry_id, 'remove', fix))
+    for entry_id, fix in additions.items():
+        conv.applied.append((entry_id, entry_id, 'add', fix))
     # Every headword, for cross-references and Strong's numbers.
     conv.by_head = {}
     conv.head_bare = {}
