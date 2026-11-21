@@ -1,0 +1,18 @@
+name: An Intermediate Greek-English Lexicon (Liddell and Scott)
+abbreviation: LS
+description: |
+  Liddell and Scott's Intermediate Greek-English Lexicon (Oxford, 1889), the
+  "Middle Liddell": Greek words of the classical authors and the New
+  Testament, with their meanings, forms, and the authors who use them, in
+  the Perseus Digital Library's text as corrected by Benjamin Linskey, with
+  further corrections checked against the 1889 printing.
+moduleType: lexicon
+year: 1889
+fetchId: eng_middle_liddell
+language: English
+languageCode: eng
+license: "Henry George Liddell and Robert Scott, An Intermediate Greek-English Lexicon, founded upon the seventh edition of Liddell and Scott's Greek-English Lexicon (Oxford: Clarendon Press, 1889). Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project; original version available for viewing and download at http://www.perseus.tufts.edu/hopper/. Corrected by Benjamin Linskey (https://github.com/blinskey/middle-liddell). Licensed under the Creative Commons Attribution-ShareAlike 3.0 United States License (http://creativecommons.org/licenses/by-sa/3.0/us/), with the additional restriction that you offer Perseus any modifications you make. Converted to Bible Nav's module format, with corrections listed in its PROVENANCE.md."
+version: 1.0.0
+# The exact edition, and where its source came from, for the signed manifest.
+edition: "Liddell and Scott, An Intermediate Greek-English Lexicon (Oxford, 1889), Perseus Digital Library text 1999.04.0058 as corrected by Benjamin Linskey, with Bible Nav's corrections checked against the 1889 printing"
+source: "github.com/blinskey/middle-liddell, Perseus_text_1999.04.0058.xml at commit 5db8d88a20066e182ca3fc6ee758c9f61ac60603 (SHA-256 1b0e2ed672ac23399fbdb031b06119e7736ccefc78c229f6c9302b7c6348c811), converted to TEI by tools/import-middle-liddell.py with assets/eng_middle_liddell/corrections.yaml; see assets/eng_middle_liddell/PROVENANCE.md"

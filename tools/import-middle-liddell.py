@@ -144,6 +144,7 @@ class Converter:
         self.corrections = corrections
         self.used = set()
         self.applied = []
+        self.settled = set()
 
     # -- Greek ----------------------------------------------------------------
 
@@ -378,7 +379,7 @@ class Converter:
                 notes.append(c)
             elif c.tag == 'gramGrp':
                 self.counts['machine stem analysis (gramGrp) left out'] += 1
-                if c.find('.//bibl') is not None:
+                if c.find('.//bibl') is not None and entry_id not in self.settled:
                     self.flags.append(f'{entry_id}: an author name inside the machine analysis left out: '
                                       + ', '.join(''.join(b.itertext()) for b in c.iter('bibl')))
             elif c.tag in ('etym', 'sense'):
@@ -404,7 +405,7 @@ class Converter:
                 # numbered "Perseus"); a numbered one may have lost its
                 # text, so it is listed for a look at the print.
                 self.counts['empty senses left out'] = self.counts.get('empty senses left out', 0) + 1
-                if c.get('n') not in (None, '0'):
+                if c.get('n') not in (None, '0', 'Perseus') and entry_id not in self.settled:
                     self.flags.append(f'{entry_id}: empty sense numbered {c.get("n")} left out')
                 continue
             if c.tag == 'etym':
@@ -636,6 +637,8 @@ def main():
     entries = [replaced(e, replacements[e.get('id')]) if e.get('id') in replacements else e for e in entries]
     conv = Converter(corrections, draft=draft)
     conv.inflected = inflected
+    # Entries a correction has dealt with: nothing left to flag in them.
+    conv.settled = set(replacements) | {c['after'] for c in additions.values()}
     for entry_id, fix in replacements.items():
         conv.applied.append((entry_id, entry_id, 'replace', fix))
     for entry_id, fix in removals.items():
