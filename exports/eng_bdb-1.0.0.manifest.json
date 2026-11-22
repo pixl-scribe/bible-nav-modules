@@ -1,0 +1,30 @@
+{
+  "type": "bible-nav module manifest",
+  "manifestVersion": 1,
+  "module": {
+    "id": "eng_bdb",
+    "version": "1.0.0",
+    "moduleType": "lexicon",
+    "formatVersion": 1,
+    "name": "A Hebrew and English Lexicon of the Old Testament (Brown, Driver, Briggs)",
+    "abbreviation": "BDB",
+    "languageCode": "eng"
+  },
+  "file": {
+    "name": "eng_bdb-1.0.0.db",
+    "size": 30695424,
+    "sha256": "93de6897ef6c11fb09fa2d8fa5f87a1946d253c158c7b15b7ea5ab59b439a081"
+  },
+  "entries": {
+    "treeVersion": 1,
+    "edition": "Brown, Driver and Briggs, A Hebrew and English Lexicon of the Old Testament (Oxford, 1906), in Sefaria's transcription, with Bible Nav's corrections checked against the 1906 printing and the Westminster Leningrad Codex; Strong's numbers from the Open Scriptures lexical index",
+    "source": "Sefaria's public database dump (dump_small.tar.gz, Last-Modified 2026-11-21, SHA-256 a0213cabe5351121c157c437d5cf2cd7a4425c67367d4b29c8ed41b3cb887583), BDB entries extracted as assets/eng_bdb/source/bdb.json (SHA-256 ccd51c2e93845d413ecc7ff34ebf152276f9853f00afa8675c9a2bbf6a45998b); Open Scriptures HebrewLexicon LexicalIndex.xml at commit 21c9add13bc727d3a951361778e97e3ff7afd1ce; converted to TEI by tools/import-sefaria-bdb.py with assets/eng_bdb/corrections.yaml and corrections-letters.yaml; see assets/eng_bdb/PROVENANCE.md",
+    "lookups": [
+      "strong:H"
+    ],
+    "count": 11878,
+    "keysRoot": "fe69beb6428b093c62c694dff2adcdc052546553b9bc5cfcd7ed7da9ce5df70b",
+    "contentRoot": "07c51c20121bd3dbf09f2cdbe887ecbf6168771c3fd70564d4bd62be9f957a3e"
+  },
+  "createdAt": "2026-11-22"
+}
