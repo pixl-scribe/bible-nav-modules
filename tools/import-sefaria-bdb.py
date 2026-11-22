@@ -30,7 +30,8 @@ part then the Aramaic):
   (assets/eng_bdb/source/oshb/LexicalIndex.xml), which gives them entry by
   entry; Sefaria's own `strong_numbers`, given to whole groups of related
   entries, are used only for numbers the index doesn't place.
-- corrections.yaml and corrections-letters.yaml are applied and marked
+- corrections.yaml, corrections-letters.yaml and corrections-meant.yaml
+  are applied and marked
   with choice/sic/corr, bn:meant, or a note (see those files).
 
 Left out: GK and TWOT numbers, Sefaria's `quotes`, `prev_hw`/`next_hw`,
@@ -138,6 +139,7 @@ class Corrections:
     def __init__(self):
         main = yaml.safe_load((HERE / 'corrections.yaml').read_text(encoding='utf-8'))
         letters = yaml.safe_load((HERE / 'corrections-letters.yaml').read_text(encoding='utf-8'))
+        nearby = yaml.safe_load((HERE / 'corrections-meant.yaml').read_text(encoding='utf-8'))
         self.items = []  # (sic, corr, label) for each choice, by number
         self.used = set()
         self.by_entry = {}
@@ -148,7 +150,10 @@ class Corrections:
             c['kind'] = 'letter'
             c['_id'] = f'l{i}'
             self.by_entry.setdefault(c['entry'], []).append(c)
-        self.all = main + letters
+        for i, c in enumerate(nearby):
+            c['_id'] = f'n{i}'
+            self.by_entry.setdefault(c['entry'], []).append(c)
+        self.all = main + letters + nearby
         self.changes = []  # (entry, text) for the revisionDesc
         self.notes = {}    # entry -> [(link, note)]
         self.meant = {}    # (entry, link, text) -> sid
@@ -175,11 +180,17 @@ class Corrections:
             elif kind == 'ref':
                 self._ref(rid, c, fields)
             elif kind == 'meant':
+                if 'quote' in c:
+                    self._meant_after_quote(rid, c, fields)
+                    continue
                 self._find_link(rid, c['link'], c['text'], fields)
+                if (rid, c['link'], c['text']) in self.meant:
+                    raise Fail(f"{rid}: two corrections for the reference \"{c['text']}\"")
                 self.meant[(rid, c['link'], c['text'])] = c['meant']
-                self.changes.append((rid, f"{rid}: the reference \"{c['text']}\" is BDB's own misprint, kept as "
-                                          f"printed; it is linked to {c['meant']} (bn:meant). Evidence: 1906 printing, "
-                                          f"{c['evidence']}; checked by the maintainer on 2026-11-21."))
+                if True:
+                    self.changes.append((rid, f"{rid}: the reference \"{c['text']}\" is BDB's own misprint, kept as "
+                                              f"printed; it is linked to {c['meant']} (bn:meant). Evidence: 1906 "
+                                              f"printing, {c['evidence']}; checked by the maintainer on 2026-11-21."))
                 self.used.add(c['_id'])
             elif kind == 'homograph':
                 if entry.get('ordinal') != c['sic']:
@@ -209,6 +220,23 @@ class Corrections:
                 self.used.add(c['_id'])
             else:
                 raise Fail(f'{rid}: unknown correction kind {kind}')
+
+    def _meant_after_quote(self, rid, c, fields):
+        """A verse meant for the one link that follows a quotation: the
+        link is marked in the source's HTML (data-meant), as the same
+        reference may stand elsewhere in the entry, rightly."""
+        pattern = re.compile(r'(<span dir="rtl">' + re.escape(c['quote']) + r'</span>\s*<a )([^>]*data-ref="' +
+                             re.escape(c['link']) + r'"[^>]*>' + re.escape(c['text']) + '</a>)')
+        n = sum(len(pattern.findall(f[1])) for f in fields)
+        if n != 1:
+            raise Fail(f"{rid}: the link to {c['link']} after the quotation is found {n} times")
+        for f in fields:
+            f[1] = pattern.sub(lambda m: m.group(1) + f'data-meant="{c["meant"]}" ' + m.group(2), f[1])
+        self.changes.append((rid, f"{rid}: the reference \"{c['text']}\" after the quotation is kept as printed and "
+                                  f"linked to {c['meant']} (bn:meant), the nearest verse with the quotation's words, "
+                                  f"which are not in the verse cited (Westminster Leningrad Codex); not checked in "
+                                  f"the print."))
+        self.used.add(c['_id'])
 
     def _find_link(self, rid, link, text, fields):
         pattern = re.compile(r'<a [^>]*data-ref="' + re.escape(link) + r'"[^>]*>' +
@@ -458,7 +486,7 @@ class Converter:
                     lang = lang_default
                 el = ET.SubElement(stack[-1], t('foreign'), {xml('lang'): lang, '_tag': name, '_rtl': '1'})
             elif name == 'a':
-                unknown = set(a) - {'data-ref', 'href', 'dir'}
+                unknown = set(a) - {'data-ref', 'href', 'dir', 'data-meant'}
                 if unknown or 'data-ref' not in a:
                     raise Fail(f'{self.rid}: <a> with attributes {a}')
                 ref = html.unescape(a['data-ref'])
@@ -482,9 +510,10 @@ class Converter:
                     sid = self.bible_sid(ref, shown, after)
                     el = ET.SubElement(stack[-1], t('ref'), {'type': 'bible', bn('sid'): sid, '_tag': 'a'})
                     plain = re.sub(r'<[^>]+>', '', shown)
-                    meant = self.corr.meant.get((self.rid, ref, plain))
+                    meant = a.get('data-meant') or self.corr.meant.get((self.rid, ref, plain))
                     if meant:
                         el.set(bn('meant'), meant)
+                    if (self.rid, ref, plain) in self.corr.meant:
                         self.corr.meant_used = getattr(self.corr, 'meant_used', set()) | {(self.rid, ref, plain)}
                     for link, note in self.corr.notes.get(self.rid, []):
                         if link == ref:

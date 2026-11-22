@@ -77,6 +77,8 @@ and `corrections-letters.yaml`:
 - **6 references** Sefaria transcribed wrongly, restored from the print
   (one where Sefaria had given the English verse number, Ez 20:49 for BDB's
   Ez 21⁵).
+- **31 references linked to a nearby verse** that has the quotation's
+  words (see Known limits).
 - **12 references BDB itself misprinted** (11, and Ne 7⁷⁰, where BDB counts
   a verse the Leningrad Codex lacks): kept as printed, and linked to the
   verse meant.
@@ -95,6 +97,10 @@ and `corrections-letters.yaml`:
   was lost in transcription). They are empty in this module too, until
   they are restored from the print.
 - The 148 quotations that fit a neighbouring verse better than the one
-  cited are left as printed: a sample were BDB's own numbering.
+  cited are left as printed: a sample were BDB's own numbering. For the 31
+  of two words or more whose words aren't in the cited verse at all, the
+  reference links to the nearest verse that has them (generated into
+  `corrections-meant.yaml` by `tools/make-bdb-meant-corrections.py`; not
+  checked in the print).
 - References follow BDB's printed numbering, which is the Hebrew Bible's
   (and so the WLC's), except where BDB follows Baer's edition.
