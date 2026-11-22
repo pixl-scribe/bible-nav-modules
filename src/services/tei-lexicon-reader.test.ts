@@ -114,7 +114,9 @@ describe('TEI lexicon reader', () => {
     const cases = [
       entry('H2', '\n        <usg>x</usg>'),
       entry('H2', '', 'from <term>x</term>'),
-      entry('H2', '', '<hi rend="bold">x</hi>'),
+      entry('H2', '', '<hi rend="underline">x</hi>'),
+      entry('H2', '', '<ref type="bible">Gn 1:1</ref>'),
+      entry('H2', '', '<ref type="bible" bn:sid="Gen 1:1">Gn 1:1</ref>'),
       entry('H2', '', '<mentioned xml:lang="hbo" bn:other="1">x</mentioned>'),
     ];
     for (const body of cases) {
@@ -235,6 +237,80 @@ describe('TEI lexicon reader', () => {
     const ls = `      <entry xml:id="n1" xml:lang="en"><form type="lemma"><orth xml:lang="grc">a</orth></form>
         <etym><ref type="lemma" xml:lang="grc" bn:lemma="zz">zz</ref></etym></entry>`;
     assert.throws(() => readTeiLexicon(tei(ls)), /headword zz/);
+  });
+
+  test('BDB: headword line, stems, daggers, notes, scripture references', () => {
+    const bdb = `      <entry xml:id="BDB00001" xml:lang="en" n="I." bn:strong="H1 H2" bn:allCited="1" bn:peculiar="1" bn:brackets="first" bn:count="c. 12" bn:root="1">
+        <form type="lemma"><orth xml:lang="hbo">A</orth></form>
+        <form type="variant"><orth xml:lang="hbo">B</orth></form>
+        <form type="variant" bn:count="5"><orth xml:lang="hbo">C</orth></form>
+        <sense bn:level="1"><hi rend="bold">vb.</hi> x<hi rend="sup">2</hi><lb/>y</sense>
+        <sense n="1" bn:level="1" bn:stem="Qal" bn:allCited="1" bn:pre="Especially" bn:count="7" />
+        <sense bn:level="2">Pf. <foreign xml:lang="hbo">D</foreign> <ref type="bible" bn:sid="GEN 1:1">Gn 1:1</ref>; <ref type="bible" bn:sid="ISA 55:2" bn:meant="ISA 58:2">Is 55:2</ref>; <ref type="bible" bn:sid="2SA 1">2 S 1</ref>; <ref type="entry" target="#BDB00001">A</ref></sense>
+        <note type="comment" n="1" />
+        <note type="sourceCorrection">left out</note>
+      </entry>`;
+    const lexicon = readTeiLexicon(tei(bdb));
+    const [e] = lexicon.entries;
+    assert.equal(e.allCited, true);
+    assert.equal(e.homograph, 'I.');
+    assert.deepEqual(e.body[0], {
+      style: 'hwline',
+      attributes: { peculiar: '1', brackets: 'first', count: 'c. 12' },
+      children: [
+        { style: 'word', attributes: { lang: 'hbo' }, children: ['B'] },
+        {
+          style: 'word',
+          attributes: { lang: 'hbo', count: '5' },
+          children: ['C'],
+        },
+      ],
+    });
+    assert.deepEqual(e.body[1], {
+      style: 'sense',
+      attributes: { level: '1' },
+      children: [
+        { style: 'strong', attributes: {}, children: ['vb.'] },
+        ' x',
+        { style: 'sup', attributes: {}, children: ['2'] },
+        { style: 'br', attributes: {}, children: [] },
+        'y',
+      ],
+    });
+    assert.deepEqual(e.body[2], {
+      style: 'sense',
+      attributes: {
+        n: '1',
+        level: '1',
+        stem: 'Qal',
+        allCited: '1',
+        pre: 'Especially',
+        count: '7',
+      },
+      children: [],
+    });
+    const refs = (e.body[3] as { children: unknown[] }).children.filter(
+      (c) => typeof c !== 'string' && (c as { style: string }).style === 'bref'
+    );
+    assert.deepEqual(
+      refs.map((r) => (r as { attributes: object }).attributes),
+      [
+        { sid: 'GEN 1:1' },
+        { sid: 'ISA 55:2', meant: 'ISA 58:2' },
+        { sid: '2SA 1' },
+      ]
+    );
+    assert.deepEqual(e.body[4], {
+      style: 'note',
+      attributes: { n: '1' },
+      children: [],
+    });
+    assert.equal(e.body.length, 5);
+    // Hebrew headwords get no lemma lookups: only the Strong's numbers.
+    assert.deepEqual(
+      lexicon.lookups.map((l) => `${l.kind}:${l.value}`),
+      ['strong:H1', 'strong:H2']
+    );
   });
 
   test('two entries with one key fail', () => {

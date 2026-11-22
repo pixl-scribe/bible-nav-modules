@@ -123,6 +123,12 @@ def apply_corrections(rid, e, parts, corr):
             e['ordinal'] = c['corr']
         elif k == 'markup':
             pass
+        elif k == 'count':
+            first = next(p for p in parts if p['kind'] != 'forms')
+            if e.get('occurrences') != c['sic'] or not first['html'].startswith(c['text']):
+                fail(f'{rid}: count correction does not apply')
+            e['occurrences'] = c['corr']
+            first['html'] = first['html'][len(c['text']):]
     # Letters: replace each quotation once all its words are known.
     done = set()
     for c in corr.get(rid, []):
@@ -214,6 +220,8 @@ def main():
             'bn:allCited': '1' if e.get('all_cited') else '',
             'bn:peculiar': '1' if e.get('peculiar') else '',
             'bn:brackets': {'first_word': 'first', 'all': 'all', None: ''}[e.get('brackets')],
+            # A count with no word among the other spellings is the whole
+            # headword line's.
             'bn:count': e.get('occurrences') or '',
             'bn:root': '1' if e.get('root') else '',
         }
@@ -223,7 +231,14 @@ def main():
                 fail(f'{rid}: {k} is "{got}", the source gives "{v}"')
         variants = [(text_of(f.getElementsByTagNameNS(TEI, 'orth')[0]), f.getAttributeNS(BN, 'count'))
                     for f in forms if f.getAttribute('type') == 'variant']
-        if variants != [(a['word'], a.get('occurences', '')) for a in e.get('alt_headwords') or []]:
+        # A count with no word is the count of the spelling before it.
+        want = []
+        for a in e.get('alt_headwords') or []:
+            if a.get('word'):
+                want.append([a['word'], a.get('occurences', '')])
+            else:
+                want[-1][1] = a['occurences']
+        if variants != [tuple(w) for w in want]:
             fail(f'{rid}: variant spellings')
         # Parts.
         tparts = []

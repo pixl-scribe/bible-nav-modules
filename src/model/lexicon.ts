@@ -47,6 +47,7 @@ export interface Lexicon {
 
 /** The styles allowed at the top of a body, and anywhere inside one. */
 export const TOP_STYLES = new Set([
+  'hwline',
   'deriv',
   'def',
   'kjv',
@@ -61,16 +62,20 @@ export const INLINE_STYLES: Record<string, string[]> = {
   em: [],
   tr: [],
   strong: [],
+  big: [],
+  br: [],
   sup: [],
   sub: [],
   usg: ['title'],
   foreign: ['lang'],
   ref: ['strong', 'key'],
-  word: ['lang', 'translit', 'pronunciation'],
-  bref: ['sid'],
+  word: ['lang', 'translit', 'pronunciation', 'count'],
+  bref: ['sid', 'meant'],
 };
 
 /** Attributes allowed on top-level styles. */
 export const TOP_ATTRIBUTES: Record<string, string[]> = {
-  sense: ['n', 'level'],
+  hwline: ['peculiar', 'brackets', 'count'],
+  sense: ['n', 'level', 'stem', 'allCited', 'pre', 'count'],
+  note: ['n'],
 };

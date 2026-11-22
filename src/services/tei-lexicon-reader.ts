@@ -119,6 +119,18 @@ function isSourceCorrection(node: XmlNode): boolean {
   return nameOf(node) === 'note' && attrsOf(node).type === 'sourceCorrection';
 }
 
+/** <hi rend="..."> and the body style it becomes. */
+const HI_STYLES: Record<string, string> = {
+  italic: 'em',
+  bold: 'strong',
+  sup: 'sup',
+  sub: 'sub',
+  large: 'big',
+};
+
+/** A verse ("GEN 1:1") or a whole chapter ("2SA 1"). */
+const SID = /^[1-4A-Z]{3} \d+(:\d+)?$/;
+
 /** Inline content: text and the inline elements listed above. */
 function inline(nodes: XmlNode[], where: string): BodyItem[] {
   const items: BodyItem[] = [];
@@ -131,10 +143,36 @@ function inline(nodes: XmlNode[], where: string): BodyItem[] {
     const attrs = attrsOf(node);
     if (isSourceCorrection(node)) continue;
     if (name === 'hi') {
-      if (attrs.rend !== 'italic' || Object.keys(attrs).length !== 1) {
-        throw new Error(`${where}: <hi> must have rend="italic" only`);
+      const style = HI_STYLES[attrs.rend];
+      if (!style || Object.keys(attrs).length !== 1) {
+        throw new Error(
+          `${where}: <hi> must have only rend, one of ${Object.keys(HI_STYLES).join(', ')}`
+        );
       }
-      items.push(element('em', {}, inline(childrenOf(node), where)));
+      items.push(element(style, {}, inline(childrenOf(node), where)));
+    } else if (name === 'lb') {
+      expectAttrs(node, [], where);
+      if (childrenOf(node).length > 0) {
+        throw new Error(`${where}: <lb> must be empty`);
+      }
+      items.push(element('br', {}, []));
+    } else if (name === 'ref' && attrs.type === 'bible') {
+      // A scripture reference (BDB): the verse or chapter BDB printed, and
+      // the verse meant where BDB misprinted it.
+      expectAttrs(node, ['type', 'bn:sid', 'bn:meant'], where);
+      if (!SID.test(attrs['bn:sid'] ?? '')) {
+        throw new Error(
+          `${where}: <ref type="bible"> must have a verse or chapter in bn:sid`
+        );
+      }
+      if (attrs['bn:meant'] !== undefined && !SID.test(attrs['bn:meant'])) {
+        throw new Error(
+          `${where}: bn:meant must be a verse or chapter, not "${attrs['bn:meant']}"`
+        );
+      }
+      const refAttrs: Attributes = { sid: attrs['bn:sid'] };
+      if (attrs['bn:meant']) refAttrs.meant = attrs['bn:meant'];
+      items.push(element('bref', refAttrs, inline(childrenOf(node), where)));
     } else if (name === 'gloss') {
       expectAttrs(node, [], where);
       items.push(element('tr', {}, inline(childrenOf(node), where)));
@@ -230,10 +268,38 @@ function readEntry(node: XmlNode): LexiconEntry {
   const key = attrs['xml:id'];
   const where = `entry ${key}`;
   if (!key) throw new Error('an entry has no xml:id');
-  expectAttrs(node, ['xml:id', 'xml:lang', 'n', 'bn:strong'], where);
+  expectAttrs(
+    node,
+    [
+      'xml:id',
+      'xml:lang',
+      'n',
+      'bn:strong',
+      // BDB's headword line (docs/lexicon-format.md, `hwline`), and
+      // Sefaria's root flag, which the module leaves out.
+      'bn:allCited',
+      'bn:peculiar',
+      'bn:brackets',
+      'bn:count',
+      'bn:root',
+    ],
+    where
+  );
   if (attrs['xml:lang'] !== 'en') {
     throw new Error(`${where}: xml:lang must be "en"`);
   }
+  for (const flag of ['bn:allCited', 'bn:peculiar', 'bn:root']) {
+    if (attrs[flag] !== undefined && attrs[flag] !== '1') {
+      throw new Error(`${where}: ${flag} must be "1"`);
+    }
+  }
+  if (
+    attrs['bn:brackets'] !== undefined &&
+    !['first', 'all'].includes(attrs['bn:brackets'])
+  ) {
+    throw new Error(`${where}: bn:brackets must be "first" or "all"`);
+  }
+  checkCount(attrs['bn:count'], where);
   const entry: LexiconEntry = {
     key,
     headword: '',
@@ -241,7 +307,7 @@ function readEntry(node: XmlNode): LexiconEntry {
     homograph: attrs.n ?? '',
     translit: '',
     pronunciation: '',
-    allCited: false,
+    allCited: attrs['bn:allCited'] === '1',
     body: [],
   };
   /** The body's parts, in the order the TEI file gives them. */
@@ -249,10 +315,25 @@ function readEntry(node: XmlNode): LexiconEntry {
   let haveForm = false;
   /** Other forms of the headword, for lookups only. */
   const inflected: string[] = [];
+  /** Other spellings printed on the headword line (BDB). */
+  const variants: BodyElement[] = [];
 
   for (const child of elements(node, where)) {
     const name = nameOf(child);
-    if (name === 'form' && attrsOf(child).type === 'inflected') {
+    if (name === 'form' && attrsOf(child).type === 'variant') {
+      expectAttrs(child, ['type', 'bn:count'], where);
+      checkCount(attrsOf(child)['bn:count'], where);
+      const orths = elements(child, where);
+      if (orths.length !== 1 || nameOf(orths[0]) !== 'orth') {
+        throw new Error(`${where}: <form type="variant"> holds one <orth>`);
+      }
+      expectAttrs(orths[0], ['xml:lang'], where);
+      const wordAttrs: Attributes = { lang: attrsOf(orths[0])['xml:lang'] };
+      if (attrsOf(child)['bn:count']) {
+        wordAttrs.count = attrsOf(child)['bn:count'];
+      }
+      variants.push(element('word', wordAttrs, [plainText(orths[0], where)]));
+    } else if (name === 'form' && attrsOf(child).type === 'inflected') {
       // Another form of the headword (an aorist, say): a lookup, not text.
       expectAttrs(child, ['type'], where);
       const orths = elements(child, where);
@@ -309,15 +390,32 @@ function readEntry(node: XmlNode): LexiconEntry {
         }
       }
     } else if (name === 'sense') {
-      // Liddell and Scott: a numbered sense holding its text.
-      expectAttrs(child, ['n', 'bn:level'], where);
+      // Liddell and Scott, BDB: a numbered sense holding its text, with
+      // BDB's verb stem, dagger, the words before its number, and count.
+      expectAttrs(
+        child,
+        ['n', 'bn:level', 'bn:stem', 'bn:allCited', 'bn:pre', 'bn:count'],
+        where
+      );
+      const a = attrsOf(child);
+      if (a['bn:allCited'] !== undefined && a['bn:allCited'] !== '1') {
+        throw new Error(`${where}: a sense's bn:allCited must be "1"`);
+      }
+      checkCount(a['bn:count'], where);
       const senseAttrs: Attributes = {};
-      if (attrsOf(child).n) senseAttrs.n = attrsOf(child).n;
-      if (attrsOf(child)['bn:level']) {
-        senseAttrs.level = attrsOf(child)['bn:level'];
+      const names: [string, string][] = [
+        ['n', 'n'],
+        ['bn:level', 'level'],
+        ['bn:stem', 'stem'],
+        ['bn:allCited', 'allCited'],
+        ['bn:pre', 'pre'],
+        ['bn:count', 'count'],
+      ];
+      for (const [tei, body] of names) {
+        if (a[tei]) senseAttrs[body] = a[tei];
       }
       parts.push(
-        element('sense', senseAttrs, inline(childrenOf(child), where))
+        element('sense', senseAttrs, inline(childrenOf(child) ?? [], where))
       );
     } else if (isSourceCorrection(child)) {
       continue;
@@ -325,14 +423,25 @@ function readEntry(node: XmlNode): LexiconEntry {
       expectAttrs(child, ['type'], where);
       parts.push(element('form', {}, inline(childrenOf(child), where)));
     } else if (name === 'note' && attrsOf(child).type === 'comment') {
-      expectAttrs(child, ['type'], where);
-      parts.push(element('note', {}, inline(childrenOf(child), where)));
+      // A note; BDB numbers a few ("Note 1").
+      expectAttrs(child, ['type', 'n'], where);
+      const noteAttrs: Attributes = {};
+      if (attrsOf(child).n) noteAttrs.n = attrsOf(child).n;
+      parts.push(element('note', noteAttrs, inline(childrenOf(child), where)));
     } else {
       throw new Error(`${where}: unexpected <${name}> in an entry`);
     }
   }
   if (!entry.headword || !entry.headwordLang) {
     throw new Error(`${where}: no headword`);
+  }
+  // BDB's marks and other spellings on the headword line come first.
+  const hwline: Attributes = {};
+  if (attrs['bn:peculiar']) hwline.peculiar = '1';
+  if (attrs['bn:brackets']) hwline.brackets = attrs['bn:brackets'];
+  if (attrs['bn:count']) hwline.count = attrs['bn:count'];
+  if (Object.keys(hwline).length > 0 || variants.length > 0) {
+    parts.unshift(element('hwline', hwline, variants));
   }
   entry.body = parts;
   INFLECTED.set(entry, inflected);
@@ -341,6 +450,13 @@ function readEntry(node: XmlNode): LexiconEntry {
     (attrs['bn:strong'] ?? '').split(/\s+/).filter(Boolean)
   );
   return entry;
+}
+
+/** BDB's occurrence counts: a number, or "c. 6823" (about). */
+function checkCount(count: string | undefined, where: string): void {
+  if (count !== undefined && !/^(c\. )?\d+$/.test(count)) {
+    throw new Error(`${where}: count "${count}"`);
+  }
 }
 
 /** Other forms of each entry's headword, kept for lookupsFor. */
@@ -388,10 +504,21 @@ function lookupsFor(entry: LexiconEntry): Lookup[] {
   if (strong === entry.key) {
     return [{ kind: 'strong', value: strong, entryKey: entry.key }];
   }
-  const lookups: Lookup[] = [
-    { kind: 'lemma', value: lemmaForm(entry.headword), entryKey: entry.key },
-  ];
-  for (const form of INFLECTED.get(entry) ?? []) {
+  const lookups: Lookup[] = [];
+  // Lemmas are Greek only for now (Liddell and Scott). Hebrew and Aramaic
+  // headwords (BDB) are found by Strong's number: lemmaForm's Unicode
+  // normalization must never touch pointed Hebrew, and a Hebrew lemma
+  // lookup needs its own design.
+  if (entry.headwordLang === 'grc') {
+    lookups.push({
+      kind: 'lemma',
+      value: lemmaForm(entry.headword),
+      entryKey: entry.key,
+    });
+  }
+  for (const form of entry.headwordLang === 'grc'
+    ? (INFLECTED.get(entry) ?? [])
+    : []) {
     const value = lemmaForm(form);
     if (!lookups.some((l) => l.value === value)) {
       lookups.push({ kind: 'lemma', value, entryKey: entry.key });

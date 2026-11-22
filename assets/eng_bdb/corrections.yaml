@@ -172,3 +172,14 @@
   find: "<em>in behalf of</em>).</strong>"
   replace: "<em>in behalf of</em>)."
   reason: "a </strong> with no <strong> at the end of the passage"
+
+# A count Sefaria split: the "c." in its count field, the number at the
+# start of the text.
+#   count: the count becomes `corr`; `text`, at the start of the first
+#   passage, is taken out of the text.
+- entry: BDB02327
+  kind: count
+  sic: "c."
+  corr: "c. 6823"
+  text: "6823 "
+  reason: "BDB prints \"c. 6823\" as one count; Sefaria put \"c.\" in its count field and \"6823\" at the start of the text"

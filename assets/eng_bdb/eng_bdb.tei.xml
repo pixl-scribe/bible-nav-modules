@@ -71,6 +71,7 @@
       <change target="#BDB02229">BDB02229: in the quotation before Job 24:18, כְּרָמִים for the source's בְּרָמִים, corrected against the Westminster Leningrad Codex: Sefaria's OCR (print-checks.md).</change>
       <change target="#BDB02240">BDB02240: in the quotation before Leviticus 25:10, יֹשְׁבֶ֑יהָ for the source's יֹשְׁכֶ֑יהָ, corrected against the Westminster Leningrad Codex: Sefaria's OCR (print-checks.md).</change>
       <change target="#BDB02244">BDB02244: the reference "Is 55:2" is BDB's own misprint, kept as printed; it is linked to ISA 58:2 (bn:meant). Evidence: 1906 printing, page 204 (image n227): Is 55², as Sefaria has it; checked by the maintainer on 2026-11-21.</change>
+      <change target="#BDB02327">BDB02327: occurrence count "c. 6823" (BDB prints "c. 6823" as one count; Sefaria put "c." in its count field and "6823" at the start of the text).</change>
       <change target="#BDB02413">BDB02413: in the quotation before Song of Songs 2:11, חָלַף for the source's הָלַף, corrected against the Westminster Leningrad Codex: Sefaria's OCR (print-checks.md).</change>
       <change target="#BDB02413">BDB02413: in the quotation before Psalms 35:14, כְּאָח for the source's כְּאָה, corrected against the Westminster Leningrad Codex: Sefaria's OCR (print-checks.md).</change>
       <change target="#BDB02496">BDB02496: in the quotation before Jeremiah 24:6, אֶהֱרֹס for the source's אֶהֱרֹם, corrected against the Westminster Leningrad Codex: Sefaria's OCR (print-checks.md).</change>
@@ -20529,11 +20530,11 @@
         </form>
         <sense bn:level="1"><hi rend="bold">n.f. ruin, disaster (</hi>cf. sub <ref type="entry" target="#BDB02324"><foreign xml:lang="hbo">הַוָּה</foreign></ref><hi rend="bold">)</hi> <ref type="bible" bn:sid="EZK 7:26">Ez 7:26</ref><hi rend="sup">(×2)</hi> <foreign xml:lang="hbo">הֹוָה עַל הֹוָה תָבוֹא</foreign> <hi rend="italic">disaster</hi> shall come upon <hi rend="italic">disaster</hi>, <ref type="bible" bn:sid="ISA 47:11">Is 47:11</ref> <foreign xml:lang="hbo">וְתִפֹּל עָלַיִךְ הֹוָה</foreign> <hi rend="italic">disaster</hi> shall fall upon thee (‖ <foreign xml:lang="hbo">רָעָה</foreign>, <foreign xml:lang="hbo">שֹׁאָה</foreign>).</sense>
       </entry>
-      <entry xml:id="BDB02327" xml:lang="en" bn:strong="H3068 H3069 H3070 H3071 H3072 H3073 H3074" bn:count="c.">
+      <entry xml:id="BDB02327" xml:lang="en" bn:strong="H3068 H3069 H3070 H3071 H3072 H3073 H3074" bn:count="c. 6823">
         <form type="lemma">
           <orth xml:lang="hbo">יהוה</orth>
         </form>
-        <sense bn:level="1">6823 i.e. <foreign xml:lang="hbo">יַהְוֶה</foreign> <hi rend="bold">n.pr.dei</hi> Yahweh, the proper name of the God of Israel—<hi rend="bold">(1.</hi> MT <foreign xml:lang="hbo">יְהוָֹה</foreign><hi rend="sub">6518</hi> (Qr <foreign xml:lang="hbo">אֲדֹנָי</foreign>), or <foreign xml:lang="hbo">יֱהוִֹה</foreign><hi rend="sub">305</hi> (Qr <foreign xml:lang="hbo">אֱלֹהִים</foreign>), in the combinations <foreign xml:lang="hbo">אדני יהוה</foreign> &amp; <foreign xml:lang="hbo">יהוה אדני</foreign> (vid. <foreign xml:lang="hbo">אֲדֹנָי</foreign>), and with prep. <foreign xml:lang="hbo">בַּיהוָֹה</foreign>, <foreign xml:lang="hbo">לַיהוָֹה</foreign>, <foreign xml:lang="hbo">מֵיהוָֹה</foreign> (Qr <foreign xml:lang="hbo">בַּאדֹנָי</foreign>, <foreign xml:lang="hbo">לַאדֹנָי</foreign>, <foreign xml:lang="hbo">מֵאדֹנָי</foreign>), do not give the original form. 𝔊 and other Vrss follow the Qr. On the basis of <ref type="bible" bn:sid="EXO 20:7">Ex 20:7</ref>; <ref type="bible" bn:sid="LEV 24:11">Lv 24:11</ref> <foreign xml:lang="hbo">יהוה</foreign> was regarded as a <hi rend="italic">nomen ineffabile</hi> (vid. Philo de Vita Mosis iii, 519, 529), called by the Jews <foreign xml:lang="hbo">הַשֵּׁם</foreign> and by the Samaritans <foreign xml:lang="hbo">שׁימא</foreign>. The pronunciation <hi rend="italic">Jehovah</hi> was unknown until 1520, when it was introduced by Galatinus; but it was contested by Le Mercier, J. Drusius, and L. Capellus, as against grammatical and historical propriety (cf. Bö<hi rend="sup">§ 88</hi>). The traditional <foreign xml:lang="grc">Ἰαβέ</foreign> of Theodoret and Epiphanius, the <foreign xml:lang="hbo">־יָהוּ</foreign>, <foreign xml:lang="hbo">יְהוֹ־</foreign> of compound n.pr. and the contracted form <foreign xml:lang="hbo">יָהּ</foreign>, all favour <foreign xml:lang="hbo">יַהְוֶה</foreign> (cf. <foreign xml:lang="hbo">יַהֲלֹמ֑וּן</foreign> <ref type="bible" bn:sid="PSA 74:6">ψ 74:6</ref>; <foreign xml:lang="hbo">תַּהֲרוּ</foreign> <ref type="bible" bn:sid="ISA 33:11">Is 33:11</ref>), v. Lag<hi rend="sup">Sym. i. 14</hi> Baudissin<hi rend="sup">Studien i. 179 ff.</hi>; Dr<hi rend="sup">Stud. Bib. i. 1 ff.</hi> For <hi rend="italic">Jeve</hi> v. Sta<hi rend="sup">ZAW 1881, 346</hi> De <hi rend="sup">ib. 1882, 173 f. &amp; Gn. Excurs. ii</hi>. <hi rend="bold">2.</hi> on liter. of interpret. v. Nes<hi rend="sup">Eg 67</hi> Dr<hi rend="sup">l.c.</hi>.—Many recent scholars explain <foreign xml:lang="hbo">יַהְוֶה</foreign> as Hiph. of <foreign xml:lang="hbo">הוה</foreign> (= <foreign xml:lang="hbo">היה</foreign>) <hi rend="italic">the one bringing into being, life-giver</hi> (cf. <ref type="entry" target="#BDB02324"><foreign xml:lang="hbo">הַוָּה</foreign></ref> <ref type="bible" bn:sid="GEN 3:20">Gn 3:20</ref>) Schr HSch; <hi rend="italic">giver of existence, creator</hi>, Kue Tiele; <hi rend="italic">he who brings to pass</hi> (so already Le Clerc), <hi rend="italic">performer of his promises</hi>, Lag, Nes.<hi rend="sup">Eg 88</hi> (but Nes<hi rend="sup">Eg. 91</hi> inclines to Qal as RS<hi rend="sup">Brit. &amp; For. Ev. Rev.</hi> v. infr.); or from <foreign xml:lang="hbo">הוה</foreign> <hi rend="italic">he who causes to fall</hi>, rain or lightning RS<hi rend="sup">OTJC ed. 1, 423; om. ed. 2, 245</hi>, cf. We<hi rend="sup">Skizzen iii. 175</hi>; ‘<hi rend="italic">Fäller</hi>,’ destroying foes, Sta<hi rend="sup">G. i. 429</hi> (dubiously). But most take it as Qal of <foreign xml:lang="hbo">היה</foreign> (= <foreign xml:lang="hbo">היה</foreign>); <hi rend="italic">the one who is:</hi> i.e. <hi rend="italic">the absolute and unchangeable one</hi>, Ri; <hi rend="italic">the existing, ever-living</hi>, as self-consistent and unchangeable, Di; or <hi rend="italic">the one ever coming into manifestation</hi> as the God of redemption, De Oehl; cf. also RS<hi rend="sup">Brit. &amp; For. Ev. Rev. 1876</hi>, <hi rend="italic">he will be</hi> it, i.e. all that his servants look for (cf. Ew<hi rend="sup">infr.</hi>), <hi rend="italic">he will approve himself</hi> (<hi rend="italic">give evidence of being, assert his being</hi> Dr<hi rend="sup">l. c. 17</hi>)<hi rend="bold">).</hi> theories of non-Heb. or non-Sem. origin. opposed (in their older forms) by Bau<hi rend="sup">Rel i. 181 ff. (v. especially 230)</hi>; Dl<hi rend="sup">Pa 162 ff.</hi> claimed Bab. origin for <foreign xml:lang="hbo">יהו</foreign>, against this Kue<hi rend="sup">National religions, etc., Note iv (Eng. Trans. 329 ff.)</hi> Jastr<hi rend="sup">JBL xiii (1894), 103 f.</hi> cf. Hpt<hi rend="sup">BAS i. 170 N</hi>; Dl <hi rend="sup">Babel u. Bibel, 46 f., 73 f.</hi> makes same claim for <foreign xml:lang="hbo">יהוה</foreign>, agst. this v. especially Hirsch<hi rend="sup">ZAW xxiii (1903), 355 ff.</hi> Zim<hi rend="sup">KAT 3, 465 ff.</hi>; Spiegelberg<hi rend="sup">ZMG liii (1899), 633 ff.</hi> proposes (improb.) Egyptian etymol. for <foreign xml:lang="hbo">יהוה</foreign>; further discussions see in Kö<hi rend="sup">EB Names, § 112 and n. 3</hi>. ‘Jehovah’ found in Jacob (? Johann.) Wessel († 1480), according to Schwally<hi rend="sup">ThLZ, 1905, col. 612</hi>.</sense>
+        <sense bn:level="1">i.e. <foreign xml:lang="hbo">יַהְוֶה</foreign> <hi rend="bold">n.pr.dei</hi> Yahweh, the proper name of the God of Israel—<hi rend="bold">(1.</hi> MT <foreign xml:lang="hbo">יְהוָֹה</foreign><hi rend="sub">6518</hi> (Qr <foreign xml:lang="hbo">אֲדֹנָי</foreign>), or <foreign xml:lang="hbo">יֱהוִֹה</foreign><hi rend="sub">305</hi> (Qr <foreign xml:lang="hbo">אֱלֹהִים</foreign>), in the combinations <foreign xml:lang="hbo">אדני יהוה</foreign> &amp; <foreign xml:lang="hbo">יהוה אדני</foreign> (vid. <foreign xml:lang="hbo">אֲדֹנָי</foreign>), and with prep. <foreign xml:lang="hbo">בַּיהוָֹה</foreign>, <foreign xml:lang="hbo">לַיהוָֹה</foreign>, <foreign xml:lang="hbo">מֵיהוָֹה</foreign> (Qr <foreign xml:lang="hbo">בַּאדֹנָי</foreign>, <foreign xml:lang="hbo">לַאדֹנָי</foreign>, <foreign xml:lang="hbo">מֵאדֹנָי</foreign>), do not give the original form. 𝔊 and other Vrss follow the Qr. On the basis of <ref type="bible" bn:sid="EXO 20:7">Ex 20:7</ref>; <ref type="bible" bn:sid="LEV 24:11">Lv 24:11</ref> <foreign xml:lang="hbo">יהוה</foreign> was regarded as a <hi rend="italic">nomen ineffabile</hi> (vid. Philo de Vita Mosis iii, 519, 529), called by the Jews <foreign xml:lang="hbo">הַשֵּׁם</foreign> and by the Samaritans <foreign xml:lang="hbo">שׁימא</foreign>. The pronunciation <hi rend="italic">Jehovah</hi> was unknown until 1520, when it was introduced by Galatinus; but it was contested by Le Mercier, J. Drusius, and L. Capellus, as against grammatical and historical propriety (cf. Bö<hi rend="sup">§ 88</hi>). The traditional <foreign xml:lang="grc">Ἰαβέ</foreign> of Theodoret and Epiphanius, the <foreign xml:lang="hbo">־יָהוּ</foreign>, <foreign xml:lang="hbo">יְהוֹ־</foreign> of compound n.pr. and the contracted form <foreign xml:lang="hbo">יָהּ</foreign>, all favour <foreign xml:lang="hbo">יַהְוֶה</foreign> (cf. <foreign xml:lang="hbo">יַהֲלֹמ֑וּן</foreign> <ref type="bible" bn:sid="PSA 74:6">ψ 74:6</ref>; <foreign xml:lang="hbo">תַּהֲרוּ</foreign> <ref type="bible" bn:sid="ISA 33:11">Is 33:11</ref>), v. Lag<hi rend="sup">Sym. i. 14</hi> Baudissin<hi rend="sup">Studien i. 179 ff.</hi>; Dr<hi rend="sup">Stud. Bib. i. 1 ff.</hi> For <hi rend="italic">Jeve</hi> v. Sta<hi rend="sup">ZAW 1881, 346</hi> De <hi rend="sup">ib. 1882, 173 f. &amp; Gn. Excurs. ii</hi>. <hi rend="bold">2.</hi> on liter. of interpret. v. Nes<hi rend="sup">Eg 67</hi> Dr<hi rend="sup">l.c.</hi>.—Many recent scholars explain <foreign xml:lang="hbo">יַהְוֶה</foreign> as Hiph. of <foreign xml:lang="hbo">הוה</foreign> (= <foreign xml:lang="hbo">היה</foreign>) <hi rend="italic">the one bringing into being, life-giver</hi> (cf. <ref type="entry" target="#BDB02324"><foreign xml:lang="hbo">הַוָּה</foreign></ref> <ref type="bible" bn:sid="GEN 3:20">Gn 3:20</ref>) Schr HSch; <hi rend="italic">giver of existence, creator</hi>, Kue Tiele; <hi rend="italic">he who brings to pass</hi> (so already Le Clerc), <hi rend="italic">performer of his promises</hi>, Lag, Nes.<hi rend="sup">Eg 88</hi> (but Nes<hi rend="sup">Eg. 91</hi> inclines to Qal as RS<hi rend="sup">Brit. &amp; For. Ev. Rev.</hi> v. infr.); or from <foreign xml:lang="hbo">הוה</foreign> <hi rend="italic">he who causes to fall</hi>, rain or lightning RS<hi rend="sup">OTJC ed. 1, 423; om. ed. 2, 245</hi>, cf. We<hi rend="sup">Skizzen iii. 175</hi>; ‘<hi rend="italic">Fäller</hi>,’ destroying foes, Sta<hi rend="sup">G. i. 429</hi> (dubiously). But most take it as Qal of <foreign xml:lang="hbo">היה</foreign> (= <foreign xml:lang="hbo">היה</foreign>); <hi rend="italic">the one who is:</hi> i.e. <hi rend="italic">the absolute and unchangeable one</hi>, Ri; <hi rend="italic">the existing, ever-living</hi>, as self-consistent and unchangeable, Di; or <hi rend="italic">the one ever coming into manifestation</hi> as the God of redemption, De Oehl; cf. also RS<hi rend="sup">Brit. &amp; For. Ev. Rev. 1876</hi>, <hi rend="italic">he will be</hi> it, i.e. all that his servants look for (cf. Ew<hi rend="sup">infr.</hi>), <hi rend="italic">he will approve himself</hi> (<hi rend="italic">give evidence of being, assert his being</hi> Dr<hi rend="sup">l. c. 17</hi>)<hi rend="bold">).</hi> theories of non-Heb. or non-Sem. origin. opposed (in their older forms) by Bau<hi rend="sup">Rel i. 181 ff. (v. especially 230)</hi>; Dl<hi rend="sup">Pa 162 ff.</hi> claimed Bab. origin for <foreign xml:lang="hbo">יהו</foreign>, against this Kue<hi rend="sup">National religions, etc., Note iv (Eng. Trans. 329 ff.)</hi> Jastr<hi rend="sup">JBL xiii (1894), 103 f.</hi> cf. Hpt<hi rend="sup">BAS i. 170 N</hi>; Dl <hi rend="sup">Babel u. Bibel, 46 f., 73 f.</hi> makes same claim for <foreign xml:lang="hbo">יהוה</foreign>, agst. this v. especially Hirsch<hi rend="sup">ZAW xxiii (1903), 355 ff.</hi> Zim<hi rend="sup">KAT 3, 465 ff.</hi>; Spiegelberg<hi rend="sup">ZMG liii (1899), 633 ff.</hi> proposes (improb.) Egyptian etymol. for <foreign xml:lang="hbo">יהוה</foreign>; further discussions see in Kö<hi rend="sup">EB Names, § 112 and n. 3</hi>. ‘Jehovah’ found in Jacob (? Johann.) Wessel († 1480), according to Schwally<hi rend="sup">ThLZ, 1905, col. 612</hi>.</sense>
         <sense n="I" bn:level="1" />
         <sense bn:level="2"><foreign xml:lang="hbo">יהוה</foreign> is not used by E in Gn, but is given <ref type="bible" bn:sid="EXO 3:12">Ex 3:12–15</ref> as the name of the God who revealed Himself to Moses at Horeb, and is explained thus: <foreign xml:lang="hbo">אֶהְיֶה עִמָּ֑ךְ</foreign> <hi rend="italic">I shall be with thee</hi> (v <ref type="bible" bn:sid="EXO 3:12">12</ref>), which is then implied in <foreign xml:lang="hbo">אֶהְיֶה אֲשֶׁר אֶהְיֶה</foreign> <hi rend="italic">I shall be the one who will be</hi> it v <ref type="bible" bn:sid="EXO 3:14">14a</ref> (i.e. with thee v <ref type="bible" bn:sid="EXO 3:12">12</ref>) and then compressed into <foreign xml:lang="hbo">אֶהְיֶה</foreign> v <ref type="bible" bn:sid="EXO 3:14">14b</ref> (i.e. with thee v <ref type="bible" bn:sid="EXO 3:12">12</ref>), which then is given in the nominal form <foreign xml:lang="hbo">יהוה</foreign> <hi rend="italic">He who will be</hi> it v <ref type="bible" bn:sid="EXO 3:15">15</ref> (i.e. with thee v <ref type="bible" bn:sid="EXO 3:12">12</ref>). Cf. Ew<hi rend="sup">BTh ii. 337, 338</hi> RS<hi rend="sup">l. c., Proph. 385 ff.</hi> Other interpretations are: <hi rend="italic">I am he who I am</hi>, i.e. it is no concern of yours (Le Clerc Lag<hi rend="sup">Psalt. Hieron. 156</hi>); <hi rend="italic">I am</hi>, (this is my name), <hi rend="italic">inasmuch as I am</hi> (<foreign xml:lang="hbo">אֲשֶׁר</foreign> = <foreign xml:lang="hbo">כִּי</foreign>; AE JDMich We<hi rend="sup">JD Th xxi, 540 = Comp. Hex. 72</hi>); Di al. <hi rend="italic">I am who I am</hi>, he who is essentially unnameable, inexplicable.—E uses <foreign xml:lang="hbo">יהוה</foreign> sparingly by the side of <foreign xml:lang="hbo">אלהים</foreign> and <foreign xml:lang="hbo">האלהים</foreign> in his subsequent narrative. The Ephraimitic writers in Ju S K use it in similar proportions. P abstains from the use of <foreign xml:lang="hbo">יהוה</foreign> until he gives an account of its revelation to Moses <ref type="bible" bn:sid="EXO 6:3">Ex 6:3</ref>; but subsequently uses it freely. He gives no explanation of its meaning. He represents that <foreign xml:lang="hbo">אֵל שַׁדַּי</foreign> was the God of the patriarchs. J uses <foreign xml:lang="hbo">יהוה</foreign> from the beginning of his narrative, possibly explaining it, <ref type="bible" bn:sid="GEN 21:33">Gn 21:33</ref> by <foreign xml:lang="hbo">אל עולם</foreign>, the evergreen tamarisk being a symbol of the ever-living God; cf. De <ref type="bible" bn:sid="GEN 21:33">Gn 21:33</ref>. Elsewhere <foreign xml:lang="hbo">יהוה</foreign> is the common divine name in pre-exilic writers, but in post-exilic writers gradually falls into disuse, and is supplanted by <foreign xml:lang="hbo">אלהים</foreign> and <foreign xml:lang="hbo">אדני</foreign>. In Job it is used 31 times in prose parts, and <ref type="bible" bn:sid="JOB 12:9">12:9</ref> (a proverb); not elsewhere in the poem. Chr apart from his sources prefers <foreign xml:lang="hbo">אלהים</foreign> and <foreign xml:lang="hbo">האלהים</foreign>. Dn uses <foreign xml:lang="hbo">יהוה</foreign> only in chap. 9 (7 times); Ec not at all. In the Elohistic group of <ref type="bible" bn:sid="PSA 42">ψ 42–83</ref> it is used 39 times (see <ref type="entry" target="#BDB00482"><foreign xml:lang="hbo">אלהים</foreign></ref>). It occurs as the name of Israel’s God MI <hi rend="sup">18</hi>. It is doubtful whether it was used by other branches of the Shemitic family, cf. COT <ref type="bible" bn:sid="GEN 2:4">Gn 2:4b</ref> Dl<hi rend="sup">Pa 158 ff.</hi> Dr<hi rend="sup">Stud. Bib. i. 7 ff.</hi></sense>
         <sense n="II" bn:level="1" />
@@ -38568,11 +38569,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">יְרוּשָׁלַ֫םִ</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">יְרוּשָׁלַ֫יִם</orth>
-        </form>
         <form type="variant" bn:count="644">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">יְרוּשָׁלַ֫יִם</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.pr.loc. Jerusalem (</hi>in Assyrian <hi rend="italic">Urusalim</hi>, Tel Amarna, Zim<hi rend="sup">ZA, 1891, 252, 254</hi>; <hi rend="italic">Ursalimmu</hi>, COT<hi rend="sup">Gloss.</hi>; 𝔊 <foreign xml:lang="grc">Ιερουσαλημ</foreign>; √ and meaning dub.; Rel Ew al. der. from <foreign xml:lang="hbo">יְרוּשׁ שׁלם</foreign> <hi rend="italic">possession of peace</hi> (or <hi rend="italic">Salem’s possession</hi>); Thes al. from <foreign xml:lang="hbo">יָרָה</foreign>, i.e. <foreign xml:lang="hbo">יְרוּ</foreign> + <foreign xml:lang="hbo">שָׁלֵם</foreign> <hi rend="italic">a foundation of peace;</hi> Grill<hi rend="sup">ZAW, 1884, 134 ff.</hi> <hi rend="italic">foundation of Shalem</hi> (Sh. = God of peace, = <foreign xml:lang="hbo">י׳</foreign>); but name not certainly Hebr.; according to Sayce<hi rend="sup">Acad. Feb. 7, 1891, 138; Higher Crit. 176</hi> (opposed by Zim<hi rend="sup">ZA</hi>, <hi rend="sup">1891, 263</hi>), Jastr<hi rend="sup">JBL xi, 1892, 105</hi> = <hi rend="italic">Uru</hi> (<hi rend="italic">city</hi>) + <hi rend="italic">Salim</hi>, n.pr.div.<hi rend="bold">)</hi>;—usually <foreign xml:lang="hbo">יְרוּשָׁלַ֫םִ</foreign> (Qr <hi rend="italic">perpetuum</hi>), <ref type="bible" bn:sid="JOS 10:1">Jos 10:1</ref> +; <foreign xml:lang="hbo">יְרוּשָׁלָ֑םִ</foreign> <ref type="bible" bn:sid="1SA 17:54">1 S 17:54</ref> +; -<foreign xml:lang="hbo">לַ֫יִם</foreign> 5 times according to Mas. (vid. Frensdorff<hi rend="sup">Mass Magna, 293</hi>), viz. <ref type="bible" bn:sid="JER 26:18">Je 26:18</ref> <ref type="bible" bn:sid="1CH 3:5">1 Ch 3:5</ref> <ref type="bible" bn:sid="2CH 25:1">2 Ch 25:1</ref>; <ref type="bible" bn:sid="2CH 32:9">32:9</ref> (c. <foreign xml:lang="hbo">ה</foreign> loc.), <ref type="bible" bn:sid="EST 2:6">Est 2:6</ref>, (but -<foreign xml:lang="hbo">לָ֑֫םִ</foreign> <ref type="bible" bn:sid="1CH 3:5">1 Ch 3:5</ref> van d. H Baer), so Maccab. coins, Levy<hi rend="sup">Gesch. d. jüd. Münz. 42f.</hi>; c. <foreign xml:lang="hbo">ה</foreign> loc. <foreign xml:lang="hbo">יְרוּשָׁלַ֫מֳה</foreign> <ref type="bible" bn:sid="1KI 10:2">1 K 10:2</ref> <ref type="bible" bn:sid="ISA 36:2">Is 36:2</ref> <ref type="bible" bn:sid="EZK 8:3">Ez 8:3</ref>; (<foreign xml:lang="hbo">-לַ֫יְמָה</foreign> <ref type="bible" bn:sid="2CH 32:9">2 Ch 32:9</ref> supr.); -<foreign xml:lang="hbo">לָ֑מֳה</foreign> <ref type="bible" bn:sid="2KI 9:28">2 K 9:28</ref>; with prefixes: <foreign xml:lang="hbo">בִּירו׳</foreign> <ref type="bible" bn:sid="2SA 9:13">2 S 9:13</ref> +; <foreign xml:lang="hbo">לִירו׳</foreign> <ref type="bible" bn:sid="2KI 18:22">2 K 18:22</ref> +; <foreign xml:lang="hbo">מִירו׳</foreign> <ref type="bible" bn:sid="2SA 15:11">2 S 15:11</ref> +; <foreign xml:lang="hbo">וִירו׳</foreign> <ref type="bible" bn:sid="2KI 23:1">1 K 23:1</ref> +; —<hi rend="italic">Jerusalem</hi>, renowned as capital of all Israel, afterwards of southern kingdom, seat of central worship in temple, first named as city of Canaanite Adoni-Ṣedeḳ †<ref type="bible" bn:sid="JOS 10:1">Jos 10:1</ref>, <ref type="bible" bn:sid="JOS 10:3">3</ref>, <ref type="bible" bn:sid="JOS 10:5">5</ref>, <ref type="bible" bn:sid="JOS 10:23">23</ref> (all JE), cf. <ref type="bible" bn:sid="JOS 12:10">12:10</ref> (D); inhabited by Jebusites <ref type="bible" bn:sid="JOS 15:63">Jos 15:63</ref><hi rend="sup">(×2)</hi> (P), <ref type="bible" bn:sid="JDG 1:21">Ju 1:21</ref><hi rend="sup">(×2)</hi>, cf. v <ref type="bible" bn:sid="JDG 1:7">7</ref> (Adoni-Bezek); identif. with <foreign xml:lang="hbo">יְבוּס</foreign> <ref type="bible" bn:sid="JDG 19:10">Ju 19:10</ref>, and <foreign xml:lang="hbo">הַיְבוּסִי</foreign> (q.v.) <ref type="bible" bn:sid="JOS 15:8">Jos 15:8</ref>; <ref type="bible" bn:sid="JOS 8:28">8:28</ref> (both P); captured by Judah <ref type="bible" bn:sid="JDG 1:8">Ju 1:8</ref>; first named in connexion with David <ref type="bible" bn:sid="1SA 17:54">1 S 17:54</ref>†; taken possession of by David as king <ref type="bible" bn:sid="2SA 5:6">2 S 5:6</ref>; David’s royal seat v <ref type="bible" bn:sid="2SA 5:5">5</ref>, <ref type="bible" bn:sid="2SA 5:13">13</ref>, <ref type="bible" bn:sid="2SA 5:14">14</ref>; <ref type="bible" bn:sid="2SA 8:7">8:7</ref>; <ref type="bible" bn:sid="2SA 11:1">11:1</ref> +; it remained the capital until taken by Nebuchadrezzar, b.c. 588, <ref type="bible" bn:sid="2KI 25:1">2 K 25:1</ref> +; it became the chief home of the returned exiles <ref type="bible" bn:sid="EZR 1:11">Ezr 1:11</ref>; <ref type="bible" bn:sid="EZR 2:11">2:11</ref> <ref type="bible" bn:sid="NEH 2:11">Ne 2:11</ref>, <ref type="bible" bn:sid="NEH 2:17">17</ref> +; mentioned S 31 times, K 92 times, Ch 151 times, Ezr 25 times, Ne 38 times, Is<hi rend="sup">1</hi> 27 times, Is<hi rend="sup">2, 3</hi> 22 times, Je 107 times, Ez 26 times, Zc 41 times, etc.—Vid. also n.pr.loc. <foreign xml:lang="hbo">יְבוּס</foreign>, <foreign xml:lang="hbo">שָׁלֵם</foreign>.</sense>
       </entry>
@@ -40801,11 +40799,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">מְכוֹנָה</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">מְכֹנָה</orth>
-        </form>
         <form type="variant" bn:count="25">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">מְכֹנָה</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.f. fixed resting-place, base</hi>;—abs. <foreign xml:lang="hbo">מ׳</foreign> <ref type="bible" bn:sid="1KI 7:27">1 K 7:27</ref> + 5 times; <foreign xml:lang="hbo">מְכֹנָה</foreign> <ref type="bible" bn:sid="1KI 7:34">1 K 7:34</ref><hi rend="sup">(×2)</hi>, <ref type="bible" bn:sid="1KI 7:35">35</ref>; sf. <foreign xml:lang="hbo">מְכֻנָתָהּ</foreign> <ref type="bible" bn:sid="ZEC 5:11">Zc 5:11</ref> (Ges<hi rend="sup">§ 27, 3. R. 1</hi>); pl. <foreign xml:lang="hbo">מְכוֹנוֹת</foreign> <ref type="bible" bn:sid="JER 27:19">Je 27:19</ref>, <foreign xml:lang="hbo">מְכֹנֹת</foreign> <ref type="bible" bn:sid="1KI 7:27">1 K 7:27</ref> + 12 times; sf. <foreign xml:lang="hbo">מְכוֹנֹתָ֯ו</foreign> <ref type="bible" bn:sid="EZR 3:3">Ezr 3:3</ref>;—<hi rend="italic">base</hi> or <hi rend="italic">stand</hi> of laver <foreign xml:lang="hbo">כִּיּוֹר</foreign> <ref type="bible" bn:sid="1KI 7:27">1 K 7:27</ref><hi rend="sup">(×2)</hi> + 13 times <ref type="bible" bn:sid="1KI 1">1 K 7</ref>, <ref type="bible" bn:sid="2KI 16:17">2 K 16:17</ref>; <ref type="bible" bn:sid="2KI 25:13">25:13</ref>, <ref type="bible" bn:sid="2KI 25:16">16</ref> = <ref type="bible" bn:sid="JER 52:17">Je 52:17</ref>, <ref type="bible" bn:sid="JER 52:20">20</ref>, <ref type="bible" bn:sid="JER 27:19">Je 27:19</ref> <ref type="bible" bn:sid="2CH 4:14">2 Ch 4:14</ref><hi rend="sup">(×2)</hi>; of altar <ref type="bible" bn:sid="EZR 3:3">Ezr 3:3</ref>; of the symbol. ephah <ref type="bible" bn:sid="ZEC 5:11">Zc 5:11</ref>.</sense>
       </entry>
@@ -42346,11 +42341,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">כִּסֵּא</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">כִּסֵּה</orth>
-        </form>
         <form type="variant" bn:count="133">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">כִּסֵּה</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.m.</hi> <ref type="bible" bn:sid="2SA 7:16">2 S 7:16</ref> <hi rend="bold">seat</hi> of honour, <hi rend="bold">throne (</hi>NH <hi rend="italic">id.;</hi> Ph. (pl.) <foreign xml:lang="hbo">כרסים</foreign>; Aramaic <foreign xml:lang="hbo">כּוּרְסְיָא</foreign>, <foreign xml:lang="syc">ܟܽܘܪܣܝܳܐ</foreign>; Biblical Aramaic <foreign xml:lang="hbo">כָּרְסֵא</foreign>, Zinj. <foreign xml:lang="hbo">כרסא</foreign> DHM<hi rend="sup">Sendsch. 58. 44</hi>; Arabic <foreign xml:lang="ar">كُرْسِىٌّ</foreign>; but Assyrian <hi rend="italic">kussu;</hi> perhaps Akkad. loan-word; ideogr. <hi rend="italic">iṣ</hi> GU. ZA, cf. Dl<hi rend="sup">HWB 343</hi><hi rend="bold">)</hi>;—abs. <foreign xml:lang="hbo">כִּסֵּא</foreign> <ref type="bible" bn:sid="GEN 41:40">Gn 41:40</ref> +; <foreign xml:lang="hbo">כִּסֵּה</foreign> <ref type="bible" bn:sid="1KI 10:19">1 K 10:19</ref><hi rend="sup">(×2)</hi> <ref type="bible" bn:sid="JOB 26:9">Jb 26:9</ref>, <foreign xml:lang="hbo">הַכִּסֶּא</foreign> <ref type="bible" bn:sid="EZK 1:26">Ez 1:26</ref>; cstr. <foreign xml:lang="hbo">כִּסֵּא</foreign> <ref type="bible" bn:sid="2SA 3:10">2 S 3:10</ref> +, <foreign xml:lang="hbo">כֵּס</foreign> <ref type="bible" bn:sid="EXO 17:16">Ex 17:16</ref> (si vera l.; v. infr.); sf. <foreign xml:lang="hbo">כִּסְאִי</foreign> <ref type="bible" bn:sid="1KI 1:13">1 K 1:13</ref> +, <foreign xml:lang="hbo">כִּסְאֲךָ</foreign> <ref type="bible" bn:sid="2SA 7:16">2 S 7:16</ref> +, <foreign xml:lang="hbo">כִּסְאֶ֑ךָ</foreign> <ref type="bible" bn:sid="1KI 5:19">1 K 5:19</ref> +, <foreign xml:lang="hbo">כִּסְאוֹ</foreign> <ref type="bible" bn:sid="EXO 11:5">Ex 11:5</ref> +; pl. <foreign xml:lang="hbo">כִּסְאוֹת</foreign> <ref type="bible" bn:sid="PSA 122:5">ψ 122:5</ref><hi rend="sup">(×2)</hi>; sf. <foreign xml:lang="hbo">כִּסְאוֹתָם</foreign> <ref type="bible" bn:sid="EZK 26:16">Ez 26:16</ref> <ref type="bible" bn:sid="ISA 14:9">Is 14:9</ref>;—<hi rend="italic">seat of honour</hi>, usually</sense>
         <sense n="1" bn:level="1" />
@@ -45418,11 +45410,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">לַ֫יְלָה</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">לַ֫יִל</orth>
-        </form>
         <form type="variant" bn:count="242">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">לַ֫יִל</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.m.</hi> <ref type="bible" bn:sid="GEN 40:5">Gn 40:5</ref> <hi rend="bold">night (</hi>NH <hi rend="italic">id.;</hi> MI<hi rend="sup">15</hi> <foreign xml:lang="hbo">(ב)ללה</foreign>; Aramaic <foreign xml:lang="hbo">לֵילָא</foreign>, <foreign xml:lang="syc">ܠܻܠܝܳܐ</foreign>, <foreign xml:lang="syc">ܠܶܠܝܳܐ</foreign>; Arabic <foreign xml:lang="ar">لَيْلٌ</foreign>, <foreign xml:lang="ar">لَيْلَةٌ</foreign>; Ethiopic <foreign xml:lang="gez">ሌሊት</foreign> all = <hi rend="italic">night;</hi> Assyrian <hi rend="italic">lîlâtu</hi>, <hi rend="italic">evening</hi> Dl<hi rend="sup">HWB</hi>; meaning of √ dubious; form probably <foreign xml:lang="hbo">לילי</foreign>, and ending <foreign xml:lang="hbo">ָה</foreign> radical, and not <foreign xml:lang="hbo">ה</foreign> loc., Nö<hi rend="sup">M 127</hi> Dl<hi rend="sup">Prol. 128</hi> Ges<hi rend="sup">§ 90, 2. c. R.</hi> Kö<hi rend="sup">i. p. 57, R. 1</hi><hi rend="bold">)</hi>;—abs. <foreign xml:lang="hbo">לַ֫יְלָה</foreign> <ref type="bible" bn:sid="GEN 19:33">Gn 19:33</ref> + 214 times + 2 times Qr (v. infr.); <foreign xml:lang="hbo">לָ֑יְלָה</foreign> <ref type="bible" bn:sid="GEN 1:5">Gn 1:5</ref> + 3 times; <foreign xml:lang="hbo">לַ֫יִל</foreign> <ref type="bible" bn:sid="ISA 16:3">Is 16:3</ref> + <ref type="bible" bn:sid="PRO 31:18">Pr 31:18</ref> <ref type="bible" bn:sid="LAM 2:19">La 2:19</ref> Kt (Qr <foreign xml:lang="hbo">לַיְלָה</foreign>); <foreign xml:lang="hbo">לֵיל</foreign> <ref type="bible" bn:sid="ISA 15:1">Is 15:1</ref><hi rend="sup">(×2)</hi>; <ref type="bible" bn:sid="ISA 21:11">21:11</ref>; cstr. <foreign xml:lang="hbo">לֵיל</foreign> <ref type="bible" bn:sid="EXO 12:42">Ex 12:42</ref> <ref type="bible" bn:sid="ISA 30:29">Is 30:29</ref>; pl. abs. <foreign xml:lang="hbo">לֵילוֹת</foreign> <ref type="bible" bn:sid="1SA 30:12">1 S 30:12</ref> + 4 times; cstr. <hi rend="italic">id.</hi>, <ref type="bible" bn:sid="ISA 21:8">Is 21:8</ref> + 5 times;—</sense>
         <sense n="1" bn:level="1" />
@@ -69958,11 +69947,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">עֲרֹעֵר</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">עֲרוֹעֵר</orth>
-        </form>
         <form type="variant" bn:count="5">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">עֲרוֹעֵר</orth>
         </form>
         <form type="variant" bn:count="1">
           <orth xml:lang="hbo">עַרְעֹר</orth>
@@ -70267,11 +70253,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">עֶשֶׂר</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">עֲשָׂרָה</orth>
-        </form>
         <form type="variant" bn:count="176">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">עֲשָׂרָה</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.m.</hi> and <hi rend="bold">f.</hi> ten <hi rend="bold">(</hi>NH = BH; perhaps MI <hi rend="sup">33</hi> <foreign xml:lang="hbo">עשרֿ</foreign>; Ph. <foreign xml:lang="hbo">עשר</foreign>, <foreign xml:lang="hbo">עסר</foreign>, <foreign xml:lang="hbo">עשרת</foreign>, etc.; Arabic <foreign xml:lang="ar">عَشْرٌ</foreign>, <foreign xml:lang="ar">عَشَرَةٌ</foreign>; Sab. <foreign xml:lang="hbo">עשר</foreign> SabDenkm<hi rend="sup"> No. 11 b, l, 5, 6</hi>, <foreign xml:lang="hbo">עשרת</foreign> and cpds. Hom<hi rend="sup">Chrest. 48</hi>; Ethiopic <foreign xml:lang="gez">ዐሥሩ</foreign>: <foreign xml:lang="gez">ዐሠርቱ</foreign>; Assyrian <hi rend="italic">ešru;</hi> 𝔗 <foreign xml:lang="hbo">עֲסַר</foreign>, <foreign xml:lang="hbo">עַסְרָא</foreign>; <foreign xml:lang="hbo">עֲשַׂר</foreign>, <foreign xml:lang="hbo">עַשְׂרָא</foreign>; Syriac <foreign xml:lang="syc">ܥܣܰܪ</foreign>, <foreign xml:lang="syc">ܥܶܣܪܳܐ</foreign>; Nab. <foreign xml:lang="hbo">עשר</foreign>, all = <hi rend="italic">ten;</hi> Palm. <foreign xml:lang="hbo">עשרתא</foreign> <hi rend="italic">the Ten</hi> (rulers)<hi rend="bold">)</hi>;—<hi rend="bold">m.</hi> (c. <hi rend="bold">n.f.</hi>) <foreign xml:lang="hbo">עֶ֫שֶׂר</foreign> <ref type="bible" bn:sid="2SA 15:16">2 S 15:16</ref> + 53 times (abs. and cstr. usually indistinguishable); <foreign xml:lang="hbo">עָ֑שֶׂר</foreign> <ref type="bible" bn:sid="1KI 7:43">1 K 7:43</ref>; <ref type="bible" bn:sid="1CH 6:46">1 Ch 6:46</ref>; <hi rend="bold">f.</hi> (c. <hi rend="bold">n.m.</hi>): abs. <foreign xml:lang="hbo">עֲשָׂרָה</foreign> <ref type="bible" bn:sid="GEN 24:10">Gn 24:10</ref> + 69 times; cstr. (prob.) <foreign xml:lang="hbo">עֲשֶׂ֫רֶת</foreign> <ref type="bible" bn:sid="1SA 17:18">1 S 17:18</ref> + 46 times; f.pl. <foreign xml:lang="hbo">עֲשָׂרֹת</foreign> <ref type="bible" bn:sid="EXO 18:21">Ex 18:21</ref> + 2 times;—on pl. <foreign xml:lang="hbo">עֶשְׂרִים</foreign>, 20, v. infr.;—</sense>
         <sense n="1" bn:level="1" bn:allCited="1" />
@@ -70299,11 +70282,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">עָשָׂר</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">עֶשְׂרֵה</orth>
-        </form>
         <form type="variant" bn:count="144">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">עֶשְׂרֵה</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.</hi> ten, only after units to make num. 11–19, both cardinal and ordinal; <foreign xml:lang="hbo">עֶשְׂרֵה</foreign> c. <hi rend="bold">n.f.</hi>, <foreign xml:lang="hbo">עָשָׂר</foreign> c. <hi rend="bold">n.m.</hi>, thus:</sense>
         <sense n="1" bn:level="1" />
@@ -76064,11 +76044,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">יִצְחָק</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">יִשְׂחָק</orth>
-        </form>
         <form type="variant" bn:count="4">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">יִשְׂחָק</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.pr.m.</hi> <foreign xml:lang="grc">Ισαακ</foreign>: <hi rend="bold">Isaac, son</hi> of Abr. and Sarah <hi rend="bold">(</hi><hi rend="italic">he laugheth</hi>, cf. play upon name <ref type="bible" bn:sid="GEN 18:12">Gn 18:12 f.</ref> (J), <ref type="bible" bn:sid="GEN 21:6">21:6</ref> (E), <ref type="bible" bn:sid="GEN 17:17">17:17</ref>, <ref type="bible" bn:sid="GEN 17:19">19</ref> (P); <ref type="bible" bn:sid="GEN 26:8">26:8</ref> (J)<hi rend="bold">)</hi>;—<foreign xml:lang="hbo">יִצְּחָק</foreign> <ref type="bible" bn:sid="GEN 21:3">Gn 21:3</ref>, <ref type="bible" bn:sid="GEN 21:4">4</ref>, <ref type="bible" bn:sid="GEN 21:5">5</ref> (E) +, <ref type="bible" bn:sid="GEN 24:62">24:62</ref>, <ref type="bible" bn:sid="GEN 24:63">63</ref>, <ref type="bible" bn:sid="GEN 24:67">67</ref> (J) +, <ref type="bible" bn:sid="GEN 17:19">17:19</ref>, <ref type="bible" bn:sid="GEN 17:21">21</ref> (P) +, (80 times Gn, 9 times Ex, 7 times Dt), <ref type="bible" bn:sid="LEV 26:42">Lv 26:42</ref>; <ref type="bible" bn:sid="NUM 32:11">Nu 32:11</ref>; <ref type="bible" bn:sid="JOS 24:3">Jos 24:3</ref>, <ref type="bible" bn:sid="JOS 24:4">4</ref>; <ref type="bible" bn:sid="1KI 18:36">1 K 18:36</ref>; <ref type="bible" bn:sid="2CH 13:23">2 Ch 13:23</ref>; <ref type="bible" bn:sid="1CH 1:28">1 Ch 1:28</ref>, <ref type="bible" bn:sid="1CH 1:34">34</ref><hi rend="sup">(×2)</hi>; <ref type="bible" bn:sid="1CH 16:16">16:16</ref>; <ref type="bible" bn:sid="1CH 29:18">29:18</ref>; <ref type="bible" bn:sid="2CH 30:6">2 Ch 30:6</ref>; †<foreign xml:lang="hbo">יִשְׂחָק</foreign> <ref type="bible" bn:sid="JER 33:26">Je 33:26</ref> <ref type="bible" bn:sid="PSA 105:9">ψ 105:9</ref>, and (= Israel) <foreign xml:lang="hbo">בָּמוֹת יִשְׂחָק</foreign> <ref type="bible" bn:sid="AMO 7:9">Am 7:9</ref>, <foreign xml:lang="hbo">בֵּית יִשְׂחָק</foreign> v <ref type="bible" bn:sid="AMO 7:16">16</ref>.</sense>
       </entry>
@@ -81085,11 +81062,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">קָרֵב</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">קָרַב</orth>
-        </form>
         <form type="variant" bn:count="279">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">קָרַב</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">vb.</hi> come near, approach <hi rend="bold">(</hi>NH <hi rend="italic">approach, be offered;</hi> Assyrian <hi rend="italic">ḳarâbu</hi>, <hi rend="italic">approach;</hi> Arabic <foreign xml:lang="ar">قَرِبَ</foreign>, <foreign xml:lang="ar">قَرُبَ</foreign> <hi rend="italic">be near, approach;</hi> so Ethiopic <foreign xml:lang="gez">ቀርበ</foreign>: Sab. <foreign xml:lang="hbo">קרב</foreign> <hi rend="italic">approach</hi> a woman (sexually, v. <hi rend="bold">1 a</hi> infr.), DHM<hi rend="sup">Hofmus. No. 6. 1. 2</hi>, but also gen. <foreign xml:lang="hbo">דֿ רחק וקרב</foreign> <hi rend="italic">he who is far and he who is near</hi> CIS<hi rend="sup">iv, no. 95, 7, 8</hi> cf. SabDenkm<hi rend="sup">No. 12, 9, 10</hi>; Aramaic <foreign xml:lang="hbo">קְרֵב</foreign>, <foreign xml:lang="syc">ܩܪܶܒ</foreign>, <hi rend="italic">approach;</hi> also, = <hi rend="italic">oblation</hi>, Sab. <foreign xml:lang="hbo">קרבן</foreign> DHM<hi rend="sup">ZMG xxx (1876), 672</hi> Arabic <foreign xml:lang="ar">قُرْبَانٌ</foreign>, Old Aramaic <foreign xml:lang="hbo">קרבן</foreign>, 𝔗 <foreign xml:lang="hbo">קוּרְבָּנָא</foreign>, Syriac <foreign xml:lang="syc">ܩܽܘܪܒܳܢܳܐ</foreign>; cf. Assyrian <hi rend="italic">kurbannu</hi> <foreign xml:lang="hbo">(כ)</foreign>, Dl<hi rend="sup">HWB 351</hi><hi rend="bold">)</hi>;—</sense>
         <sense bn:level="1" bn:stem="Qal" bn:count="93" />
@@ -81164,11 +81138,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">קָרֹב</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">קָרוֹב</orth>
-        </form>
         <form type="variant" bn:count="78">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">קָרוֹב</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">adj.</hi> near;—abs. <foreign xml:lang="hbo">קָרֹב</foreign> <ref type="bible" bn:sid="EXO 12:4">Ex 12:4</ref> +; -<foreign xml:lang="hbo">וֹב</foreign> <ref type="bible" bn:sid="2SA 19:43">2 S 19:43</ref> +; pl. <foreign xml:lang="hbo">קְרֹבִים</foreign> <ref type="bible" bn:sid="1KI 8:59">1 K 8:59</ref>, <foreign xml:lang="hbo">קְרוֹבִים</foreign> <ref type="bible" bn:sid="ISA 33:13">Is 33:13</ref> +; fpl. <foreign xml:lang="hbo">קְרֹבוֹת</foreign> <ref type="bible" bn:sid="EZK 22:5">Ez 22:5</ref>, etc.;—<hi rend="italic">near</hi> (often opp. <foreign xml:lang="hbo">רָחוֹק</foreign>):</sense>
         <sense n="1" bn:level="1" />
@@ -87065,11 +87036,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">שָׂבֵעַ</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">שָׂבַע</orth>
-        </form>
         <form type="variant" bn:count="96">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">שָׂבַע</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">vb.</hi> be sated, satisfied, surfeited <hi rend="bold">(</hi>NH (der. spec.) = BH; so Assyrian <hi rend="italic">šebû</hi>, Arabic <foreign xml:lang="ar">شَبِعَ</foreign>, Aramaic <foreign xml:lang="hbo">סְבַע</foreign>, <foreign xml:lang="syc">ܣܒܰܥ</foreign>, Palm. <foreign xml:lang="hbo">שבע</foreign>; the Ethiopic vb. of same meaning is <foreign xml:lang="gez">ጸግበ</foreign>: <hi rend="bold">)</hi>;—</sense>
         <sense bn:level="1" bn:stem="Qal" bn:count="79" />
@@ -87489,11 +87457,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">שׂוּם</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">שִׂים</orth>
-        </form>
         <form type="variant" bn:count="582">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">שִׂים</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">vb.</hi> put, place, set <hi rend="bold">(</hi>cf. Nö<hi rend="sup">ZMG xxxvii (1883), 532</hi>; NH <foreign xml:lang="hbo">סוּם</foreign> Pi. <hi rend="italic">designate, fix</hi>, <foreign xml:lang="hbo">שׂום</foreign> Ecclus 45:5c; 49:6; Ph. <foreign xml:lang="hbo">שם</foreign>, Assyrian <hi rend="italic">šâmu</hi>, <hi rend="italic">fix, determine;</hi> Sab. <foreign xml:lang="hbo">שׂים</foreign> <hi rend="italic">set, set up</hi>, SabDenkm<hi rend="sup">No. 7, 1. 6</hi> CIS<hi rend="sup">iv. 1</hi>; Arabic <foreign xml:lang="ar">شَامَ (ى)</foreign> is <hi rend="italic">insert, sheathe</hi>, also <hi rend="italic">compute;</hi> Ethiopic <foreign xml:lang="gez">ሤመ</foreign>: <hi rend="italic">put, place;</hi> 𝔗 <foreign xml:lang="hbo">שׂוּם</foreign>, Syriac <foreign xml:lang="syc">ܣܳܡ</foreign>, Old Aramaic <foreign xml:lang="hbo">שים</foreign><hi rend="bold">)</hi>;—</sense>
         <sense bn:level="1" bn:stem="Qal" />
@@ -88234,11 +88199,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">שָׂמַח</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">שָׂמֵ֑חַ</orth>
-        </form>
         <form type="variant" bn:count="154">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">שָׂמֵ֑חַ</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">vb.</hi> rejoice, be glad <hi rend="bold">(</hi>NH id.<hi rend="italic">;</hi> cf. perhaps Assyrian <hi rend="italic">šamâḫu</hi>, <hi rend="italic">flourish</hi>, Arabic <foreign xml:lang="ar">شَمَخَ</foreign> <hi rend="italic">be high, proud;</hi> Pun. n.pr. f. <foreign xml:lang="hbo">שמחת</foreign><hi rend="bold">)</hi>;—</sense>
         <sense bn:level="1" bn:stem="Qal" bn:count="126" />
@@ -89879,11 +89841,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">שֶׁ֫בַע</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">שִׁבְעָה</orth>
-        </form>
         <form type="variant" bn:count="394">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">שִׁבְעָה</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.m.</hi> et <hi rend="bold">f. seven (</hi>NH id., MI<hi rend="sup">16</hi> <foreign xml:lang="hbo">שבעת</foreign>; Assyrian <hi rend="italic">sibi, sibittu</hi> (Dl<hi rend="sup">Gr. § 65, 6</hi>; <hi rend="italic">s</hi> = <foreign xml:lang="hbo">שׁ</foreign>), Arabic <foreign xml:lang="ar">سَبْعٌ</foreign>, <foreign xml:lang="ar">سَبْعَةٌ</foreign> Sab. <foreign xml:lang="hbo">סבע</foreign> Hom<hi rend="sup">Chr 47, 124</hi>, Ethiopic <foreign xml:lang="gez">ሰብዑ</foreign>: <foreign xml:lang="gez">ሰብዐቱ</foreign>: Ph. (Pun.) <foreign xml:lang="hbo">שבע</foreign>, Nab. <foreign xml:lang="hbo">שבע</foreign>, <foreign xml:lang="hbo">שבעה</foreign>, Palm. <foreign xml:lang="hbo">שבעא</foreign>, <foreign xml:lang="hbo">שבעה</foreign>; Aramaic <foreign xml:lang="hbo">שִׁבְעָא</foreign>,<foreign xml:lang="hbo">שְׁבַע</foreign>, <foreign xml:lang="syc">ܫܒܰܥ</foreign>, <foreign xml:lang="syc">ܫܰܒܥܳܐ</foreign>; on etym. cf. Lag<hi rend="sup">BN 37 f.</hi><hi rend="bold">)</hi>;—<hi rend="bold">m.</hi> (c. <hi rend="bold">n.f.</hi>) abs. <foreign xml:lang="hbo">שֶׁבַע</foreign> <ref type="bible" bn:sid="GEN 41:2">Gn 41:2</ref> + 115 times; cstr. <foreign xml:lang="hbo">שְׁבַע</foreign> <ref type="bible" bn:sid="GEN 5:26">5:26</ref> + 47 times, especially P (15 times) and Chr (20 times), <foreign xml:lang="hbo">וּשֲׁבַע</foreign> <ref type="bible" bn:sid="1KI 14:21">1 K 14:21</ref>. <hi rend="bold">f.</hi> (c. <hi rend="bold">n.m.</hi>) abs. <foreign xml:lang="hbo">שִׁבְעָה</foreign> <ref type="bible" bn:sid="GEN 4:24">Gn 4:24</ref> + 100 times; cstr. <foreign xml:lang="hbo">שִׁבְעַת</foreign> <ref type="bible" bn:sid="GEN 7:10">7:10</ref> + 120 times; sf. <foreign xml:lang="hbo">שְׁבַעְתָּם</foreign> <ref type="bible" bn:sid="2SA 21:9">2 S 21:9</ref> Qr (so Vrss and mod.; v. Dr; &gt; Kt <foreign xml:lang="hbo">שִׁבְעָתַיִם</foreign>);—<hi rend="italic">seven:</hi></sense>
         <sense n="1" bn:level="1" />
@@ -90561,11 +90520,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">שֵׁשׁ</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">שִׁשָּׁה</orth>
-        </form>
         <form type="variant" bn:count="216">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">שִׁשָּׁה</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">n.m.</hi> et <hi rend="bold">f.six</hi>;—<hi rend="bold">m.</hi> <foreign xml:lang="hbo">שֵׁשׁ</foreign> (c. <hi rend="bold">n.f.</hi>) <ref type="bible" bn:sid="GEN 31:41">Gn 31:41</ref> + 120 times; <hi rend="bold">f.</hi> <foreign xml:lang="hbo">שִׁשָּׁה</foreign> (c. n.m.) <ref type="bible" bn:sid="GEN 30:20">30:20</ref> + 39 times; cstr. <foreign xml:lang="hbo">שֵׁ֫שֶׁת</foreign> <ref type="bible" bn:sid="EXO 23:12">Ex 23:12</ref> + 30 times (6 + 10 = 16 are additional);—<hi rend="italic">six</hi> (Hex chiefly P):</sense>
         <sense n="1" bn:level="1" />
@@ -92396,11 +92352,8 @@
         <form type="lemma">
           <orth xml:lang="hbo">שָׁכַן</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="hbo">שָׁכֵ֑ן</orth>
-        </form>
         <form type="variant" bn:count="129">
-          <orth xml:lang="hbo" />
+          <orth xml:lang="hbo">שָׁכֵ֑ן</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">vb.</hi> settle down, abide, dwell <hi rend="bold">(</hi>NH id.<hi rend="italic">;</hi> Ecclus 43:17d +; Ph. <foreign xml:lang="hbo">שכן</foreign> Lzb<hi rend="sup">375</hi>; Aramaic <foreign xml:lang="hbo">שְׁכֵין</foreign>; Syriac <foreign xml:lang="syc">ܫܟܶܢ</foreign>, all <hi rend="italic">dwell;</hi> Arabic <foreign xml:lang="ar">سَكَنَ</foreign> <hi rend="italic">rest, dwell</hi>, cf. Assyrian <hi rend="italic">šakânu</hi>, <hi rend="italic">set, lay, deposit, set up</hi> (a dwelling), intrans. <hi rend="italic">be situated</hi> (of city), <hi rend="italic">maškanu</hi>, <hi rend="italic">place, dwelling-place</hi><hi rend="bold">)</hi>;—</sense>
         <sense bn:level="1" bn:stem="Qal" />
@@ -101024,11 +100977,8 @@
         <form type="lemma">
           <orth xml:lang="arc">הֲוָא</orth>
         </form>
-        <form type="variant">
-          <orth xml:lang="arc">הֲוָה</orth>
-        </form>
         <form type="variant" bn:count="71">
-          <orth xml:lang="arc" />
+          <orth xml:lang="arc">הֲוָה</orth>
         </form>
         <sense bn:level="1"><hi rend="bold">vb. come to pass, become, be (</hi>BH <foreign xml:lang="arc">הָיָה</foreign><hi rend="bold">)</hi>;—</sense>
         <sense bn:level="1" bn:stem="Pe." />

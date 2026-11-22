@@ -33,21 +33,32 @@ interface ScannedEntry {
   langs: string[];
   strong: string[];
   inflected: string[];
+  allCited: boolean;
+  /** Scripture references: "sid" or "sid>meant", in order. */
+  brefs: string[];
 }
 
 /** Top-level parts of an entry, in order: [TEI pattern, module style]. */
 const PARTS = new RegExp(
   [
     '<note type="forms">([\\s\\S]*?)</note>',
-    '<note type="comment">([\\s\\S]*?)</note>',
+    '<note type="comment"(?: n="([^"]*)")?>([\\s\\S]*?)</note>',
     '<etym>([\\s\\S]*?)</etym>',
     '<def>([\\s\\S]*?)</def>',
     '<note type="kjvRenderings">([\\s\\S]*?)</note>',
+    '<sense((?: [^>]*?)?) />',
+    '<note type="comment"(?: n="([^"]*)")? />',
     '<sense((?: [^>]*)?)>([\\s\\S]*?)</sense>',
   ].join('|'),
   'g'
 );
-const PART_STYLES = ['form', 'note', 'deriv', 'def', 'kjv'];
+
+/** A sense's attributes as the verifier compares them. */
+function senseLabel(get: (name: string) => string): string {
+  return ['n', 'level', 'stem', 'allCited', 'pre', 'count']
+    .map((name) => get(name))
+    .join('/');
+}
 
 function attrIn(attrs: string, name: string): string {
   return unescape(new RegExp(`${name}="([^"]*)"`).exec(attrs)?.[1] ?? '');
@@ -101,13 +112,32 @@ function scanTei(xml: string): ScannedEntry[] {
       '$1'
     );
     const parts = [...unwrapped.matchAll(PARTS)].map((m) => {
-      const index = m.slice(1, 6).findIndex((g) => g !== undefined);
-      if (index >= 0)
-        return `${PART_STYLES[index]}: ${stripTags(m[index + 1])}`;
-      const n = attrIn(m[6], 'n');
-      const level = attrIn(m[6], 'bn:level');
-      return `sense ${n}/${level}: ${stripTags(m[7])}`;
+      if (m[1] !== undefined) return `form: ${stripTags(m[1])}`;
+      if (m[3] !== undefined) return `note ${m[2] ?? ''}: ${stripTags(m[3])}`;
+      if (m[4] !== undefined) return `deriv: ${stripTags(m[4])}`;
+      if (m[5] !== undefined) return `def: ${stripTags(m[5])}`;
+      if (m[6] !== undefined) return `kjv: ${stripTags(m[6])}`;
+      // An empty note (one that only heads its numbered parts).
+      if (m[0].startsWith('<note')) return `note ${m[8] ?? ''}: `;
+      const attrs = m[7] ?? m[9] ?? '';
+      const text = m[7] !== undefined ? '' : stripTags(m[10]);
+      const label = senseLabel((name) =>
+        attrIn(attrs, name === 'n' ? 'n' : `bn:${name}`)
+      );
+      return `sense ${label}: ${text}`;
     });
+    // BDB's headword line: its marks, then any other spellings.
+    const variants = [
+      ...body.matchAll(
+        /<form type="variant"( bn:count="[^"]*")?>\s*<orth xml:lang="([^"]+)">([^<]*)<\/orth>\s*<\/form>/g
+      ),
+    ].map((v) => `${v[2]}|${attrIn(v[1] ?? '', 'bn:count')}|${unescape(v[3])}`);
+    const marks = ['bn:peculiar', 'bn:brackets', 'bn:count'].map((name) =>
+      attrIn(entryAttrs, name)
+    );
+    if (marks.some(Boolean) || variants.length > 0) {
+      parts.unshift(`hwline ${marks.join('/')}: ${variants.join(' ')}`);
+    }
     const links = [
       // In this file ("#G25") or another lexicon's ("<file>#H5689"), or
       // every entry with a headword.
@@ -122,7 +152,9 @@ function scanTei(xml: string): ScannedEntry[] {
     const titles = [...body.matchAll(/<usg( [^>]*)?>/g)].map((m) =>
       attrIn(m[1] ?? '', 'bn:title')
     );
-    const langs = [...body.matchAll(/<foreign xml:lang="([^"]*)">/g)].map(
+    // An empty foreign word (BDB's Hebrew lost in transcription) is written
+    // <foreign ... />.
+    const langs = [...body.matchAll(/<foreign xml:lang="([^"]*)"\s*\/?>/g)].map(
       (m) => m[1]
     );
     const words = [
@@ -159,6 +191,12 @@ function scanTei(xml: string): ScannedEntry[] {
       titles,
       langs,
       strong: attrIn(entryAttrs, 'bn:strong').split(/\s+/).filter(Boolean),
+      allCited: attrIn(entryAttrs, 'bn:allCited') === '1',
+      brefs: [
+        ...body.matchAll(
+          /<ref type="bible" bn:sid="([^"]*)"(?: bn:meant="([^"]*)")?>/g
+        ),
+      ].map((r) => (r[2] ? `${r[1]}>${r[2]}` : r[1])),
       inflected: [
         ...body.matchAll(
           /<form type="inflected"><orth xml:lang="[^"]+">([^<]*)<\/orth><\/form>/g
@@ -202,7 +240,7 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
     const rows = db
       .prepare(
         `SELECT key, headword, headwordLang, homograph, translit,
-                pronunciation, body
+                pronunciation, allCited, body
          FROM entries ORDER BY id`
       )
       .all() as {
@@ -212,6 +250,7 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
       homograph: string;
       translit: string;
       pronunciation: string;
+      allCited: number;
       body: string;
     }[];
     if (rows.length !== scanned.length) {
@@ -235,17 +274,45 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
       expect('homograph', row.homograph, tei.homograph);
       expect('transliteration', row.translit, tei.translit);
       expect('pronunciation', row.pronunciation, tei.pronunciation);
+      expect('dagger', String(row.allCited), tei.allCited ? '1' : '0');
       const body = JSON.parse(row.body) as Stored[];
+      const attr = (item: Stored, name: string) =>
+        typeof item === 'string' ? '' : String(item[name] ?? '');
       const parts = body.map((item) => {
         if (typeof item === 'string') return `text: ${item}`;
-        if (item.style !== 'sense') {
-          return `${item.style}: ${storedText(item.children)}`;
+        if (item.style === 'sense') {
+          const label = senseLabel((name) => attr(item, name));
+          return `sense ${label}: ${storedText(item.children)}`;
         }
-        const n = String(item.n ?? '');
-        const level = String(item.level ?? '');
-        return `sense ${n}/${level}: ${storedText(item.children)}`;
+        if (item.style === 'note') {
+          return `note ${attr(item, 'n')}: ${storedText(item.children)}`;
+        }
+        if (item.style === 'hwline') {
+          const marks = ['peculiar', 'brackets', 'count']
+            .map((name) => attr(item, name))
+            .join('/');
+          const words = item.children
+            .map(
+              (w) =>
+                `${attr(w, 'lang')}|${attr(w, 'count')}|${storedText(typeof w === 'string' ? [w] : w.children)}`
+            )
+            .join(' ');
+          return `hwline ${marks}: ${words}`;
+        }
+        return `${item.style}: ${storedText(item.children)}`;
       });
       expect('parts', parts.join('\n'), tei.parts.join('\n'));
+      expect(
+        'scripture references',
+        collect(body, 'bref')
+          .map((r) =>
+            attr(r, 'meant')
+              ? `${attr(r, 'sid')}>${attr(r, 'meant')}`
+              : attr(r, 'sid')
+          )
+          .join(' '),
+        tei.brefs.join(' ')
+      );
       expect(
         'usage titles',
         collect(body, 'usg')
@@ -276,7 +343,13 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
       );
       expect(
         'words',
-        collect(body, 'word')
+        // Not the other spellings on BDB's headword line, compared above.
+        collect(
+          body.filter(
+            (item) => typeof item === 'string' || item.style !== 'hwline'
+          ),
+          'word'
+        )
           .map((w) => {
             const word = w as {
               lang?: string;
@@ -308,9 +381,12 @@ export function verifyLexicon(dbFile: string, teiFile: string): LexiconSummary {
         wanted.add(`strong ${tei.key} ${tei.key}`);
         continue;
       }
-      wanted.add(`lemma ${lemmaOf(tei.headword)} ${tei.key}`);
-      for (const form of tei.inflected) {
-        wanted.add(`lemma ${lemmaOf(form)} ${tei.key}`);
+      // Lemma lookups are Greek only (docs/lexicon-format.md).
+      if (tei.headwordLang === 'grc') {
+        wanted.add(`lemma ${lemmaOf(tei.headword)} ${tei.key}`);
+        for (const form of tei.inflected) {
+          wanted.add(`lemma ${lemmaOf(form)} ${tei.key}`);
+        }
       }
       for (const n of tei.strong) wanted.add(`strong ${n} ${tei.key}`);
     }

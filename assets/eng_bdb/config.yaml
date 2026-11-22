@@ -1,0 +1,19 @@
+name: A Hebrew and English Lexicon of the Old Testament (Brown, Driver, Briggs)
+abbreviation: BDB
+description: |
+  Brown, Driver and Briggs's Hebrew and English Lexicon of the Old Testament
+  (Oxford, 1906), with its appendix on Biblical Aramaic: every Hebrew and
+  Aramaic word of the Old Testament, its forms, meanings and related words
+  in other Semitic languages, with references to every verse where it is
+  used, in Sefaria's transcription, with corrections checked against the
+  1906 printing and the Westminster Leningrad Codex.
+moduleType: lexicon
+year: 1906
+fetchId: eng_bdb
+language: English
+languageCode: eng
+license: "Public domain. Francis Brown, with the co-operation of S. R. Driver and Charles A. Briggs, A Hebrew and English Lexicon of the Old Testament, with an appendix containing the Biblical Aramaic (Oxford: Clarendon Press, 1906), in Sefaria's transcription (BDB Dictionary and BDB Aramaic Dictionary, marked public domain by Sefaria). Strong's numbers from the Open Scriptures Hebrew Bible Project's lexical index (https://github.com/openscriptures/HebrewLexicon), licensed under the Creative Commons Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/). Converted to Bible Nav's module format, with corrections listed in its PROVENANCE.md."
+version: 1.0.0
+# The exact edition, and where its source came from, for the signed manifest.
+edition: "Brown, Driver and Briggs, A Hebrew and English Lexicon of the Old Testament (Oxford, 1906), in Sefaria's transcription, with Bible Nav's corrections checked against the 1906 printing and the Westminster Leningrad Codex; Strong's numbers from the Open Scriptures lexical index"
+source: "Sefaria's public database dump (dump_small.tar.gz, Last-Modified 2026-11-21, SHA-256 a0213cabe5351121c157c437d5cf2cd7a4425c67367d4b29c8ed41b3cb887583), BDB entries extracted as assets/eng_bdb/source/bdb.json (SHA-256 ccd51c2e93845d413ecc7ff34ebf152276f9853f00afa8675c9a2bbf6a45998b); Open Scriptures HebrewLexicon LexicalIndex.xml at commit 21c9add13bc727d3a951361778e97e3ff7afd1ce; converted to TEI by tools/import-sefaria-bdb.py with assets/eng_bdb/corrections.yaml and corrections-letters.yaml; see assets/eng_bdb/PROVENANCE.md"

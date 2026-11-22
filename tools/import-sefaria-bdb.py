@@ -196,6 +196,13 @@ class Corrections:
                     f[1] = f[1].replace(c['find'], c['replace'])
                 self.changes.append((rid, f"{rid}: Sefaria's markup corrected ({c['reason']}); the wording is unchanged."))
                 self.used.add(c['_id'])
+            elif kind == 'count':
+                if entry.get('occurrences') != c['sic'] or not fields or not fields[0][1].startswith(c['text']):
+                    raise Fail(f'{rid}: count correction does not apply')
+                entry['occurrences'] = c['corr']
+                fields[0][1] = fields[0][1][len(c['text']):]
+                self.changes.append((rid, f"{rid}: occurrence count \"{c['corr']}\" ({c['reason']})."))
+                self.used.add(c['_id'])
             elif kind == 'note':
                 self._find_link(rid, c['link'], None, fields)
                 self.notes.setdefault(rid, []).append((c['link'], c['note']))
@@ -582,18 +589,28 @@ class Converter:
             entry.set(bn('brackets'), {'first_word': 'first', 'all': 'all'}[e['brackets']])
         if e.get('occurrences'):
             count = e['occurrences']
-            if not re.fullmatch(r'\d+|c\.', count):
+            if not re.fullmatch(r'\d+|c\. \d+', count):
                 raise Fail(f'{self.rid}: occurrence count "{count}"')
             entry.set(bn('count'), count)
         if e.get('root'):
             entry.set(bn('root'), '1')
         form = ET.SubElement(entry, t('form'), {'type': 'lemma'})
         ET.SubElement(form, t('orth'), {xml('lang'): lang}).text = e['headword']
+        # Other spellings printed on the headword line, some with their own
+        # count (Sefaria spells that field "occurences"). Sefaria sometimes
+        # gives a spelling's count as an item of its own with no word: it
+        # belongs to the spelling before it.
+        alts = []
         for alt in e.get('alt_headwords') or []:
-            # Other spellings printed on the headword line, some with their
-            # own count (Sefaria spells that field "occurences").
             if set(alt) - {'word', 'occurences'}:
                 raise Fail(f'{self.rid}: alt_headwords item {alt}')
+            if alt.get('word'):
+                alts.append(dict(alt))
+            elif alts and not alts[-1].get('occurences') and re.fullmatch(r'\d+', alt.get('occurences') or ''):
+                alts[-1]['occurences'] = alt['occurences']
+            else:
+                raise Fail(f'{self.rid}: a count with no word to belong to, {alt}')
+        for alt in alts:
             f = ET.SubElement(entry, t('form'), {'type': 'variant'})
             if alt.get('occurences'):
                 if not re.fullmatch(r'\d+', alt['occurences']):

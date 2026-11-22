@@ -131,13 +131,16 @@ Tables:
   - `strong`: a Strong's number in normal form (below). Every Strong's entry
     has one. In LS, an entry gets one when its headword matches the lemma of
     a Strong's Greek entry (checked against CrossWire's `MLStrong`).
-  - `lemma`: the headword as the TR or Masoretic text's lemma would give it:
+  - `lemma` (Greek only, for now): the headword as the TR's lemma would give it:
     Unicode NFC, without breve or macron (editors' marks of vowel length),
     homograph digits, or the asterisk LS prints before a form not found in
     use (LS's root \*ERA, "earth", is shown with it and looked up without).
     An entry's inflected forms (`<form type="inflected">` in its TEI source,
     such as the aorist named in a headword's entry) are lemma lookups too,
-    so a word met in a text in that form finds the entry.
+    so a word met in a text in that form finds the entry. Hebrew and Aramaic
+    headwords (BDB) get no lemma lookups yet: they are found by Strong's
+    number. A Hebrew lemma lookup needs its own design, since pointed Hebrew
+    must never be Unicode-normalized.
 
 There is no full-text search table (FTS5): an entry is only ever found by
 an exact value, through `lookups`' index on `(kind, value)` or the unique
@@ -155,19 +158,21 @@ with optional attributes as further string fields. The styles are:
 | `def` | | Definition, shown as **Meaning** | SH, SG |
 | `kjv` | | KJV renderings, shown as **In the KJV** | SH, SG |
 | `etym` | | Etymology | LS |
-| `hwline` | `peculiar` (`1`), `brackets` (`first` or `all`), `count` (each optional) | BDB's marks on the headword line: ‡ before the headword, square brackets around the headword (`first`) or the whole headword line (`all`), and the occurrence count printed under it. Has no children; always the first item when present | BDB |
-| `sense` | `n`, `level`, `stem`, `allCited` (`1`) (each optional except `level`) | A numbered sense, such as `n="II"` or `n="1"`. `stem` is the verb stem that heads a section (`Qal`, `Niph.`), shown in bold before it; `allCited` is BDB's † before the number. A sense's text may begin with words printed before its number, such as "Especially" | LS, BDB |
-| `note` | | A note within an entry | BDB |
+| `hwline` | `peculiar` (`1`), `brackets` (`first` or `all`), `count` (each optional) | BDB's headword line: ‡ before the headword (`peculiar`), square brackets around the headword (`first`) or the whole headword line (`all`), and the occurrence count printed under it (a number, or "c. 6823", about). Its children are the other spellings BDB prints on the headword line, as `word` elements, each with its own `count` where BDB gives one. Always the first item when present | BDB |
+| `sense` | `n`, `level`, `stem`, `allCited` (`1`), `pre`, `count` (each optional except `level`) | A numbered sense, such as `n="II"` or `n="1"`. `stem` is the verb stem that heads a section (`Qal`, `Niph.`), shown in bold before it; `allCited` is BDB's † before the number; `pre` the words BDB prints before the number ("Especially"); `count` an occurrence count. May be empty when it only heads the senses after it | LS, BDB |
+| `note` | `n` (optional) | A note within an entry; BDB numbers a few ("Note 1"). May be empty when it only heads the senses after it | SG, BDB |
 | `strong` | | Bold | BDB |
+| `big` | | Large type, as BDB prints headwords inside an entry | BDB |
+| `br` | | A line break; no children | BDB |
 | `sup`, `sub` | | Superscript or subscript, such as BDB's citation details | BDB |
-| `bref` | `sid`, `meant` (optional) | A scripture reference, such as `sid="GEN 10:10"`; its children are the text shown, as printed. `sid` is the verse BDB prints (Hebrew numbering, as in the WLC). Where BDB misprinted the number, `meant` gives the verse the quotation is from, and the app links there | BDB |
+| `bref` | `sid`, `meant` (optional) | A scripture reference; its children are the text shown, as printed. `sid` is where the reference BDB printed starts: a verse (`GEN 10:10`) or, for a whole chapter or a range of chapters, the chapter (`2SA 1`), in Hebrew numbering, as in the WLC. Where BDB misprinted the number, `meant` gives the verse the quotation is from, and the app links there | BDB |
 | `em` | | Italic | all |
 | `form` | | A word's forms or inflections | LS |
 | `tr` | | A translation, in bold | LS |
 | `usg` | `title` (optional) | A usage label, such as `NTest.`, with its meaning | LS |
 | `foreign` | `lang` | A Hebrew or Greek word inside English text | all |
 | `ref` | `strong` or `key` | A link to another entry; its children are the text shown. A Strong's number of another language (SG's links to Hebrew numbers) opens in that language's lexicon. In TEI such a link points into the other lexicon's file (`eng_strongs_heb.tei.xml#H85`) | all |
-| `word` | `lang`, `translit`, `pronunciation` (each optional except `lang`) | A Hebrew or Greek word with no link, such as an alternative spelling; its children are the word, and may be empty when the dictionary gives only a pronunciation | SH |
+| `word` | `lang`, `translit`, `pronunciation`, `count` (each optional except `lang`) | A Hebrew or Greek word with no link, such as an alternative spelling; its children are the word, and may be empty when the dictionary gives only a pronunciation. `count` is BDB's occurrence count for another spelling on its headword line | SH, BDB |
 
 A `foreign` element's `lang` is a language code (`hbo`, `arc`, `syc`,
 `ar`, `grc`, ...), so the app can choose the font and text direction.
