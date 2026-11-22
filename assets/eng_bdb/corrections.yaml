@@ -1,0 +1,174 @@
+# Corrections to Sefaria's BDB, applied by tools/import-sefaria-bdb.py and
+# marked in the TEI file. The one-letter Hebrew slips are generated into
+# corrections-letters.yaml; these are the rest, each checked in the 1906
+# print (Internet Archive hebrewenglishlex00browuoft; printed page p is
+# image n{p+23}) by the maintainer on 2026-11-21, as recorded in
+# print-checks.md.
+#
+# Kinds:
+#   ref: a scripture reference whose printed text Sefaria got wrong; `link`
+#        is Sefaria's data-ref, `sic` the reference as Sefaria shows it,
+#        `corr` as the print has it (in Sefaria's style of writing references).
+#   meant: a reference BDB itself misprinted. The text stays as printed; the
+#        TEI gives the verse meant (bn:meant), which the app links to.
+#   homograph: a homograph number (I., II.) Sefaria got wrong.
+#   note: a reading kept as printed, with a note in the TEI file only.
+
+# Sefaria's slips: the print has the verse the quotation is from.
+- entry: BDB00304
+  kind: ref
+  link: "II Kings 1:8"
+  sic: "2 K 1:3"
+  corr: "2 K 1:8"
+  evidence: "page 24 (image n47): 2 K 1⁸"
+- entry: BDB01456
+  kind: ref
+  link: "Ezekiel 20:37"
+  sic: "Ez 20:27"
+  corr: "Ez 20:37"
+  evidence: "page 136 (image n159): Ez 20³⁷"
+- entry: BDB01818
+  kind: ref
+  link: "Obadiah 1:20"
+  sic: "Ob 20:20"
+  corr: "Ob 20(×2)"
+  evidence: "page 162 (image n185): Ob ²⁰·²⁰, verse 20 twice (Obadiah has one chapter)"
+- entry: BDB04901
+  kind: ref
+  link: "Judges 11:25"
+  sic: "Ju 11:26"
+  corr: "Ju 11:25"
+  evidence: "page 534 (image n557): Ju 11²⁵"
+- entry: BDB05933
+  kind: ref
+  link: "Ezekiel 21:5"
+  sic: "Ez 20:49"
+  corr: "Ez 21:5"
+  evidence: "page 604 (image n627): Ez 21⁵, the Hebrew verse; Sefaria had given the English number"
+- entry: BDB09294
+  kind: ref
+  link: "Joshua 9:6"
+  sic: "Jos 6:9"
+  corr: "Jos 9:6"
+  evidence: "page 934 (image n957): Jos 9⁶"
+
+# BDB's own misprints: kept as printed, linked to the verse meant.
+- entry: BDB02244
+  kind: meant
+  link: "Isaiah 58:2"
+  text: "Is 55:2"
+  meant: "ISA 58:2"
+  evidence: "page 204 (image n227): Is 55², as Sefaria has it"
+- entry: BDB03163
+  kind: meant
+  link: "Ezra 8:27"
+  text: "Ezr 8:37"
+  meant: "EZR 8:27"
+  evidence: "page 326 (image n349): Ezr 8³⁷; the same entry cites Ezr 8²⁷ correctly"
+- entry: BDB06028
+  kind: meant
+  link: "Nehemiah 7:33"
+  text: "Ne 7:34"
+  meant: "NEH 7:33"
+  evidence: "page 612 (image n635): Ne 7³⁴; \"the other Nebo\" is 7:33, 7:34 \"the other Elam\""
+- entry: BDB06221
+  kind: meant
+  link: "Numbers 21:14"
+  text: "Nu 21:4"
+  meant: "NUM 21:14"
+  evidence: "page 636 (image n659): Nu 21⁴; the same page cites Nu 21¹⁴ correctly"
+- entry: BDB06834
+  kind: meant
+  link: "Jeremiah 16:6"
+  text: "Je 6:16"
+  meant: "JER 16:6"
+  evidence: "page 704 (image n727): Je 6¹⁶; the same column cites Je 16⁶ correctly"
+- entry: BDB07297
+  kind: meant
+  link: "Numbers 28:27"
+  text: "Nu 28:37"
+  meant: "NUM 28:27"
+  evidence: "page 750 (image n773): Nu 28³⁷; Numbers 28 has 31 verses"
+- entry: BDB07381
+  kind: meant
+  link: "Esther 7:7"
+  text: "Est 7:17"
+  meant: "EST 7:7"
+  evidence: "page 768 (image n791): Est 7¹⁷; Esther 7 has 10 verses"
+- entry: BDB07820
+  kind: meant
+  link: "Ezekiel 46:18"
+  text: "Ez 48:16"
+  meant: "EZK 46:18"
+  evidence: "page 806 (image n829): Ez 48¹⁶"
+- entry: BDB07942
+  kind: meant
+  link: "Proverbs 5:21"
+  text: "5:11"
+  meant: "PRO 5:21"
+  evidence: "page 814 (image n837): 5¹¹; sense 2 cites Pr 5²¹ correctly"
+- entry: BDB09318
+  kind: meant
+  link: "II Samuel 19:25"
+  text: "16:25"
+  meant: "2SA 19:25"
+  evidence: "page 936 (image n959): 16²⁵; the same line cites 19²⁶·³¹ correctly"
+- entry: BDB10699
+  kind: meant
+  link: "Song of Songs 4:2"
+  text: "Ct 5:2"
+  meant: "SNG 4:2"
+  evidence: "page 1060 (image n1083): Ct 5² 6⁶; 6⁶ is right"
+# Versification: BDB counts Neh 7:68, which the Leningrad Codex lacks.
+- entry: BDB02764
+  kind: meant
+  link: "Nehemiah 7:69"
+  text: "Ne 7:70"
+  meant: "NEH 7:69"
+  evidence: "page 284 (image n307): Ne 7⁷⁰, twice; BDB's numbering, one more than the WLC's after 7:68"
+
+# Homograph numbers.
+- entry: BDB07297
+  kind: homograph
+  sic: "II."
+  corr: "I."
+  evidence: "page 750 (image n773): I., whole burnt-offering"
+- entry: BDB07298
+  kind: homograph
+  sic: "III."
+  corr: "II."
+  evidence: "page 750 (image n773): † II., in brackets, ascent, stairway"
+
+# Kept as printed.
+- entry: BDB02917
+  kind: note
+  link: "Isaiah 5:22"
+  note: "BDB prints this word with bet as its second letter (page 298, image n321, checked in the print); the Leningrad Codex has kaf. Kept as printed."
+
+# Sefaria's markup (tags only; the wording doesn't change).
+#   markup: `find` (Sefaria's HTML, once in the entry) becomes `replace`.
+- entry: BDB00821
+  kind: markup
+  find: "n.pr.f.</strong> (Ew;"
+  replace: "<strong>n.pr.f.</strong> (Ew;"
+  reason: "the opening <strong> of \"n.pr.f.\" is missing"
+- entry: BDB00821
+  kind: markup
+  find: "<em>hearth of †El)."
+  replace: "<em>hearth of †El</em>)."
+  reason: "the <em> of \"hearth of El\" is never closed"
+- entry: BDB04816
+  kind: markup
+  find: "(cf. Di).</sup>"
+  replace: "(cf. Di)."
+  reason: "a </sup> with no <sup>"
+- entry: BDBA0664
+  kind: markup
+  find: "(K<sup>§ 47 a)) "
+  replace: "(K<sup>§ 47 a)</sup>) "
+  reason: "the <sup> of K's section number is never closed"
+- entry: BDBA0664
+  kind: markup
+  find: "<em>in behalf of</em>).</strong>"
+  replace: "<em>in behalf of</em>)."
+  reason: "a </strong> with no <strong> at the end of the passage"

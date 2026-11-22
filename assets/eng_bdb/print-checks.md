@@ -107,3 +107,17 @@ Sefaria's `ordinal` can't be checked automatically: BDB numbers homographs by ro
 | `all_cited` | † before the headword (or a sense number) | BDB06221 "† I. נַחַל" (p. 636, n659) |
 | `brackets` | [ ] around the headword: the form itself does not occur | BDB00304 "†[אָזַר]" (p. 24, n47) |
 | `occurrences` | small number under the headword: BDB's count | BDB04901 "I. [לָחַם] ₁₇₁" (p. 534, n557) |
+
+## Strong's numbers: spot checks of the lexical index
+
+The module takes Strong's numbers from the Open Scriptures lexical index where it places them (strongs-review.md lists every difference from Sefaria's). The maintainer checked these against Strong's Hebrew dictionary (Accordance, "KJV with Strong's") on 2026-11-22; the index was right each time:
+
+| Number | Strong's | Index's entry | Sefaria's |
+|---|---|---|---|
+| H122 | red, ruddy (also the "red pottage" of Gn 25:30) | BDB00135, BDB00136, and BDB00138 (the condiment of Gn 25:30) | BDB00135, BDB00136 |
+| H123 | Edom | BDB00139 | BDB00138 (the condiment) and BDB00139 |
+| H224 | Urim | BDB00267 | four entries spelled like it |
+| H377 | to be a man, denominative from H376 (Is 46:8) | BDB00947, the root BDB gives Is 46:8, citing Strong's derivation | BDB00435, man, which doesn't treat Is 46:8 |
+| H741 | an orthographical variation of H2025, the altar of the temple | BDB00825, hearth, altar-hearth | BDB00821, BDB00838 (the name Ariel) |
+| H800 | fire | BDB00884 | BDB00883 |
+| H839 | box-wood or cedar, "Ashurite" (Ez 27:6) | BDB00940, BDB's note on Ez 27:6 | BDB00938, Asher |
