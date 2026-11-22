@@ -32,3 +32,18 @@ licence ("Public Domain"), and the version's source, a National Library of
 Israel record of the 1906 edition
 (https://www.nli.org.il/he/books/NNL_ALEPH990019502310205171/NLI). Sefaria
 doesn't say who transcribed it.
+
+## Strong's numbers: Open Scriptures' lexical index
+
+`oshb/LexicalIndex.xml` maps BDB's entries to Strong's numbers one entry at
+a time, where Sefaria's `strong_numbers` sit on whole groups of related
+entries. It is from the Open Scriptures Hebrew Bible Project's
+`HebrewLexicon` repository, kept unchanged with that repository's
+`readme.md`, which states the licence:
+
+- Address: https://github.com/openscriptures/HebrewLexicon (`LexicalIndex.xml` and `readme.md`)
+- Commit: `21c9add13bc727d3a951361778e97e3ff7afd1ce` (2019-09-02, the latest on 2026-11-21)
+- Licence: Creative Commons Attribution 4.0 International; "For attribution purposes, credit the Open Scriptures Hebrew Bible Project." (The text of BDB and of Strong's dictionary remain in the public domain.)
+
+Only the index's Strong's numbers are used, never its glosses; its TWOT
+numbers are left out, as Sefaria's are.
