@@ -88,10 +88,21 @@ importer counts what it leaves out, so nothing is dropped by accident.
   numbering among words spelled the same (`ordinal`: I., II.), BDB's dagger
   (`all_cited`: every occurrence is cited), forms, numbered senses, notes,
   scripture references, and the Hebrew, Aramaic, Syriac, Arabic and other
-  words in their own scripts. Left out: the GK and TWOT numbers (numbering
-  systems still under copyright), Sefaria's `quotes`, `occurrences` and
-  links between neighbouring headwords, and its `strong_numbers`, which are
-  replaced by a finer mapping (see "Strong's numbers"). Sefaria's text
+  words in their own scripts. Also kept, as marks on the headword line (see
+  `hwline` below), checked against the 1906 print: BDB's double dagger ‡
+  (`peculiar`: a word found only in Biblical Aramaic), its square brackets
+  (`brackets`: the headword is a form that does not itself occur), and the
+  small count printed under the headword (`occurrences`, such as 171 for
+  I. [לָחַם]; one count is "c. 6823"). Senses keep their dagger
+  (`all_cited`) and the verb stem that heads them (`form`: Qal, Niph. ...).
+  Kept in the TEI file only: Sefaria's `root` flag (it marks verb and root
+  entries; BDB prints nothing for it). Left out: the GK and TWOT numbers
+  (numbering systems still under copyright), Sefaria's `quotes` (all empty)
+  and links between neighbouring headwords, and its `strong_numbers`, which
+  are replaced by a finer mapping (see "Strong's numbers"). Sefaria's
+  homograph numbers (`ordinal`) can't be checked automatically, since BDB
+  numbers by root and skips on purpose; they are kept, and corrected where
+  found wrong (`assets/eng_bdb/print-checks.md`). Sefaria's text
   spells out BDB's abbreviations and writes references in full, on purpose;
   that is kept, like Open Scriptures' editing of Strong's.
 
@@ -144,11 +155,12 @@ with optional attributes as further string fields. The styles are:
 | `def` | | Definition, shown as **Meaning** | SH, SG |
 | `kjv` | | KJV renderings, shown as **In the KJV** | SH, SG |
 | `etym` | | Etymology | LS |
-| `sense` | `n`, `level` | A numbered sense, such as `n="II"` or `n="1"` | LS, BDB |
+| `hwline` | `peculiar` (`1`), `brackets` (`first` or `all`), `count` (each optional) | BDB's marks on the headword line: ‡ before the headword, square brackets around the headword (`first`) or the whole headword line (`all`), and the occurrence count printed under it. Has no children; always the first item when present | BDB |
+| `sense` | `n`, `level`, `stem`, `allCited` (`1`) (each optional except `level`) | A numbered sense, such as `n="II"` or `n="1"`. `stem` is the verb stem that heads a section (`Qal`, `Niph.`), shown in bold before it; `allCited` is BDB's † before the number. A sense's text may begin with words printed before its number, such as "Especially" | LS, BDB |
 | `note` | | A note within an entry | BDB |
 | `strong` | | Bold | BDB |
 | `sup`, `sub` | | Superscript or subscript, such as BDB's citation details | BDB |
-| `bref` | `sid` | A scripture reference, such as `sid="GEN 10:10"`; its children are the text shown | BDB |
+| `bref` | `sid`, `meant` (optional) | A scripture reference, such as `sid="GEN 10:10"`; its children are the text shown, as printed. `sid` is the verse BDB prints (Hebrew numbering, as in the WLC). Where BDB misprinted the number, `meant` gives the verse the quotation is from, and the app links there | BDB |
 | `em` | | Italic | all |
 | `form` | | A word's forms or inflections | LS |
 | `tr` | | A translation, in bold | LS |
@@ -160,8 +172,13 @@ with optional attributes as further string fields. The styles are:
 A `foreign` element's `lang` is a language code (`hbo`, `arc`, `syc`,
 `ar`, `grc`, ...), so the app can choose the font and text direction.
 
-The top level holds only `deriv`, `def`, `kjv`, `etym`, `form`, `note` and
-`sense` elements. In Strong's Greek, `form` holds the alternative forms
+The top level holds only `hwline`, `deriv`, `def`, `kjv`, `etym`, `form`,
+`note` and `sense` elements. BDB's nested senses (up to five levels) are
+written flat, in reading order, each with its `level`, as LS's are. The
+headword-line marks are in the body rather than in columns of `entries`
+(decided 2026-11-21) because the body is already covered by the content
+root, and new marks can be added later without changing the tables or the
+lexicon tree. In Strong's Greek, `form` holds the alternative forms
 (TEI `note type="forms"`) and `note` Strong's remarks after the KJV
 renderings (TEI `note type="comment"`). Any other style, or an attribute not listed, fails the
 build, as unknown USX does for Bibles.
