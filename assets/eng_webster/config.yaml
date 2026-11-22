@@ -1,0 +1,21 @@
+name: Webster Bible (1833)
+abbreviation: WBT
+description: |
+  The Holy Bible, containing the Old and New Testaments, in the Common
+  Version, with amendments of the language by Noah Webster, LL.D. (1833):
+  the King James Version with words that had become obsolete or misleading
+  replaced; with the King James Version's Strong's numbers carried over to
+  Webster's words.
+moduleType: bible
+year: 1833
+fetchId: eng_webster
+language: English
+languageCode: eng
+license: "Public domain. Source: eBible.org, https://ebible.org/details.php?id=engwebster. Converted to Bible Nav's module format without changes to the text. Strong's numbers carried over from the King James Version (eBible.org eng-kjv2006, public domain); see PROVENANCE.md."
+version: 1.0.0
+# The exact edition, and where its source came from, for the signed manifest.
+edition: "eBible.org engwebster, 2026-10-30 release (Noah Webster's 1833 revision of the King James Version), with the KJV's Strong's numbers"
+source: "USFM from eBible.org engwebster_usfm.zip of 2026-10-30 (SHA-256 0f3c1122422adba66cf1e0c98e11db117beebbe40994d2d8afb5e80cc84942cf), converted to USX with usfmtc 0.4.10, Strong's numbers from assets/eng_kjv by tools/tag-webster-strongs.py; see assets/eng_webster/PROVENANCE.md"
+testamentsIncluded:
+  - OT
+  - NT

@@ -137,6 +137,23 @@
         "language": "English",
         "license": "Public domain. James Strong, A Concise Dictionary of the Words in the Hebrew Bible (1890), as edited by David Troidl and David Instone-Brewer for Open Scriptures. Converted to Bible Nav's module format, with corrections listed in its PROVENANCE.md."
       }
+    },
+    {
+      "manifest": "{\n  \"type\": \"bible-nav module manifest\",\n  \"manifestVersion\": 1,\n  \"module\": {\n    \"id\": \"eng_webster\",\n    \"version\": \"1.0.0\",\n    \"formatVersion\": 2,\n    \"name\": \"Webster Bible (1833)\",\n    \"abbreviation\": \"WBT\",\n    \"languageCode\": \"eng\"\n  },\n  \"file\": {\n    \"name\": \"eng_webster-1.0.0.db\",\n    \"size\": 35303424,\n    \"sha256\": \"a4faf16d0a88c95d250336e9e2e45a70b794d3a58b1057b0760c5b6ef84a3297\"\n  },\n  \"text\": {\n    \"treeVersion\": 1,\n    \"edition\": \"eBible.org engwebster, 2026-10-30 release (Noah Webster's 1833 revision of the King James Version), with the KJV's Strong's numbers\",\n    \"source\": \"USFM from eBible.org engwebster_usfm.zip of 2026-10-30 (SHA-256 0f3c1122422adba66cf1e0c98e11db117beebbe40994d2d8afb5e80cc84942cf), converted to USX with usfmtc 0.4.10, Strong's numbers from assets/eng_kjv by tools/tag-webster-strongs.py; see assets/eng_webster/PROVENANCE.md\",\n    \"textRoot\": \"cfaeb2002114f0ab086ecac84123e3df015738cef95b52dbbc359a1e039d5d57\",\n    \"contentRoot\": \"4eaf32331891e7d2f76ef65df92ee74ac30dc51b519da5f8cb2cea2c2acbae2a\"\n  },\n  \"createdAt\": \"2026-11-22\"\n}\n",
+      "signatures": "ed25519 c7703a6f42bedeee oef4m+Yucb7ZWFvIfT8Va4pIm+kA/4vNeaXHFz+CB1ycyeTAHbJ5Gc6wq95JRx6T+lNPqxaw6lZV68/mHqG0Ag==\ned25519 447d4fa16f501391 6ln6E43bsJLXmisUopF439zh13remcrzJPAbzuxldBrjlm9pEhPLDvtEgXlsxGh0EBhGfF15MZHmLls/YtMWDg==\n",
+      "download": {
+        "name": "eng_webster-1.0.0.db.gz",
+        "size": 9054742,
+        "sha256": "dc541146524bb1257a68ab5ef5a4228547384e781e43a0f02750943a71b40e1c",
+        "urls": [
+          "https://github.com/pixl-scribe/bible-nav-modules/releases/download/eng_webster-1.0.0/eng_webster-1.0.0.db.gz"
+        ]
+      },
+      "about": {
+        "description": "The Holy Bible, containing the Old and New Testaments, in the Common\nVersion, with amendments of the language by Noah Webster, LL.D. (1833):\nthe King James Version with words that had become obsolete or misleading\nreplaced; with the King James Version's Strong's numbers carried over to\nWebster's words.",
+        "language": "English",
+        "license": "Public domain. Source: eBible.org, https://ebible.org/details.php?id=engwebster. Converted to Bible Nav's module format without changes to the text. Strong's numbers carried over from the King James Version (eBible.org eng-kjv2006, public domain); see PROVENANCE.md."
+      }
     }
   ],
   "statements": []

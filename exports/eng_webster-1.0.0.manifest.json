@@ -1,0 +1,25 @@
+{
+  "type": "bible-nav module manifest",
+  "manifestVersion": 1,
+  "module": {
+    "id": "eng_webster",
+    "version": "1.0.0",
+    "formatVersion": 2,
+    "name": "Webster Bible (1833)",
+    "abbreviation": "WBT",
+    "languageCode": "eng"
+  },
+  "file": {
+    "name": "eng_webster-1.0.0.db",
+    "size": 35303424,
+    "sha256": "a4faf16d0a88c95d250336e9e2e45a70b794d3a58b1057b0760c5b6ef84a3297"
+  },
+  "text": {
+    "treeVersion": 1,
+    "edition": "eBible.org engwebster, 2026-10-30 release (Noah Webster's 1833 revision of the King James Version), with the KJV's Strong's numbers",
+    "source": "USFM from eBible.org engwebster_usfm.zip of 2026-10-30 (SHA-256 0f3c1122422adba66cf1e0c98e11db117beebbe40994d2d8afb5e80cc84942cf), converted to USX with usfmtc 0.4.10, Strong's numbers from assets/eng_kjv by tools/tag-webster-strongs.py; see assets/eng_webster/PROVENANCE.md",
+    "textRoot": "cfaeb2002114f0ab086ecac84123e3df015738cef95b52dbbc359a1e039d5d57",
+    "contentRoot": "4eaf32331891e7d2f76ef65df92ee74ac30dc51b519da5f8cb2cea2c2acbae2a"
+  },
+  "createdAt": "2026-11-22"
+}
